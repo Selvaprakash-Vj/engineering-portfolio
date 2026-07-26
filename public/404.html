@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Routing… | Selva Engineering Lab</title>
+    <script>
+      // GitHub Pages serves this file for direct requests to client-side routes.
+      // Preserve the repository segment on github.io, then redirect through index.html.
+      ;(function (location) {
+        const parts = location.pathname.split('/').filter(Boolean)
+        const firstSegmentIsRoute = ['projects', 'resume'].includes(parts[0])
+        const keepSegments = location.hostname.endsWith('github.io') && !firstSegmentIsRoute ? 1 : 0
+        const rootParts = parts.slice(0, keepSegments)
+        const routeParts = parts.slice(keepSegments)
+        const root = `/${rootParts.join('/')}${rootParts.length ? '/' : ''}`
+        const route = routeParts.join('/').replace(/&/g, '~and~')
+        const query = location.search ? `&${location.search.slice(1).replace(/&/g, '~and~')}` : ''
+        location.replace(`${location.protocol}//${location.host}${root}?/${route}${query}${location.hash}`)
+      })(window.location)
+    </script>
+  </head>
+  <body></body>
+</html>

@@ -1,0 +1,4 @@
+The website expects the final résumé PDF in this folder with the exact name:
+Selvaprakash_Vijayaraman_Resume.pdf
+
+Selva has already added this file in the working project folder.

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://selvaprakash-vj.github.io/engineering-portfolio/sitemap.xml
