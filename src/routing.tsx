@@ -11,13 +11,15 @@ export type AppRoute = 'home' | 'machineguard-ai' | 'finance-tracker' | 'resume'
 export type Language = 'en' | 'de'
 
 const routeSuffixes: Array<[AppRoute, string]> = [
+  ['machineguard-ai', '/de/projekte/machineguard-ai'],
+  ['finance-tracker', '/de/projekte/finance-tracker'],
   ['machineguard-ai', '/projects/machineguard-ai'],
   ['finance-tracker', '/projects/finance-tracker'],
   ['resume', '/de/lebenslauf'],
   ['resume', '/resume'],
 ]
 
-const languageSuffixes = ['/de/lebenslauf', '/de']
+const languageSuffixes = ['/de/projekte/machineguard-ai', '/de/projekte/finance-tracker', '/de/lebenslauf', '/de']
 
 function trimTrailingSlash(path: string) {
   return path.length > 1 ? path.replace(/\/+$/, '') : path
@@ -79,8 +81,9 @@ export function localizedResume(language: Language) {
 export function alternateLanguagePath(route: AppRoute, targetLanguage: Language) {
   if (route === 'resume') return localizedResume(targetLanguage)
   if (route === 'home') return localizedHome(targetLanguage)
-  // German project pages are part of the next bilingual phase.
-  return targetLanguage === 'de' ? '/de/' : `/${route === 'machineguard-ai' ? 'projects/machineguard-ai' : 'projects/finance-tracker'}`
+  if (route === 'machineguard-ai') return targetLanguage === 'de' ? '/de/projekte/machineguard-ai' : '/projects/machineguard-ai'
+  if (route === 'finance-tracker') return targetLanguage === 'de' ? '/de/projekte/finance-tracker' : '/projects/finance-tracker'
+  return localizedHome(targetLanguage)
 }
 
 export function assetUrl(filename: string) {
@@ -190,6 +193,22 @@ const routeMetadataEn: Record<AppRoute, RouteMetadata> = {
 
 const routeMetadataDe: Record<AppRoute, RouteMetadata> = {
   ...routeMetadataEn,
+  'machineguard-ai': {
+    title: 'MachineGuard AI | Zuverlässigkeitsbewusste Predictive Maintenance',
+    description: 'Eine deutschsprachige Fallstudie zur RUL-Prognose für NASA-C-MAPSS-Turbofantriebwerke mit leakage-sicherer Datenaufbereitung, GRU, Unsicherheit, Trajektoriendiagnostik und technischer Bewertung.',
+    path: 'de/projekte/machineguard-ai/',
+    image: 'social/machineguard-preview.png',
+    imageAlt: 'MachineGuard AI Predictive-Maintenance-Projekt',
+    schemaType: 'SoftwareApplication',
+  },
+  'finance-tracker': {
+    title: 'Finance Tracker Automation | Lokales Data Engineering',
+    description: 'Eine private, lokal ausgeführte Finanzdaten-Pipeline mit kanonischer Transaktionsverarbeitung, unveränderter Übernahme menschlicher Kommentare, ML-Fallback und validierter Monatsveröffentlichung.',
+    path: 'de/projekte/finance-tracker/',
+    image: 'social/finance-tracker-preview.png',
+    imageAlt: 'Finance Tracker Automation als lokales Data-Engineering-Projekt',
+    schemaType: 'CreativeWork',
+  },
   home: {
     title: 'Selvaprakash Vijayaraman | Mechanische Entwicklung, CAE & Simulation',
     description: 'Entwicklungsingenieur mit Erfahrung in mechanischer Entwicklung, FEM, Strukturdynamik, Thermomechanik, Simulationsautomatisierung und datengetriebenen Engineering-Methoden.',
@@ -294,8 +313,8 @@ function applyRouteMetadata(route: AppRoute) {
   upsertMeta('meta[name="twitter:image:alt"]', { name: 'twitter:image:alt', content: metadata.imageAlt })
   upsertLink('link[rel="canonical"]', { rel: 'canonical', href: canonical })
 
-  const englishPath = route === 'resume' ? 'resume/' : route === 'home' ? '' : metadata.path
-  const germanPath = route === 'resume' ? 'de/lebenslauf/' : route === 'home' ? 'de/' : metadata.path
+  const englishPath = route === 'resume' ? 'resume/' : route === 'home' ? '' : route === 'machineguard-ai' ? 'projects/machineguard-ai/' : 'projects/finance-tracker/'
+  const germanPath = route === 'resume' ? 'de/lebenslauf/' : route === 'home' ? 'de/' : route === 'machineguard-ai' ? 'de/projekte/machineguard-ai/' : 'de/projekte/finance-tracker/'
   upsertLink('link[rel="alternate"][hreflang="en"]', { rel: 'alternate', hreflang: 'en', href: absolutePublicUrl(englishPath) })
   upsertLink('link[rel="alternate"][hreflang="de"]', { rel: 'alternate', hreflang: 'de', href: absolutePublicUrl(germanPath) })
   upsertLink('link[rel="alternate"][hreflang="x-default"]', { rel: 'alternate', hreflang: 'x-default', href: absolutePublicUrl(englishPath) })
@@ -317,8 +336,10 @@ export function useAppRoute() {
     const legacyParams = new URLSearchParams(window.location.search)
     const legacyProject = legacyParams.get('project')
     const legacyRoute = legacyParams.get('route')
+    const legacyLanguage = legacyParams.get('lang')
     if (legacyProject === 'machineguard-ai' || legacyProject === 'finance-tracker') {
-      window.history.replaceState({}, '', appUrl(`/projects/${legacyProject}`))
+      const target = legacyLanguage === 'de' ? `/de/projekte/${legacyProject}` : `/projects/${legacyProject}`
+      window.history.replaceState({}, '', appUrl(target))
       setRouteState({ route: resolveRoute(), path: window.location.pathname })
     } else if (legacyRoute === 'resume') {
       window.history.replaceState({}, '', appUrl('/resume'))

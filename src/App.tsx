@@ -612,14 +612,174 @@ function ResumePage() {
   )
 }
 
+
+const projectTranslationsDe: Record<'machineguard' | 'finance', Record<string, string>> = {
+  machineguard: {
+    'Skip to project content': 'Zum Projektinhalt springen',
+    '← Portfolio': '← Portfolio',
+    'Launch dashboard ↗': 'Dashboard öffnen ↗',
+    'PROJECT // MG-01': 'PROJEKT // MG-01',
+    'RELEASED · v1.0.0': 'VERÖFFENTLICHT · v1.0.0',
+    'Reliability-aware Remaining Useful Life prediction for NASA C-MAPSS turbofan engines.': 'Zuverlässigkeitsbewusste Remaining-Useful-Life-Prognose für NASA-C-MAPSS-Turbofantriebwerke.',
+    'Predict remaining life. Measure uncertainty. Flag predictions that deserve a second look.': 'Restlebensdauer prognostizieren. Unsicherheit quantifizieren. Auffällige Vorhersagen für eine technische Prüfung kennzeichnen.',
+    'Open live dashboard': 'Live-Dashboard öffnen',
+    'View GitHub repository': 'GitHub-Repository ansehen',
+    'Read full project report': 'Vollständigen Projektbericht lesen',
+    'Overview': 'Übersicht', 'Workflow': 'Workflow', 'Results': 'Ergebnisse', 'Reliability': 'Zuverlässigkeit', 'Decision layer': 'Entscheidungsebene', 'Explore': 'Vertiefen',
+    'ENGINEERING PROBLEM': 'TECHNISCHE FRAGESTELLUNG',
+    'How many operating cycles remain—and how much should we trust the answer?': 'Wie viele Betriebszyklen verbleiben – und wie belastbar ist diese Aussage?',
+    'MachineGuard AI uses the latest sensor history of a simulated turbofan engine to estimate Remaining Useful Life. The prediction is not treated as an automatic maintenance command; it is one piece of evidence within an engineering review workflow.': 'MachineGuard AI nutzt die jüngste Sensorhistorie eines simulierten Turbofantriebwerks, um die Remaining Useful Life zu schätzen. Die Prognose wird nicht als automatische Instandhaltungsentscheidung verstanden, sondern als ein Evidenzbaustein innerhalb eines technischen Prüfprozesses.',
+    'WHAT THIS PROJECT IS': 'PROJEKTPOSITIONIERUNG',
+    'An end-to-end predictive-maintenance system, not only a trained neural network.': 'Ein durchgängiges Predictive-Maintenance-System – nicht nur ein trainiertes neuronales Netz.',
+    'It converts engine histories into RUL estimates, checks uncertainty and temporal behaviour, and presents the evidence in a form an engineer can review.': 'Es überführt Triebwerksverläufe in RUL-Schätzungen, prüft Unsicherheit und zeitliches Verhalten und stellt die Evidenz so dar, dass sie technisch bewertet werden kann.',
+    'MODEL INPUT': 'MODELLEINGANG', 'MODEL OUTPUT': 'MODELLAUSGANG', 'ENGINEERING GOAL': 'TECHNISCHES ZIEL',
+    'The latest 30 operating cycles, with three operating settings and 21 simulated sensor measurements per cycle.': 'Die letzten 30 Betriebszyklen mit drei Betriebseinstellungen und 21 simulierten Sensormesswerten je Zyklus.',
+    'Estimated cycles remaining before the simulated end-of-life threshold, using a capped 125-cycle target.': 'Geschätzte verbleibende Zyklen bis zur simulierten End-of-Life-Schwelle mit einem auf 125 Zyklen begrenzten Zielwert.',
+    'Estimate remaining life while making uncertainty, suspicious behaviour and review needs visible.': 'Restlebensdauer schätzen und zugleich Unsicherheit, auffälliges Verhalten und Prüfbedarf sichtbar machen.',
+    'END-TO-END WORKFLOW': 'DURCHGÄNGIGER WORKFLOW', 'Methodology before architecture.': 'Methodik vor Modellarchitektur.',
+    'The decisive improvement came from rebuilding the experiment around leakage-safe data handling and deployment-aligned evaluation—not from simply replacing one neural network with another.': 'Die entscheidende Verbesserung entstand durch leakage-sichere Datenaufbereitung und eine einsatznahe Bewertung – nicht durch den bloßen Austausch eines neuronalen Netzes.',
+    'CORE DESIGN CHOICES': 'ZENTRALE METHODISCHE ENTSCHEIDUNGEN',
+    'Split complete engines': 'Vollständige Triebwerke trennen', 'No engine trajectory appears across training and validation.': 'Keine Triebwerkstrajektorie erscheint gleichzeitig in Training und Validierung.',
+    'Fit scaling on training data only': 'Skalierung ausschließlich auf Trainingsdaten fitten', 'Unseen-engine statistics never influence preprocessing.': 'Statistiken unbekannter Triebwerke beeinflussen das Preprocessing nicht.',
+    'Use 30-cycle temporal windows': 'Zeitfenster mit 30 Zyklen verwenden', 'Each model receives the same recent operating history.': 'Jedes Modell erhält dieselbe jüngste Betriebshistorie.',
+    'Score one final window per test engine': 'Ein finales Fenster je Testtriebwerk bewerten', 'Every unseen engine contributes one deployment-style prediction.': 'Jedes unbekannte Triebwerk liefert genau eine einsatznahe Prognose.',
+    'Compare against simple baselines': 'Mit einfachen Baselines vergleichen', 'Complexity must outperform transparent alternatives.': 'Komplexität muss transparente Alternativen tatsächlich übertreffen.',
+    'RMSE after the methodology rebuild': 'RMSE nach dem methodischen Neuaufbau',
+    'KEY RESULTS': 'ZENTRALE ERGEBNISSE', 'Strong performance—with the model roles kept honest.': 'Starke Ergebnisse – bei klarer und ehrlicher Rollenverteilung der Modelle.',
+    'The GRU offered the strongest standalone operational balance. A GRU–LSTM ensemble achieved the best aggregate RMSE, while Ridge remained a valuable independent baseline and the Transformer result was retained as an honest negative experiment.': 'Die GRU bot die stärkste eigenständige operative Balance. Ein GRU–LSTM-Ensemble erzielte den besten aggregierten RMSE, Ridge blieb eine wertvolle unabhängige Baseline und das Transformer-Ergebnis wurde als ehrliches negatives Experiment beibehalten.',
+    'cycles': 'Zyklen', 'test fleet': 'Testflotte', '90% target': '90-%-Ziel',
+    'PRIMARY MODEL': 'PRIMÄRMODELL', 'BEST AVERAGE RMSE': 'BESTER MITTLERER RMSE', 'NEGATIVE RESULT RETAINED': 'NEGATIVES ERGEBNIS BEIBEHALTEN',
+    'Best standalone balance of error, efficiency and dangerous-overprediction behaviour.': 'Beste eigenständige Balance aus Fehler, Effizienz und riskantem Überprognoseverhalten.',
+    'Validation-selected ensemble with RMSE 13.21.': 'Validierungsbasiert gewähltes Ensemble mit RMSE 13,21.',
+    'More complexity did not improve this FD001 experiment.': 'Mehr Komplexität verbesserte dieses FD001-Experiment nicht.',
+    'RELIABILITY BEYOND ACCURACY': 'ZUVERLÄSSIGKEIT ÜBER GENAUIGKEIT HINAUS', 'A point prediction is only the beginning.': 'Eine Punktprognose ist nur der Anfang.',
+    'Three additional evidence layers help expose difficult cases and make the RUL estimate easier to question, explain and review.': 'Drei zusätzliche Evidenzebenen helfen, schwierige Fälle sichtbar zu machen und die RUL-Schätzung besser hinterfragen, erklären und prüfen zu können.',
+    'Uncertainty estimation': 'Unsicherheitsschätzung', 'Trajectory diagnostics': 'Trajektoriendiagnostik', 'Explainability': 'Erklärbarkeit',
+    'Repeated stochastic GRU predictions create a calibrated interval instead of presenting one precise-looking number without context.': 'Wiederholte stochastische GRU-Prognosen erzeugen ein kalibriertes Intervall, statt eine scheinbar exakte Zahl ohne Kontext auszugeben.',
+    'The history of predicted RUL is checked for plateaus, instability and physically suspicious changes that a final point estimate can hide.': 'Der Verlauf der prognostizierten RUL wird auf Plateaus, Instabilität und physikalisch auffällige Änderungen geprüft, die eine finale Punktprognose verdecken kann.',
+    'Feature occlusion reveals which sensor channels influence the model most, while keeping model reliance separate from physical causality.': 'Feature Occlusion zeigt, welche Sensorkanäle das Modell besonders beeinflussen, ohne Modellabhängigkeit mit physikalischer Kausalität gleichzusetzen.',
+    '100 MC PASSES / ENGINE': '100 MC-DURCHLÄUFE / TRIEBWERK', '90% TARGET COVERAGE': '90 % ZIELABDECKUNG', '88% OBSERVED COVERAGE': '88 % BEOBACHTETE ABDECKUNG',
+    'Confidence is not correctness.': 'Konfidenz ist nicht gleich Korrektheit.', 'Uncertainty helps identify difficult cases, but a model can still be confidently wrong.': 'Unsicherheit hilft bei der Erkennung schwieriger Fälle, dennoch kann ein Modell mit hoher Konfidenz falsch liegen.',
+    'FAILURE CASE': 'FEHLERFALL', 'Engine 67: agreement without correctness.': 'Engine 67: Übereinstimmung ohne Korrektheit.',
+    'GRU and Ridge produced similar optimistic predictions. Their agreement looked reassuring, but the historical RUL trajectory showed an unrealistic high-RUL plateau and triggered engineering review.': 'GRU und Ridge lieferten ähnlich optimistische Prognosen. Die Übereinstimmung wirkte zunächst beruhigend, doch die historische RUL-Trajektorie zeigte ein unrealistisches High-RUL-Plateau und löste eine technische Prüfung aus.',
+    'ACTUAL RUL': 'TATSÄCHLICHE RUL', 'RIDGE PREDICTION': 'RIDGE-PROGNOSE', 'TRAJECTORY FLAG': 'TRAJEKTORIE-FLAG', 'ENGINEERING REVIEW': 'TECHNISCHE PRÜFUNG', 'REQUIRED': 'ERFORDERLICH',
+    'Model agreement does not guarantee model correctness. Prediction history exposed a shared blind spot that the final estimates did not.': 'Modellübereinstimmung garantiert keine Modellkorrektheit. Der Prognoseverlauf deckte einen gemeinsamen Blind Spot auf, den die finalen Schätzungen nicht sichtbar machten.',
+    'ENGINEERING DECISION LAYER': 'ENGINEERING-ENTSCHEIDUNGSEBENE', 'The model organises the evidence. The engineer retains the decision.': 'Das Modell strukturiert die Evidenz. Die Entscheidung bleibt beim Ingenieur.',
+    'Predicted RUL, uncertainty, model disagreement and trajectory behaviour are combined into four separate decision-support views. The system structures the evidence; it does not authorise maintenance actions.': 'Prognostizierte RUL, Unsicherheit, Modellabweichung und Trajektorienverhalten werden in vier getrennten Entscheidungsansichten zusammengeführt. Das System strukturiert die Evidenz, autorisiert jedoch keine Instandhaltungsmaßnahmen.',
+    'Engine condition': 'Triebwerkszustand', 'How urgent does the estimated physical condition appear?': 'Wie dringlich erscheint der geschätzte physische Zustand?',
+    'Reliability risk': 'Prognosezuverlässigkeit', 'How trustworthy or suspicious is the available prediction evidence?': 'Wie belastbar oder auffällig ist die vorliegende Prognoseevidenz?',
+    'Engineering review': 'Technische Prüfung', 'Should a human inspect the result before it is used?': 'Soll das Ergebnis vor seiner Nutzung durch einen Menschen geprüft werden?',
+    'Operational priority': 'Operative Priorität', 'How urgently should the engine enter the maintenance workflow?': 'Wie dringend sollte das Triebwerk in den Instandhaltungsprozess aufgenommen werden?',
+    'EXPLORE THE COMPLETE PROJECT': 'GESAMTPROJEKT VERTIEFEN', 'The portfolio page is the overview. The deeper evidence lives here.': 'Die Portfolio-Seite liefert den Überblick. Die vertiefende Evidenz finden Sie hier.',
+    'Use the live dashboard for interactive investigation, GitHub for the implementation and release history, and the full report for the complete engineering and machine-learning study.': 'Nutzen Sie das Live-Dashboard für die interaktive Analyse, GitHub für Implementierung und Release-Historie und den vollständigen Bericht für die gesamte Engineering- und Machine-Learning-Studie.',
+    'Explore the system': 'System interaktiv erkunden', 'Review the implementation': 'Implementierung prüfen', 'Read the complete study': 'Vollständige Studie lesen',
+    'Open dashboard ↗': 'Dashboard öffnen ↗', 'View repository ↗': 'Repository ansehen ↗', 'Open report ↗': 'Bericht öffnen ↗',
+    'RESPONSIBLE-USE BOUNDARY': 'VERANTWORTUNGSVOLLE NUTZUNG',
+    'MachineGuard AI is an educational portfolio project built on simulated NASA data.': 'MachineGuard AI ist ein Ausbildungs- und Portfolio-Projekt auf Basis simulierter NASA-Daten.',
+    'It is not a certified aircraft-maintenance system and does not replace inspection, sensor validation, maintenance history or qualified engineering judgement.': 'Es ist kein zertifiziertes Instandhaltungssystem für Luftfahrzeuge und ersetzt weder Inspektion, Sensorvalidierung und Wartungshistorie noch qualifizierte technische Beurteilung.',
+    'PROJECT STATUS': 'PROJEKTSTATUS', 'COMPLETE · RELEASED · PUBLIC': 'ABGESCHLOSSEN · VERÖFFENTLICHT · ÖFFENTLICH', '← Return to project lab': '← Zurück zum Projektlabor', 'Download technical report ↗': 'Technischen Bericht herunterladen ↗',
+    '100 training + 100 test engines': '100 Trainings- + 100 Testtriebwerke', 'Leakage-safe preprocessing': 'Leakage-sicheres Preprocessing', 'Engine split · train-only scaling · 30-cycle windows': 'Triebwerkssplit · Skalierung nur auf Training · 30-Zyklen-Fenster',
+    'Model benchmark': 'Modellbenchmark', 'Validation-only selection': 'Auswahl ausschließlich auf Validierung', 'Primary GRU · 60/40 GRU–LSTM ensemble': 'Primäre GRU · 60/40-GRU–LSTM-Ensemble',
+    'Reliability layer': 'Zuverlässigkeitsebene', 'MC dropout · calibration · disagreement · trajectories': 'MC Dropout · Kalibrierung · Abweichung · Trajektorien',
+    'Explainability layer': 'Erklärbarkeitsebene', 'Global and selected local feature occlusion': 'Globale und ausgewählte lokale Feature Occlusion',
+    'Engineering decision layer': 'Engineering-Entscheidungsebene', 'Condition · reliability · review · priority': 'Zustand · Zuverlässigkeit · Prüfung · Priorität',
+    'Public dashboard': 'Öffentliches Dashboard', 'Fleet · engines · models · uncertainty · methodology': 'Flotte · Triebwerke · Modelle · Unsicherheit · Methodik',
+    'PREDICTION CORE': 'PROGNOSEKERN', 'DATASET': 'DATENSATZ', 'RELEASE': 'RELEASE',
+    'PREDICTED &': 'PROGNOSTIZIERTE &', 'CONSERVATIVE RUL': 'KONSERVATIVE RUL', 'UNCERTAINTY &': 'UNSICHERHEIT &', 'MODEL DISAGREEMENT': 'MODELLABWEICHUNG', 'TRAJECTORY': 'TRAJEKTORIEN-', 'DIAGNOSTICS': 'DIAGNOSTIK',
+    'SEPARATES PHYSICAL URGENCY': 'TRENNT PHYSISCHE DRINGLICHKEIT', 'FROM PREDICTION RELIABILITY': 'VON PROGNOSEZUVERLÄSSIGKEIT',
+    'Critical · Warning · Monitor · Healthy': 'Kritisch · Warnung · Beobachten · Gesund', 'High · Medium · Low': 'Hoch · Mittel · Niedrig', 'Required · Recommended · Not required': 'Erforderlich · Empfohlen · Nicht erforderlich', 'Immediate · High · Elevated · Watch · Routine': 'Sofort · Hoch · Erhöht · Beobachten · Routine',
+    'The model does not make the maintenance decision.': 'Das Modell trifft keine Instandhaltungsentscheidung.', 'It organises evidence for human engineering review.': 'Es strukturiert Evidenz für die menschliche technische Prüfung.',
+  },
+  finance: {
+    'Skip to project content': 'Zum Projektinhalt springen', '← Portfolio': '← Portfolio',
+    'Public-release roadmap ↓': 'Roadmap zur öffentlichen Version ↓', 'View architecture ↓': 'Architektur ansehen ↓',
+    'PROJECT // FT-01': 'PROJEKT // FT-01', 'PRIVATE SYSTEM · OPERATIONAL': 'PRIVATES SYSTEM · BETRIEBSBEREIT',
+    'Local-first financial data engineering designed around automation without surrendering control.': 'Lokales Finanz-Data-Engineering, das Automatisierung mit menschlicher Kontrolle verbindet.',
+    'A private monthly workflow that converts statements from three financial providers into canonical transaction data, preserves manual context, uses machine learning only for genuinely blank rows and publishes validated outputs without sending personal data to a cloud service.': 'Ein privater monatlicher Workflow, der Abrechnungen von drei Finanzanbietern in kanonische Transaktionsdaten überführt, manuelle Kontexte unverändert bewahrt, Machine Learning ausschließlich für tatsächlich leere Zeilen nutzt und validierte Ergebnisse veröffentlicht, ohne persönliche Daten an einen Cloud-Dienst zu senden.',
+    'Explore the workflow': 'Workflow erkunden', 'See the human-control layer': 'Menschliche Kontrollschicht ansehen', 'Why the repository is private': 'Warum das Repository privat ist',
+    'INPUT SOURCES': 'EINGABEQUELLEN', 'PROCESSING PHASES': 'VERARBEITUNGSPHASEN', 'EXECUTION MODEL': 'AUSFÜHRUNGSMODELL', 'AUTHORITATIVE LABELS': 'VERBINDLICHE LABELS',
+    'Problem': 'Problem', 'Human control': 'Menschliche Kontrolle', 'Safeguards': 'Schutzmechanismen', 'System state': 'Systemstand', 'Roadmap': 'Roadmap',
+    'THE ENGINEERING PROBLEM': 'DIE TECHNISCHE AUFGABE', 'The difficult part was not drawing a spending chart. It was making the monthly data trustworthy.': 'Die Herausforderung war nicht das Zeichnen eines Ausgabendiagramms, sondern die monatlichen Daten verlässlich zu machen.',
+    'Financial statements arrive in different structures, descriptions are inconsistent and manual context can easily disappear during automation. The project was built to make monthly preparation repeatable without allowing automation to overwrite human judgement.': 'Finanzabrechnungen liegen in unterschiedlichen Strukturen vor, Beschreibungen sind uneinheitlich und manueller Kontext kann bei der Automatisierung leicht verloren gehen. Das Projekt macht die monatliche Aufbereitung wiederholbar, ohne dass Automatisierung menschliche Entscheidungen überschreibt.',
+    'PROJECT POSITIONING': 'PROJEKTPOSITIONIERUNG', 'A personal operations system, not a generic budgeting application.': 'Ein persönliches Betriebssystem – keine generische Budget-App.',
+    'The core value is the data pipeline: extraction, canonicalisation, human-annotation preservation, controlled machine-learning fallback and safe monthly publishing.': 'Der Kernwert liegt in der Datenpipeline: Extraktion, Kanonisierung, unveränderte Übernahme menschlicher Annotationen, kontrollierter Machine-Learning-Fallback und sichere monatliche Veröffentlichung.',
+    'FRAGMENTED INPUTS': 'FRAGMENTIERTE EINGABEN', 'REPETITIVE WORK': 'WIEDERKEHRENDE ARBEIT', 'CONTEXT RISK': 'KONTEXTVERLUST-RISIKO',
+    'Each provider exports transactions with its own structure, naming conventions and statement behaviour.': 'Jeder Anbieter exportiert Transaktionen mit eigener Struktur, Benennung und Abrechnungslogik.',
+    'Manual conversion, cleanup and reconciliation consume time and invite inconsistent handling.': 'Manuelle Konvertierung, Bereinigung und Abstimmung kosten Zeit und begünstigen inkonsistente Bearbeitung.',
+    'Personal comments contain the meaning behind a transaction and must survive every automated phase.': 'Persönliche Kommentare enthalten den tatsächlichen Kontext einer Transaktion und müssen jede automatisierte Phase unverändert überstehen.',
+    'END-TO-END WORKFLOW': 'DURCHGÄNGIGER WORKFLOW', 'Three phases turn statements into a controlled monthly data product.': 'Drei Phasen überführen Abrechnungen in ein kontrolliertes monatliches Datenprodukt.',
+    'The architecture separates raw extraction, model training and safe publication. Each phase has a distinct responsibility so parsing errors, model behaviour and final output rules can be tested independently.': 'Die Architektur trennt Rohdatenextraktion, Modelltraining und sichere Veröffentlichung. Jede Phase hat eine klar abgegrenzte Verantwortung, sodass Parserfehler, Modellverhalten und Ausgaberegeln unabhängig geprüft werden können.',
+    'Extract & canonicalise': 'Extrahieren & kanonisieren', 'Train & validate the fallback': 'Fallback trainieren & validieren', 'Publish safely': 'Sicher veröffentlichen',
+    'HUMAN-IN-THE-LOOP CONTROL': 'HUMAN-IN-THE-LOOP-KONTROLLE', 'Automation fills gaps. It does not rewrite intent.': 'Automatisierung füllt Lücken. Sie überschreibt keine menschliche Absicht.',
+    'The comment column is treated as a protected human decision layer. Any nonblank comment remains untouched; only a genuinely unlabelled transaction is eligible for machine-learning fallback.': 'Die Kommentarspalte wird als geschützte menschliche Entscheidungsebene behandelt. Jeder nichtleere Kommentar bleibt unverändert; nur tatsächlich unbeschriftete Transaktionen sind für den Machine-Learning-Fallback zugelassen.',
+    'Human comments are authoritative': 'Menschliche Kommentare sind verbindlich', 'Machine learning is a fallback': 'Machine Learning ist ein Fallback', 'Publishing is a separate gate': 'Die Veröffentlichung ist ein separates Gate',
+    'WORKFLOW SAFEGUARDS': 'WORKFLOW-SCHUTZMECHANISMEN', 'A useful automation must fail predictably.': 'Eine belastbare Automatisierung muss vorhersehbar fehlschlagen.',
+    'The project focuses as much on preventing silent damage as it does on saving time. Guards and validation rules protect the monthly workflow from missing inputs, duplicated execution, schema drift and lost annotations.': 'Das Projekt konzentriert sich ebenso auf die Vermeidung stiller Fehler wie auf Zeitersparnis. Schutz- und Validierungsregeln sichern den monatlichen Workflow gegen fehlende Eingaben, doppelte Ausführung, Schemaabweichungen und verlorene Annotationen ab.',
+    'MISSING-FILE GUARD': 'FEHLENDE-DATEI-SCHUTZ', 'IDEMPOTENT EXECUTION': 'IDEMPOTENTE AUSFÜHRUNG', 'SCHEMA CONTROL': 'SCHEMAKONTROLLE', 'COMMENT PRESERVATION': 'KOMMENTARERHALT', 'LOCAL PROCESSING': 'LOKALE VERARBEITUNG', 'CONTROLLED PUBLISHING': 'KONTROLLIERTE VERÖFFENTLICHUNG',
+    'STOP ON MISSING INPUT': 'STOPP BEI FEHLENDER EINGABE', 'PRESERVE NONBLANK COMMENTS': 'NICHTLEERE KOMMENTARE UNVERÄNDERT BEWAHREN', 'VALIDATE BEFORE PUBLISH': 'VOR VERÖFFENTLICHUNG VALIDIEREN',
+    'CURRENT SYSTEM STATE': 'AKTUELLER SYSTEMSTAND', 'Operational for the monthly workflow it was designed to solve.': 'Betriebsbereit für den monatlichen Workflow, für den das System entwickelt wurde.',
+    'The complete local pipeline has been reproduced across months: canonical data generation, model-bundle creation and comment-safe publication. The strongest result is not a flashy model score—it is a repeatable process that preserves the reviewed data already present.': 'Die vollständige lokale Pipeline wurde über mehrere Monate reproduziert: kanonische Datenerzeugung, Erstellung des Modell-Bundles und kommentarsichere Veröffentlichung. Das stärkste Ergebnis ist kein auffälliger Modellscore, sondern ein wiederholbarer Prozess, der bereits geprüfte Daten unverändert erhält.',
+    'PRIVATE BOUNDARY & PUBLIC ROADMAP': 'PRIVATE GRENZE & ÖFFENTLICHE ROADMAP', 'The case study is public. The personal financial system is not.': 'Die Fallstudie ist öffentlich. Das persönliche Finanzsystem ist es nicht.',
+    'The current codebase contains provider assumptions, personal categories, local paths and workflow choices tailored to one household. Publishing it responsibly requires a clean, de-personalised release rather than exposing the working private repository.': 'Die aktuelle Codebasis enthält anbieterspezifische Annahmen, persönliche Kategorien, lokale Pfade und auf einen Haushalt zugeschnittene Workflow-Entscheidungen. Eine verantwortungsvolle Veröffentlichung erfordert deshalb eine bereinigte und entpersonalisierte Version statt der Freigabe des produktiven privaten Repositorys.',
+    'CURRENT RELEASE': 'AKTUELLER RELEASE', 'PRIVATE SOURCE · PRIVATE DATA · PUBLIC ARCHITECTURE': 'PRIVATER QUELLCODE · PRIVATE DATEN · ÖFFENTLICHE ARCHITEKTUR',
+    'This page explains the engineering design without exposing statements, account details, transaction records, personal categories or machine-specific configuration.': 'Diese Seite erklärt die technische Architektur, ohne Abrechnungen, Kontodetails, Transaktionsdaten, persönliche Kategorien oder systemspezifische Konfiguration offenzulegen.',
+    'PROJECT STATUS': 'PROJEKTSTATUS', 'OPERATIONAL · PRIVATE · CASE STUDY PUBLISHED': 'BETRIEBSBEREIT · PRIVAT · FALLSTUDIE VERÖFFENTLICHT', '← Return to project lab': '← Zurück zum Projektlabor', 'Review architecture ↑': 'Architektur erneut ansehen ↑',
+    'The run stops before publishing when a required monthly input is absent.': 'Der Lauf stoppt vor der Veröffentlichung, wenn eine erforderliche monatliche Eingabedatei fehlt.',
+    'Rerunning the same month does not create uncontrolled duplicate outputs.': 'Das erneute Ausführen desselben Monats erzeugt keine unkontrollierten doppelten Ausgaben.',
+    'Transactions are normalised into one consistent canonical structure.': 'Transaktionen werden in eine einheitliche kanonische Struktur normalisiert.',
+    'Existing human annotations pass through every phase unchanged.': 'Vorhandene menschliche Annotationen durchlaufen jede Phase unverändert.',
+    'Personal financial statements and trained artifacts remain on the local machine.': 'Persönliche Finanzabrechnungen und trainierte Artefakte verbleiben auf dem lokalen Rechner.',
+    'Outputs are written only after the expected validation checks pass.': 'Ausgaben werden erst geschrieben, nachdem die vorgesehenen Validierungsprüfungen bestanden wurden.',
+    'CONFIGURATION LAYER': 'KONFIGURATIONSEBENE', 'Replace personal paths, account names and fixed rules with documented configuration.': 'Persönliche Pfade, Kontonamen und feste Regeln durch dokumentierte Konfiguration ersetzen.',
+    'PARSER ABSTRACTION': 'PARSER-ABSTRAKTION', 'Create provider templates so new statement formats can be added without editing core logic.': 'Anbietervorlagen erstellen, damit neue Abrechnungsformate ohne Änderung der Kernlogik ergänzt werden können.',
+    'SYNTHETIC SAMPLE DATA': 'SYNTHETISCHE BEISPIELDATEN', 'Publish realistic examples without exposing any personal financial information.': 'Realistische Beispiele veröffentlichen, ohne persönliche Finanzinformationen offenzulegen.',
+    'AUTOMATED TEST SUITE': 'AUTOMATISIERTE TESTSUITE', 'Add parser, schema, preservation and end-to-end regression tests.': 'Parser-, Schema-, Erhaltungs- und End-to-End-Regressionstests ergänzen.',
+    'CLEAN CLI & INSTALLATION': 'SAUBERE CLI & INSTALLATION', 'Package the monthly runner with simple commands and environment checks.': 'Den monatlichen Runner mit einfachen Befehlen und Umgebungsprüfungen paketieren.',
+    'PUBLIC DOCUMENTATION': 'ÖFFENTLICHE DOKUMENTATION', 'Add architecture, privacy boundaries, examples and a reproducible walkthrough.': 'Architektur, Datenschutzgrenzen, Beispiele und einen reproduzierbaren Ablauf dokumentieren.',
+    'CANONICAL TRANSACTION': 'KANONISCHE TRANSAKTION', 'COMMENT FIELD': 'KOMMENTARFELD', 'NONBLANK?': 'NICHT LEER?', 'YES': 'JA', 'NO': 'NEIN',
+    'Keep the human comment exactly as written.': 'Den menschlichen Kommentar exakt unverändert bewahren.', 'Allow the trained classifier to propose a fallback label.': 'Dem trainierten Klassifikator erlauben, ein Fallback-Label vorzuschlagen.',
+    'AUTHORITATIVE PATH': 'VERBINDLICHER PFAD', 'FALLBACK PATH': 'FALLBACK-PFAD', 'PUBLISHING RULE': 'VERÖFFENTLICHUNGSREGEL', 'HUMAN INPUT ALWAYS WINS': 'MENSCHLICHE EINGABE HAT IMMER VORRANG',
+    'BANK PDF': 'BANK-PDF', 'CANONICALISATION CORE': 'KANONISIERUNGSKERN', 'HUMAN CONTEXT': 'MENSCHLICHER KONTEXT', 'COMMENTS PRESERVED': 'KOMMENTARE UNVERÄNDERT', 'CONTROLLED ML': 'KONTROLLIERTES ML', 'BLANK ROWS ONLY': 'NUR LEERE ZEILEN', 'VALIDATED MONTHLY DATASET': 'VALIDIERTER MONATSDATENSATZ', 'EXECUTION': 'AUSFÜHRUNG', 'LOCAL / PRIVATE': 'LOKAL / PRIVAT',
+  },
+}
+
+function ProjectLanguageTranslator({ project }: { project: 'machineguard' | 'finance' }) {
+  const language = resolveLanguage()
+  useEffect(() => {
+    if (language !== 'de') return
+    const translations = projectTranslationsDe[project]
+    const root = document.querySelector(project === 'machineguard' ? '.machineguard-page' : '.finance-case')
+    if (!root) return
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT)
+    const nodes: Text[] = []
+    while (walker.nextNode()) nodes.push(walker.currentNode as Text)
+    nodes.forEach(node => {
+      const raw = node.nodeValue ?? ''
+      const trimmed = raw.trim()
+      const translated = translations[trimmed]
+      if (!translated) return
+      const leading = raw.match(/^\s*/)?.[0] ?? ''
+      const trailing = raw.match(/\s*$/)?.[0] ?? ''
+      node.nodeValue = `${leading}${translated}${trailing}`
+    })
+    root.querySelectorAll<HTMLElement>('[aria-label]').forEach(element => {
+      const label = element.getAttribute('aria-label') ?? ''
+      if (translations[label]) element.setAttribute('aria-label', translations[label])
+    })
+  }, [language, project])
+  return null
+}
+
 function ProjectTopbar() {
+  const language = resolveLanguage()
   return (
     <header className="case-topbar">
-      <Logo href="/" route />
+      <Logo href={localizedHome(language)} route />
       <div className="case-topbar-actions">
-        <RouteLink to="/#projects">← Portfolio</RouteLink>
+        <RouteLink to={`${localizedHome(language)}#projects`}>← Portfolio</RouteLink>
+        <LanguageSwitch route="machineguard-ai" compact />
         <a href="https://github.com/Selvaprakash-Vj/MachineGuard-AI" target="_blank" rel="noreferrer">GitHub ↗</a>
-        <a className="button small primary" href="https://machineguard-ai.streamlit.app/" target="_blank" rel="noreferrer">Launch dashboard ↗</a>
+        <a className="button small primary" href="https://machineguard-ai.streamlit.app/" target="_blank" rel="noreferrer">{language === 'de' ? 'Dashboard öffnen ↗' : 'Launch dashboard ↗'}</a>
       </div>
     </header>
   )
@@ -793,6 +953,7 @@ function MachineGuardPage() {
   ]
   return (
     <div className="case-shell machineguard-page">
+      <ProjectLanguageTranslator project="machineguard" />
       <a className="skip-link" href="#mg-hero">Skip to project content</a>
       <CursorGlow /><div className="noise" /><div className="grid" />
       <ProjectTopbar />
@@ -909,7 +1070,7 @@ function MachineGuardPage() {
           </div>
           <div className="mg-case-footer" data-reveal>
             <div><span>PROJECT STATUS</span><strong>COMPLETE · RELEASED · PUBLIC</strong></div>
-            <div className="mg-case-footer-actions"><RouteLink to="/#projects">← Return to project lab</RouteLink><a href={assetUrl('MachineGuard_AI_Project_Report.pdf')} target="_blank" rel="noreferrer">Download technical report ↗</a></div>
+            <div className="mg-case-footer-actions"><RouteLink to={`${localizedHome(resolveLanguage())}#projects`}>← Return to project lab</RouteLink><a href={assetUrl('MachineGuard_AI_Project_Report.pdf')} target="_blank" rel="noreferrer">Download technical report ↗</a></div>
           </div>
         </section>
       </main>
@@ -919,13 +1080,15 @@ function MachineGuardPage() {
 
 
 function FinanceTopbar() {
+  const language = resolveLanguage()
   return (
     <header className="case-topbar">
-      <Logo href="/" route />
+      <Logo href={localizedHome(language)} route />
       <div className="case-topbar-actions">
-        <RouteLink to="/#projects">← Portfolio</RouteLink>
-        <a href="#ft-roadmap">Public-release roadmap ↓</a>
-        <a className="button small orange" href="#ft-workflow">View architecture ↓</a>
+        <RouteLink to={`${localizedHome(language)}#projects`}>← Portfolio</RouteLink>
+        <LanguageSwitch route="finance-tracker" compact />
+        <a href="#ft-roadmap">{language === 'de' ? 'Roadmap zur öffentlichen Version ↓' : 'Public-release roadmap ↓'}</a>
+        <a className="button small orange" href="#ft-workflow">{language === 'de' ? 'Architektur ansehen ↓' : 'View architecture ↓'}</a>
       </div>
     </header>
   )
@@ -1001,6 +1164,7 @@ function FinanceTrackerPage() {
   ]
   return (
     <div className="case-shell finance-case">
+      <ProjectLanguageTranslator project="finance" />
       <a className="skip-link" href="#ft-hero">Skip to project content</a>
       <CursorGlow /><div className="noise" /><div className="grid" />
       <FinanceTopbar />
@@ -1099,7 +1263,7 @@ function FinanceTrackerPage() {
           </div>
           <div className="mg-case-footer" data-reveal>
             <div><span>PROJECT STATUS</span><strong>OPERATIONAL · PRIVATE · CASE STUDY PUBLISHED</strong></div>
-            <div className="mg-case-footer-actions"><RouteLink to="/#projects">← Return to project lab</RouteLink><a href="#ft-workflow">Review architecture ↑</a></div>
+            <div className="mg-case-footer-actions"><RouteLink to={`${localizedHome(resolveLanguage())}#projects`}>← Return to project lab</RouteLink><a href="#ft-workflow">Review architecture ↑</a></div>
           </div>
         </section>
       </main>

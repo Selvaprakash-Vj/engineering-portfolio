@@ -1,4 +1,5 @@
 import { useLayoutEffect, useState } from 'react'
+import { resolveLanguage } from './routing'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -463,7 +464,12 @@ function projectSectionStart(index: number) {
 }
 
 export function ProjectCinematicScrollSystem({ project }: { project: 'machineguard' | 'finance' }) {
-  const scenes = projectScenes[project]
+  const language = resolveLanguage()
+  const labelsDe: Record<'machineguard' | 'finance', string[]> = {
+    machineguard: ['INTRO', 'PROBLEM', 'WORKFLOW', 'ERGEBNISSE', 'ZUVERLÄSSIGKEIT', 'FEHLERFALL', 'ENTSCHEIDUNG', 'VERTIEFEN'],
+    finance: ['INTRO', 'PROBLEM', 'WORKFLOW', 'KONTROLLE', 'SCHUTZ', 'SYSTEMSTAND', 'ROADMAP'],
+  }
+  const scenes = projectScenes[project].map((scene, index) => language === 'de' ? { ...scene, label: labelsDe[project][index] } : scene)
   const [activeScene, setActiveScene] = useState(scenes[0].id)
 
   useLayoutEffect(() => {
