@@ -1,6 +1,59 @@
 # Selva Engineering Portfolio
 
-A futuristic professional personal-brand website for Selvaprakash Vijayaraman, focused on mechanical development, CAE/FEM, simulation automation and data-driven engineering.
+A bilingual, cinematic engineering portfolio for **Selvaprakash Vijayaraman**, focused on mechanical development, CAE/FEM, simulation automation and data-driven engineering.
+
+**Live website:** https://selvaprakash-vj.github.io/engineering-portfolio/  
+**Deutsch:** https://selvaprakash-vj.github.io/engineering-portfolio/de/
+
+![Selva Engineering Portfolio](docs/images/portfolio-desktop.png)
+
+## Purpose
+
+This website is a professional evidence platform rather than a web-formatted CV. It connects career experience, engineering capabilities, education, a digital résumé and selected project case studies inside one personal engineering brand.
+
+## Current release
+
+**v1.1.0 — Bilingual Professional Release**
+
+- Complete English and German homepage
+- English and German digital résumé
+- Bilingual MachineGuard AI case study
+- Bilingual Finance Tracker Automation case study
+- Language-aware routing, metadata and sitemap
+- Desktop cinematic scrolling with lighter mobile behaviour
+- Mobile-specific hero and career navigation
+- GitHub Pages deployment through GitHub Actions
+
+## Featured case studies
+
+### MachineGuard AI
+
+A reliability-aware predictive-maintenance platform for NASA C-MAPSS turbofan Remaining Useful Life prediction, including leakage-safe preprocessing, GRU modelling, uncertainty estimation, trajectory diagnostics, explainability and engineering decision support.
+
+- [Live dashboard](https://machineguard-ai.streamlit.app/)
+- [Source repository](https://github.com/Selvaprakash-Vj/MachineGuard-AI)
+
+### Finance Tracker Automation
+
+A private, local-first financial data-engineering workflow that standardises monthly statements, preserves human annotations exactly and applies machine learning only as a controlled fallback. The public portfolio exposes the architecture and engineering decisions—not personal financial data or private source code.
+
+## Main routes
+
+| English | Deutsch |
+|---|---|
+| `/` | `/de/` |
+| `/resume` | `/de/lebenslauf` |
+| `/projects/machineguard-ai` | `/de/projekte/machineguard-ai` |
+| `/projects/finance-tracker` | `/de/projekte/finance-tracker` |
+
+## Technology
+
+- React
+- TypeScript
+- Vite
+- GSAP and ScrollTrigger
+- CSS-driven responsive interface
+- GitHub Actions and GitHub Pages
 
 ## Local development
 
@@ -9,41 +62,60 @@ npm install
 npm run dev
 ```
 
-## Production checks
+## Quality and production checks
 
 ```powershell
 npm run preflight
+npm run qa:bilingual
 npm run build
 npm run preview
 ```
 
-## GitHub Pages build
+Clean obsolete development notes after applying an update:
 
 ```powershell
-npm run build:github
+npm run cleanup:repo
 ```
 
-The public project-site target is:
+Run the combined release check with:
 
-`https://selvaprakash-vj.github.io/engineering-portfolio/`
+```powershell
+npm run release:check
+```
 
-Deployment is automated by `.github/workflows/deploy.yml` after pushes to `main`.
+The English CV must exist at:
 
-The homepage and digital resume are available in English and German. Project case studies remain English in Phase 6.1.
+```text
+public/Selvaprakash_Vijayaraman_Resume.pdf
+```
 
-## Main routes
+## Deployment
 
-- `/`
-- `/resume`
-- `/de/`
-- `/de/lebenslauf`
-- `/projects/machineguard-ai`
-- `/projects/finance-tracker`
+Pushes to `main` trigger `.github/workflows/deploy.yml`, which validates the public release, builds the GitHub Pages version and deploys the generated `dist` artifact.
 
-## Public assets
+```powershell
+git add .
+git commit -m "Describe the change"
+git push
+```
 
-- `public/Selvaprakash_Vijayaraman_Resume.pdf`
-- `public/Selvaprakash_Vijayaraman_Lebenslauf.docx`
-- `public/MachineGuard_AI_Project_Report.pdf`
+## Privacy boundary
 
-The Finance Tracker page describes the architecture only. Personal financial data and the private source system must never be committed to this repository.
+This public repository must never contain bank statements, real transaction exports, credentials, environment files, personal finance configuration or private Finance Tracker source data. The release preflight checks for common sensitive filenames before deployment.
+
+## Accessibility and responsive design
+
+The portfolio includes keyboard focus states, semantic navigation, reduced-motion support, route announcements, mobile-specific layouts and lighter animations on touch devices.
+
+## Repository structure
+
+```text
+.github/workflows/   GitHub Pages deployment
+public/              Route shells, documents, icons and social previews
+scripts/             Release and bilingual QA checks
+src/                 React application, routing, content and animation
+```
+
+## Content and usage
+
+Portfolio text, personal branding, visual design and project documentation are © 2026 Selvaprakash Vijayaraman. Third-party libraries remain subject to their respective licences.

@@ -1,7 +1,29 @@
-node_modules
-dist
-.vite
+# Dependencies and production output
+node_modules/
+dist/
+.vite/
+
+# TypeScript incremental build data
+*.tsbuildinfo
+
+# Local environment and editor files
+.env
+.env.*
+!.env.example
 *.local
 .DS_Store
+Thumbs.db
+.vscode/
+.idea/
 
-*.tsbuildinfo
+# Logs and test output
+*.log
+coverage/
+
+# Private finance data must never enter this repository
+Bills/
+Finances/
+transactions*.csv
+transactions*.xlsx
+transactions*.xls
+*.parquet

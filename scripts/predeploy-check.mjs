@@ -5,6 +5,11 @@ const root = process.cwd()
 const required = [
   'public/Selvaprakash_Vijayaraman_Resume.pdf',
   'public/MachineGuard_AI_Project_Report.pdf',
+  'public/Selvaprakash_Vijayaraman_Lebenslauf.docx',
+  'public/de/index.html',
+  'public/de/lebenslauf/index.html',
+  'public/de/projekte/machineguard-ai/index.html',
+  'public/de/projekte/finance-tracker/index.html',
   'public/404.html',
   'public/.nojekyll',
   'public/robots.txt',
@@ -28,6 +33,8 @@ const forbiddenNamePatterns = [
   /\.env(\.|$)/i,
   /secret/i,
   /credential/i,
+  /(^|[/\\])(INSTALL_|PHASE\d|HOTFIX_).*\.md$/i,
+  /\.tsbuildinfo$/i,
 ]
 
 const ignored = new Set(['node_modules', 'dist', '.git'])
@@ -54,7 +61,7 @@ if (suspicious.length) {
 }
 
 console.log('\n✓ Resume and public project report are present')
-console.log('✓ GitHub Pages routing files are present')
+console.log('✓ English and German GitHub Pages route shells are present')
 console.log('✓ SEO and social-preview assets are present')
 console.log('✓ No obviously private finance statements or secret files detected')
 console.log('✓ Portfolio is ready for a production build\n')

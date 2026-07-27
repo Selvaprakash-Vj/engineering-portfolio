@@ -1,14 +1,17 @@
 {
   "name": "selva-engineering-portfolio",
   "private": true,
-  "version": "6.2.0",
+  "version": "6.3.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "preflight": "node scripts/predeploy-check.mjs",
-    "build:github": "tsc -b && vite build --mode github"
+    "build:github": "tsc -b && vite build --mode github",
+    "qa:bilingual": "node scripts/bilingual-qa.mjs",
+    "release:check": "npm run preflight && npm run qa:bilingual && npm run build",
+    "cleanup:repo": "node scripts/cleanup-public-repo.mjs"
   },
   "dependencies": {
     "react": "latest",
