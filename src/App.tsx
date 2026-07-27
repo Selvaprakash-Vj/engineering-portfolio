@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
-import { site } from './site'
-import { RouteLink, assetUrl, useAppRoute, type AppRoute } from './routing'
+import { site as siteEn } from './site'
+import { usePortfolioContent } from './i18n'
+import { RouteLink, alternateLanguagePath, assetUrl, localizedHome, localizedResume, resolveLanguage, useAppRoute, type AppRoute, type Language } from './routing'
 import { CinematicScrollSystem, ProjectCinematicScrollSystem } from './cinematic-scroll'
 
 const nav = [
-  ['01', 'Identity', '#identity', 'section'],
-  ['02', 'Experience', '#experience', 'section'],
-  ['03', 'Expertise', '#expertise', 'section'],
-  ['04', 'Project Lab', '#projects', 'section'],
-  ['05', 'Education', '#education', 'section'],
-  ['06', 'Resume', '/resume', 'route'],
+  ['01', '#identity', 'section'],
+  ['02', '#experience', 'section'],
+  ['03', '#expertise', 'section'],
+  ['04', '#projects', 'section'],
+  ['05', '#education', 'section'],
+  ['06', 'resume', 'route'],
 ] as const
 
 function Logo({ href = '#home', route = false }: { href?: string; route?: boolean }) {
@@ -31,14 +32,20 @@ function Logo({ href = '#home', route = false }: { href?: string; route?: boolea
 }
 
 
+function LanguageSwitch({ route, compact = false }: { route: AppRoute; compact?: boolean }) {
+  const language = resolveLanguage()
+  return (
+    <div className={`language-switch ${compact ? 'compact' : ''}`} aria-label={language === 'de' ? 'Sprache' : 'Language'}>
+      <RouteLink className={language === 'en' ? 'active' : ''} to={alternateLanguagePath(route, 'en')} aria-current={language === 'en' ? 'page' : undefined}>EN</RouteLink>
+      <span>/</span>
+      <RouteLink className={language === 'de' ? 'active' : ''} to={alternateLanguagePath(route, 'de')} aria-current={language === 'de' ? 'page' : undefined}>DE</RouteLink>
+    </div>
+  )
+}
+
 function RouteAnnouncer({ route }: { route: AppRoute }) {
-  const labels: Record<AppRoute, string> = {
-    home: 'Portfolio home',
-    'machineguard-ai': 'MachineGuard AI project',
-    'finance-tracker': 'Finance Tracker Automation project',
-    resume: 'Digital resume',
-  }
-  return <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">{labels[route]}</div>
+  const { ui } = usePortfolioContent()
+  return <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">{ui.routeLabels[route]}</div>
 }
 
 function ScrollProgress() {
@@ -59,6 +66,7 @@ function ScrollProgress() {
 }
 
 function Navbar() {
+  const { language, site, ui } = usePortfolioContent()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [active, setActive] = useState('home')
@@ -101,11 +109,12 @@ function Navbar() {
       <ScrollProgress />
       <header className={`navbar ${scrolled ? 'scrolled' : ''}`}>
         <Logo />
-        <nav id="primary-navigation" className={open ? 'nav open' : 'nav'} aria-label="Primary navigation">
-          {nav.map(([number, label, href, kind]) => {
+        <nav id="primary-navigation" className={open ? 'nav open' : 'nav'} aria-label={ui.primaryNavigation}>
+          {nav.map(([number, href, kind], index) => {
+            const label = ui.nav[index]
             if (kind === 'route') {
               return (
-                <RouteLink key={number} to={href} onClick={() => setOpen(false)}>
+                <RouteLink key={number} to={localizedResume(language)} onClick={() => setOpen(false)}>
                   <span>{number}.</span>{label}
                 </RouteLink>
               )
@@ -118,9 +127,10 @@ function Navbar() {
               </a>
             )
           })}
-          <a className="button small outline" href={assetUrl(site.resume)} target="_blank" rel="noreferrer">CV PDF</a>
+          <LanguageSwitch route="home" compact />
+          <a className="button small outline" href={assetUrl(site.resume)} target="_blank" rel="noreferrer">{language === 'de' ? 'CV DE' : 'CV PDF'}</a>
         </nav>
-        <button className={open ? 'menu active' : 'menu'} onClick={() => setOpen(!open)} aria-label={open ? 'Close menu' : 'Open menu'} aria-controls="primary-navigation" aria-expanded={open}>
+        <button className={open ? 'menu active' : 'menu'} onClick={() => setOpen(!open)} aria-label={open ? ui.menuClose : ui.menuOpen} aria-controls="primary-navigation" aria-expanded={open}>
           <i /><i /><i />
         </button>
       </header>
@@ -173,6 +183,7 @@ function CursorGlow() {
 }
 
 function SideRails() {
+  const { language, site, ui } = usePortfolioContent()
   return (
     <>
       <aside className="social-rail">
@@ -198,34 +209,35 @@ function SectionHeader({ index, label, title, text }: { index: string; label: st
 }
 
 function IdentitySection() {
+  const { language, site, ui } = usePortfolioContent()
   return (
     <section id="identity" className="identity section panel-section">
       <SectionHeader
         index="01"
-        label="IDENTITY"
-        title="Mechanical engineer by foundation. Development and simulation engineer by experience."
-        text="I work across mechanical development, CAE and computational engineering, turning design questions into calculations, simulations and practical improvements."
+        label={ui.identity.label}
+        title={ui.identity.title}
+        text={ui.identity.text}
       />
       <div className="identity-grid">
         <div className="identity-copy" data-reveal>
           {site.profile.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
           <div className="identity-actions">
-            <a className="text-link" href="#experience">Read career log <span>↘</span></a>
-            <a className="text-link muted-link" href={assetUrl(site.resume)} target="_blank" rel="noreferrer">Open PDF CV <span>↗</span></a>
+            <a className="text-link" href="#experience">{ui.identity.career} <span>↘</span></a>
+            <a className="text-link muted-link" href={assetUrl(site.resume)} target="_blank" rel="noreferrer">{ui.identity.pdf} <span>↗</span></a>
           </div>
         </div>
         <div className="identity-console" data-reveal>
           <div className="console-head"><span>PROFILE_KERNEL.exe</span></div>
           <div className="console-body">
-            <p><span>NAME</span>{site.name}</p>
-            <p><span>ROLE</span>{site.role}</p>
-            <p><span>BASE</span>{site.location}</p>
-            <p><span>FOCUS</span>DESIGN · CAE · AUTOMATION</p>
-            <p><span>METHOD</span><strong>BUILD · SIMULATE · VALIDATE · IMPROVE</strong></p>
+            <p><span>{ui.identity.name}</span>{site.name}</p>
+            <p><span>{ui.identity.role}</span>{site.role}</p>
+            <p><span>{ui.identity.base}</span>{site.location}</p>
+            <p><span>{ui.identity.focus}</span>{ui.identity.focusValue}</p>
+            <p><span>{ui.identity.method}</span><strong>{ui.identity.methodValue}</strong></p>
           </div>
           <div className="console-visual" aria-hidden="true">
             <div className="workflow-map">
-              {['BUILD', 'SIMULATE', 'VALIDATE', 'IMPROVE'].map((step, index) => (
+              {(language === 'de' ? ['ENTWICKELN', 'SIMULIEREN', 'VALIDIEREN', 'VERBESSERN'] : ['BUILD', 'SIMULATE', 'VALIDATE', 'IMPROVE']).map((step, index) => (
                 <div className="workflow-step" key={step}>
                   <span>0{index + 1}</span>
                   <i />
@@ -234,9 +246,9 @@ function IdentitySection() {
               ))}
               <div className="workflow-line"><i /></div>
             </div>
-            <div className="workflow-readout"><span>ENGINEERING LOOP</span><strong>ACTIVE / ITERATIVE</strong></div>
+            <div className="workflow-readout"><span>{ui.identity.loop}</span><strong>{ui.identity.active}</strong></div>
           </div>
-          <div className="console-status"><i /> PROFESSIONAL SYSTEM ONLINE</div>
+          <div className="console-status"><i /> {ui.identity.status}</div>
         </div>
       </div>
       <div className="principle-grid">
@@ -251,6 +263,7 @@ function IdentitySection() {
 }
 
 function ExperienceSection() {
+  const { language, site, ui } = usePortfolioContent()
   const [selected, setSelected] = useState(0)
   const experience = site.experiences[selected]
 
@@ -258,18 +271,18 @@ function ExperienceSection() {
     <section id="experience" className="experience section">
       <SectionHeader
         index="02"
-        label="CAREER LOG"
-        title="From research models to high-precision mechanical systems."
-        text="My career has evolved through simulation research, industrial multiphysics, thermomechanical CAE and multidisciplinary product development—combining CAD, FEM, structural dynamics, validation and automation."
+        label={ui.experience.label}
+        title={ui.experience.title}
+        text={ui.experience.text}
       />
 
-      <div className="career-route" data-reveal aria-label="Career progression">
+      <div className="career-route" data-reveal aria-label={ui.experience.label}>
         {site.experiences.map((item, index) => (
           <button
             key={item.chapter}
             className={selected === index ? 'active' : ''}
             onClick={() => setSelected(index)}
-            aria-label={`Open ${item.chapter}`}
+            aria-label={`${language === 'de' ? 'Öffnen' : 'Open'} ${item.chapter}`}
           >
             <span>0{index + 1}</span>
             <i />
@@ -280,7 +293,7 @@ function ExperienceSection() {
       </div>
 
       <div className="experience-system" data-reveal>
-        <div className="experience-tabs" role="tablist" aria-label="Work experience">
+        <div className="experience-tabs" role="tablist" aria-label={ui.experience.label}>
           {site.experiences.map((item, index) => (
             <button key={item.short} className={selected === index ? 'active' : ''} onClick={() => setSelected(index)} role="tab" aria-selected={selected === index}>
               <span>0{index + 1}</span><strong>{item.short}</strong><small>{item.period}</small>
@@ -289,13 +302,13 @@ function ExperienceSection() {
         </div>
         <article className="experience-panel" key={experience.short} role="tabpanel">
           <div className="experience-topline">
-            <div><span>ACTIVE RECORD // 0{selected + 1}</span><i /></div><strong>{experience.period}</strong>
+            <div><span>{ui.experience.activeRecord} // 0{selected + 1}</span><i /></div><strong>{experience.period}</strong>
           </div>
           <p className="experience-chapter">{experience.chapter}</p>
           <h3>{experience.role} <span>@ {experience.company}</span></h3>
           <p className="experience-location">{experience.location}</p>
           <div className="experience-mission">
-            <span>ENGINEERING MISSION</span>
+            <span>{ui.experience.mission}</span>
             <strong>{experience.mission}</strong>
           </div>
           <p className="experience-summary">{experience.summary}</p>
@@ -304,35 +317,34 @@ function ExperienceSection() {
           </ul>
           <div className="tool-chips">{experience.tools.map(tool => <span key={tool}>{tool}</span>)}</div>
           <div className="experience-progression">
-            <span>THIS STAGE ADDED</span>
+            <span>{ui.experience.stageAdded}</span>
             <strong>{experience.progression}</strong>
           </div>
           <div className="panel-corner tl" /><div className="panel-corner br" />
         </article>
       </div>
       <div className="career-metrics" data-reveal>
-        <div><span>PROFESSIONAL ARC</span><strong>RESEARCH → DEVELOPMENT</strong></div>
-        <div><span>EXPERIENCE DOMAINS</span><strong>DESIGN · CAE · MULTIPHYSICS</strong></div>
-        <div><span>CONNECTING LAYER</span><strong>VALIDATION · DATA · AUTOMATION</strong></div>
+        {ui.experience.metrics.map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}
       </div>
     </section>
   )
 }
 
 function ExpertiseSection() {
-  const pipeline = ['GEOMETRY', 'LOADS & PHYSICS', 'MODEL & SOLVER', 'VALIDATION', 'ENGINEERING DECISION']
-  const verification = ['MODEL VALIDATION', 'SIMULATION–TEST CORRELATION', 'PLAUSIBILITY CHECKS', 'TECHNICAL DOCUMENTATION', 'DESIGN RECOMMENDATIONS', 'CROSS-FUNCTIONAL COMMUNICATION']
+  const { language, site, ui } = usePortfolioContent()
+  const pipeline = ui.expertise.pipeline
+  const verification = ui.expertise.verificationSignals
 
   return (
     <section id="expertise" className="expertise section panel-section">
       <SectionHeader
         index="03"
-        label="ENGINEERING STACK"
-        title="From geometry and loads to validated engineering decisions."
-        text="My engineering stack spans six connected capability areas—from mechanical development and simulation to automation and data-driven methods. Each one supports the same objective: understand how a system behaves, improve the design and communicate the reasoning clearly."
+        label={ui.expertise.label}
+        title={ui.expertise.title}
+        text={ui.expertise.text}
       />
 
-      <div className="engineering-pipeline" data-reveal aria-label="Engineering workflow">
+      <div className="engineering-pipeline" data-reveal aria-label={ui.expertise.label}>
         {pipeline.map((step, index) => (
           <div key={step}>
             <span>0{index + 1}</span>
@@ -353,7 +365,7 @@ function ExpertiseSection() {
             <p>{item.description}</p>
             <ul>{item.capabilities.map(capability => <li key={capability}>{capability}</li>)}</ul>
             <div className="expertise-tools">
-              <span>TOOLCHAIN</span>
+              <span>{ui.expertise.toolchain}</span>
               <p>{item.tools.join(' · ')}</p>
             </div>
             <div className="card-scan" /><div className="card-corner" />
@@ -363,10 +375,10 @@ function ExpertiseSection() {
 
       <div className="verification-layer" data-reveal>
         <div className="verification-head">
-          <div><i /><span>VERIFICATION LAYER // ACTIVE</span></div>
-          <strong>VALIDATE · CORRELATE · CHECK · DOCUMENT · RECOMMEND</strong>
+          <div><i /><span>{ui.expertise.verification}</span></div>
+          <strong>{ui.expertise.verificationAction}</strong>
         </div>
-        <p>Across every capability area, the objective remains the same: create results that can be checked, explained and used.</p>
+        <p>{ui.expertise.verificationText}</p>
         <div className="verification-signals">
           {verification.map((item, index) => <span key={item}><small>V{index + 1}</small>{item}</span>)}
         </div>
@@ -398,18 +410,19 @@ function ProjectGraphic({ index }: { index: number }) {
 }
 
 function ProjectsSection() {
+  const { language, site, ui } = usePortfolioContent()
   return (
     <section id="projects" className="projects section">
       <SectionHeader
         index="04"
-        label="PROJECT LAB"
-        title="Proof of work beyond the job title."
-        text="Only completed work enters this lab. For now: one engineering-AI system and one private data-automation platform, each built end to end. More projects will appear only when their code, documentation and engineering story are ready."
+        label={ui.projects.label}
+        title={ui.projects.title}
+        text={ui.projects.text}
       />
       <div className="project-grid">
         {site.projects.map((project, index) => (
           <article className={`project-card ${project.accent}`} key={project.number} data-reveal>
-            <div className="project-meta"><span>{project.number}</span><strong className={`status ${project.status.toLowerCase()}`}><i />{project.status}</strong></div>
+            <div className="project-meta"><span>{project.number}</span><strong className={`status ${project.status.toLowerCase()}`}><i />{language === 'de' ? (project.status === 'COMPLETE' ? 'ABGESCHLOSSEN' : 'PRIVAT') : project.status}</strong></div>
             <ProjectGraphic index={index} />
             <p className="project-category">{project.category}</p>
             <h3>{project.title}</h3>
@@ -420,27 +433,28 @@ function ProjectsSection() {
               className="project-link project-link-active"
               to={project.title === 'MachineGuard AI' ? '/projects/machineguard-ai' : '/projects/finance-tracker'}
             >
-              <span>OPEN CASE STUDY</span><strong>{project.release}</strong><i>↗</i>
+              <span>{ui.projects.open}</span><strong>{project.release}</strong><i>↗</i>
             </RouteLink>
           </article>
         ))}
       </div>
       <div className="project-lab-note" data-reveal>
-        <div><i /><span>CURATION RULE // ACTIVE</span></div>
-        <p>Both projects are complete enough to explain, but they have different release boundaries. MachineGuard AI is public and deployed; the Finance Tracker case study is public while its source code, financial data and personalised configuration remain private.</p>
+        <div><i /><span>{ui.projects.curation}</span></div>
+        <p>{ui.projects.note}</p>
       </div>
     </section>
   )
 }
 
 function EducationSection() {
+  const { language, site, ui } = usePortfolioContent()
   return (
     <section id="education" className="education section panel-section">
       <SectionHeader
         index="05"
-        label="ACADEMIC CORE"
-        title="Mechanical engineering foundation. Computational depth."
-        text="A core mechanical engineering education followed by an interdisciplinary master's focused on finite-element analysis, multiphysics, numerical simulation and design optimisation."
+        label={ui.education.label}
+        title={ui.education.title}
+        text={ui.education.text}
       />
       <div className="education-track">
         {site.education.map((item, index) => (
@@ -453,12 +467,12 @@ function EducationSection() {
               <div className="education-focus">{item.focus.map(focus => <span key={focus}>{focus}</span>)}</div>
               <div className="thesis"><span>{item.thesisLabel}</span><p>{item.thesis}</p></div>
             </div>
-            <div className="education-grade"><span>GRADE</span><strong>{item.grade}</strong></div>
+            <div className="education-grade"><span>{ui.education.grade}</span><strong>{item.grade}</strong></div>
           </article>
         ))}
       </div>
       <div className="certification-block" data-reveal>
-        <div><p className="section-kicker"><span>+</span>CONTINUOUS LEARNING</p><h3>The degree ended. The learning did not.</h3></div>
+        <div><p className="section-kicker"><span>+</span>{ui.education.continuous}</p><h3>{ui.education.learningTitle}</h3></div>
         <div className="cert-list">
           {site.certifications.map((item, index) => (
             <p key={item.title}>
@@ -474,39 +488,40 @@ function EducationSection() {
 }
 
 function ResumeSection() {
+  const { language, site, ui } = usePortfolioContent()
   return (
     <section id="resume" className="resume-section section">
       <SectionHeader
         index="06"
-        label="DIGITAL RESUME"
-        title="The direct professional view — inside the larger system."
-        text="A recruiter-ready summary of my profile, experience, education and technical capabilities, with the complete PDF CV one click away."
+        label={ui.resume.label}
+        title={ui.resume.title}
+        text={ui.resume.text}
       />
       <div className="resume-shell" data-reveal>
         <aside className="resume-sidebar">
           <div className="resume-avatar"><span>SV</span><i /><i /></div>
           <h3>{site.name}</h3><p>{site.role}</p>
           <div className="resume-contact">
-            <span>LOCATION<strong>{site.location}</strong></span>
-            <span>EMAIL<strong>{site.email}</strong></span>
-            <span>STATUS<strong>{site.availability}</strong></span>
+            <span>{ui.resume.location}<strong>{site.location}</strong></span>
+            <span>{ui.resume.email}<strong>{site.email}</strong></span>
+            <span>{ui.resume.status}<strong>{site.availability}</strong></span>
           </div>
-          <a className="button primary full" href={assetUrl(site.resume)} target="_blank" rel="noreferrer">Open PDF CV <span>↗</span></a>
+          <a className="button primary full" href={assetUrl(site.resume)} target="_blank" rel="noreferrer">{language === 'de' ? ui.resume.openGerman : ui.resume.open} <span>↗</span></a>
           <div className="resume-network">
             <a href={site.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
             <a href={site.github} target="_blank" rel="noreferrer">GitHub ↗</a>
             <a href={`mailto:${site.email}`}>Email ↗</a>
           </div>
-          <div className="resume-code">DOSSIER // SV-CAREER-2026<br/>REVISION // 04.1<br/>STATUS // CONTENT LOCKED</div>
+          <div className="resume-code">{ui.resume.dossier}<br/>{ui.resume.revision}<br/>{ui.resume.locked}</div>
         </aside>
         <div className="resume-document">
-          <div className="resume-doc-head"><span>CAREER DOSSIER</span><span>LAST SYSTEM UPDATE // JULY 2026</span></div>
+          <div className="resume-doc-head"><span>{ui.resume.careerDossier}</span><span>{ui.resume.updated}</span></div>
           <section>
-            <h4>PROFILE</h4>
+            <h4>{ui.resume.profile}</h4>
             <div className="resume-profile">{site.resumeProfile.map(paragraph => <p key={paragraph}>{paragraph}</p>)}</div>
           </section>
           <section>
-            <h4>EXPERIENCE</h4>
+            <h4>{ui.resume.experience}</h4>
             {site.experiences.map(item => (
               <div className="resume-line" key={item.company}>
                 <span>{item.period}</span><div><strong>{item.role}</strong><p>{item.company} · {item.location}</p></div>
@@ -514,7 +529,7 @@ function ResumeSection() {
             ))}
           </section>
           <section>
-            <h4>EDUCATION</h4>
+            <h4>{ui.resume.education}</h4>
             {site.education.map(item => (
               <div className="resume-line" key={item.degree}>
                 <span>{item.period}</span><div><strong>{item.degree}</strong><p>{item.institution} · {item.location}</p></div>
@@ -522,19 +537,19 @@ function ResumeSection() {
             ))}
           </section>
           <section>
-            <h4>TECHNICAL SYSTEMS</h4>
+            <h4>{ui.resume.technical}</h4>
             <div className="resume-tools">
               {site.toolGroups.map(([group, tools]) => <p key={group}><span>{group}</span>{tools}</p>)}
             </div>
           </section>
           <section>
-            <h4>CERTIFICATIONS</h4>
+            <h4>{ui.resume.certifications}</h4>
             <div className="resume-tools">
               {site.certifications.map(item => <p key={item.title}><span>{item.state}</span>{item.title}</p>)}
             </div>
           </section>
           <section>
-            <h4>LANGUAGES</h4>
+            <h4>{ui.resume.languages}</h4>
             <div className="resume-tools">
               {site.languages.map(([language, level]) => <p key={language}><span>{language}</span>{level}</p>)}
             </div>
@@ -547,42 +562,45 @@ function ResumeSection() {
 
 
 function ResumeTopbar() {
+  const { language, site, ui } = usePortfolioContent()
   return (
     <header className="case-topbar resume-topbar">
-      <Logo href="/" route />
+      <Logo href={localizedHome(language)} route />
       <div className="case-topbar-actions">
-        <RouteLink to="/">← Portfolio</RouteLink>
+        <RouteLink to={localizedHome(language)}>← {ui.resumePage.portfolio}</RouteLink>
+        <LanguageSwitch route="resume" compact />
         <a href={site.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
-        <a className="button small primary" href={assetUrl(site.resume)} target="_blank" rel="noreferrer">Open PDF CV ↗</a>
+        <a className="button small primary" href={assetUrl(site.resume)} target="_blank" rel="noreferrer">{ui.resumePage.open} ↗</a>
       </div>
     </header>
   )
 }
 
 function ResumePage() {
+  const { language, site, ui } = usePortfolioContent()
   return (
     <div className="case-page resume-page">
-      <a className="skip-link" href="#resume-main">Skip to resume content</a>
+      <a className="skip-link" href="#resume-main">{ui.skipResume}</a>
       <CursorGlow /><div className="noise" /><div className="grid" />
       <ResumeTopbar />
       <main id="resume-main" className="resume-page-main" tabIndex={-1}>
         <section className="resume-page-hero">
-          <p className="case-overline"><span>DIRECT ROUTE</span> PROFESSIONAL DOSSIER // CURRENT</p>
-          <h1>Digital Resume.</h1>
-          <p>A focused recruiter view of my professional profile, career progression, education and technical systems—inside the broader Selva Engineering Lab.</p>
+          <p className="case-overline"><span>{ui.resumePage.overline}</span> {ui.resumePage.dossier}</p>
+          <h1>{ui.resumePage.title}</h1>
+          <p>{ui.resumePage.intro}</p>
           <div className="actions">
-            <a className="button primary" href={assetUrl(site.resume)} target="_blank" rel="noreferrer">Open PDF CV <span>↗</span></a>
-            <a className="button ghost" href={`mailto:${site.email}`}>Contact me <span>↗</span></a>
+            <a className="button primary" href={assetUrl(site.resume)} target="_blank" rel="noreferrer">{ui.resumePage.open} <span>↗</span></a>
+            <a className="button ghost" href={`mailto:${site.email}`}>{ui.resumePage.contact} <span>↗</span></a>
           </div>
           <div className="resume-page-status">
-            <span><i />PROFILE // CURRENT</span>
-            <span>LOCATION // INGOLSTADT, DE</span>
-            <span>AVAILABILITY // OPEN</span>
+            <span><i />{ui.resumePage.profile}</span>
+            <span>{ui.resumePage.location}</span>
+            <span>{ui.resumePage.availability}</span>
           </div>
         </section>
         <ResumeSection />
         <footer className="resume-page-footer">
-          <RouteLink to="/">← Return to portfolio</RouteLink>
+          <RouteLink to={localizedHome(language)}>← {ui.resumePage.return}</RouteLink>
           <div>
             <a href={site.github} target="_blank" rel="noreferrer">GitHub ↗</a>
             <a href={site.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
@@ -1090,6 +1108,7 @@ function FinanceTrackerPage() {
 }
 
 function BootScreen() {
+  const { language, site, ui } = usePortfolioContent()
   const [show, setShow] = useState(false)
   useEffect(() => {
     const visited = sessionStorage.getItem('selva-lab-booted')
@@ -1103,15 +1122,16 @@ function BootScreen() {
   return (
     <div className="boot-screen" aria-hidden="true">
       <Logo />
-      <div className="boot-copy"><span>INITIALISING PROFESSIONAL SYSTEM</span><strong>SELVA // ENGINEERING LAB</strong></div>
+      <div className="boot-copy"><span>{language === 'de' ? 'PROFESSIONELLES SYSTEM WIRD INITIALISIERT' : 'INITIALISING PROFESSIONAL SYSTEM'}</span><strong>SELVA // ENGINEERING LAB</strong></div>
       <div className="boot-track"><i /></div>
-      <p>FEM · DEVELOPMENT · AUTOMATION · AI</p>
+      <p>{language === 'de' ? 'FEM · ENTWICKLUNG · AUTOMATISIERUNG · KI' : 'FEM · DEVELOPMENT · AUTOMATION · AI'}</p>
     </div>
   )
 }
 
 export default function App() {
   const route = useAppRoute()
+  const { language, site, ui } = usePortfolioContent()
 
   useEffect(() => {
     if (route !== 'resume') return
@@ -1138,7 +1158,7 @@ export default function App() {
   return (
     <div className="shell">
       <RouteAnnouncer route={route} />
-      <a className="skip-link" href="#main-content">Skip to main content</a>
+      <a className="skip-link" href="#main-content">{ui.skipMain}</a>
       <BootScreen />
       <CursorGlow /><div className="noise" /><div className="grid" />
       <Navbar /><SideRails /><CinematicScrollSystem />
@@ -1146,25 +1166,25 @@ export default function App() {
       <main id="main-content" tabIndex={-1}>
         <section id="home" className="hero" aria-labelledby="hero-title">
           <div className="hero-copy">
-            <p className="eyebrow r1"><span>00</span>Professional system online</p>
+            <p className="eyebrow r1"><span>00</span>{ui.hero.eyebrow}</p>
             <h1 id="hero-title" className="r2 hero-name"><span>{firstName}</span><span>{surname}.</span></h1>
             <h2 className="r3 hero-role">{site.role}</h2>
-            <div className="hero-focus r4" aria-label="Primary engineering focus">
+            <div className="hero-focus r4" aria-label={language === 'de' ? 'Zentrale Engineering-Schwerpunkte' : 'Primary engineering focus'}>
               {site.heroFocus.map((item, index) => <span key={item}>{item}{index < site.heroFocus.length - 1 && <i aria-hidden="true" />}</span>)}
             </div>
             <p className="intro r4">{site.intro}</p>
             <div className="actions r5">
-              <a className="button primary" href="#projects">Explore project lab <span aria-hidden="true">↗</span></a>
-              <RouteLink className="button ghost" to="/resume">View digital résumé <span aria-hidden="true">↗</span></RouteLink>
+              <a className="button primary" href="#projects">{ui.hero.projectButton} <span aria-hidden="true">↗</span></a>
+              <RouteLink className="button ghost" to={localizedResume(language)}>{ui.hero.resumeButton} <span aria-hidden="true">↗</span></RouteLink>
             </div>
           </div>
           <div className="hero-art r3"><Rotor /></div>
-          <div className="hero-meta r6"><span>03+ years experience</span><span>{site.location}</span></div>
-          <a className="scroll-cue r6" href="#identity"><span>SCROLL TO DECODE</span><i /></a>
+          <div className="hero-meta r6"><span>{ui.hero.experience}</span><span>{site.location}</span></div>
+          <a className="scroll-cue r6" href="#identity"><span>{ui.hero.scroll}</span><i /></a>
         </section>
 
-        <div className="system-strip" aria-label="Portfolio system status">
-          <span><i />SYSTEM STATUS: NOMINAL</span><span>PORTFOLIO BUILD: 05.1 // MOBILE EXPERIENCE REFINED</span><span>EXPERIENCE: 03+ YEARS</span><span>LOCATION: INGOLSTADT_DE</span><span><i />AVAILABLE FOR OPPORTUNITIES</span>
+        <div className="system-strip" aria-label={language === 'de' ? 'Portfolio-Systemstatus' : 'Portfolio system status'}>
+          {ui.systemStrip.map((item, index) => <span key={item}>{index === 0 || index === ui.systemStrip.length - 1 ? <i /> : null}{item}</span>)}
         </div>
 
         <IdentitySection />
@@ -1177,19 +1197,19 @@ export default function App() {
 
       <footer id="contact" className="footer section">
         <div className="footer-copy" data-reveal>
-          <p className="section-kicker"><span>07</span>NEXT CONNECTION</p>
-          <h2>Let&apos;s engineer something meaningful.</h2>
-          <p className="footer-focus">Mechanical development. CAE. Simulation automation. Data-driven engineering.</p>
-          <p className="footer-support">Open to engineering opportunities, technical collaborations and ambitious ideas worth developing.</p>
+          <p className="section-kicker"><span>07</span>{ui.footer.label}</p>
+          <h2>{ui.footer.title}</h2>
+          <p className="footer-focus">{ui.footer.focus}</p>
+          <p className="footer-support">{ui.footer.support}</p>
         </div>
-        <a className="button primary" href={`mailto:${site.email}`}>Start a conversation <span>↗</span></a>
+        <a className="button primary" href={`mailto:${site.email}`}>{ui.footer.button} <span>↗</span></a>
         <div className="footer-links">
-          <a href={`mailto:${site.email}`}>EMAIL ↗</a>
+          <a href={`mailto:${site.email}`}>{ui.footer.email} ↗</a>
           <a href={site.linkedin} target="_blank" rel="noreferrer">LINKEDIN ↗</a>
           <a href={site.github} target="_blank" rel="noreferrer">GITHUB ↗</a>
-          <a href={assetUrl(site.resume)} target="_blank" rel="noreferrer">DOWNLOAD RESUME ↗</a>
+          <a href={assetUrl(site.resume)} target="_blank" rel="noreferrer">{ui.footer.resume} ↗</a>
         </div>
-        <div className="footer-bottom"><span>Designed &amp; built by {site.name}</span><span>SELVA // ENGINEERING LAB · © {new Date().getFullYear()}</span></div>
+        <div className="footer-bottom"><span>{ui.footer.built} {site.name}</span><span>SELVA // ENGINEERING LAB · © {new Date().getFullYear()}</span></div>
       </footer>
     </div>
   )

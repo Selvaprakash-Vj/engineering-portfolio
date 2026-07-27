@@ -8,15 +8,24 @@ import {
 import { site } from './site'
 
 export type AppRoute = 'home' | 'machineguard-ai' | 'finance-tracker' | 'resume'
+export type Language = 'en' | 'de'
 
 const routeSuffixes: Array<[AppRoute, string]> = [
   ['machineguard-ai', '/projects/machineguard-ai'],
   ['finance-tracker', '/projects/finance-tracker'],
+  ['resume', '/de/lebenslauf'],
   ['resume', '/resume'],
 ]
 
+const languageSuffixes = ['/de/lebenslauf', '/de']
+
 function trimTrailingSlash(path: string) {
   return path.length > 1 ? path.replace(/\/+$/, '') : path
+}
+
+export function resolveLanguage(pathname = window.location.pathname): Language {
+  const cleanPath = trimTrailingSlash(pathname)
+  return /(^|\/)de(\/|$)/.test(cleanPath) ? 'de' : 'en'
 }
 
 export function resolveRoute(pathname = window.location.pathname): AppRoute {
@@ -38,7 +47,10 @@ export function appRootPath(pathname = window.location.pathname) {
     cleanPath = cleanPath.slice(0, -'/index.html'.length)
   }
 
-  for (const [, suffix] of routeSuffixes) {
+  const knownSuffixes = [...routeSuffixes.map(([, suffix]) => suffix), ...languageSuffixes]
+    .sort((a, b) => b.length - a.length)
+
+  for (const suffix of knownSuffixes) {
     if (cleanPath.endsWith(suffix)) {
       cleanPath = cleanPath.slice(0, -suffix.length)
       break
@@ -54,6 +66,21 @@ export function appUrl(target = '/') {
   if (target === '/' || target === '') return root
   if (target.startsWith('#')) return `${root}${target}`
   return `${root}${target.replace(/^\//, '')}`
+}
+
+export function localizedHome(language: Language) {
+  return language === 'de' ? '/de/' : '/'
+}
+
+export function localizedResume(language: Language) {
+  return language === 'de' ? '/de/lebenslauf' : '/resume'
+}
+
+export function alternateLanguagePath(route: AppRoute, targetLanguage: Language) {
+  if (route === 'resume') return localizedResume(targetLanguage)
+  if (route === 'home') return localizedHome(targetLanguage)
+  // German project pages are part of the next bilingual phase.
+  return targetLanguage === 'de' ? '/de/' : `/${route === 'machineguard-ai' ? 'projects/machineguard-ai' : 'projects/finance-tracker'}`
 }
 
 export function assetUrl(filename: string) {
@@ -77,7 +104,6 @@ export function navigateTo(target: string, replace = false) {
   if (replace) {
     window.history.replaceState({ ...window.history.state, scrollY: 0 }, '', href)
   } else {
-    // Save the current page position before entering a new route.
     window.history.replaceState({ ...window.history.state, scrollY: window.scrollY }, '', window.location.href)
     window.history.pushState({ scrollY: 0 }, '', href)
   }
@@ -127,7 +153,7 @@ type RouteMetadata = {
   schemaType: 'Person' | 'SoftwareApplication' | 'CreativeWork' | 'ProfilePage'
 }
 
-const routeMetadata: Record<AppRoute, RouteMetadata> = {
+const routeMetadataEn: Record<AppRoute, RouteMetadata> = {
   home: {
     title: 'Selvaprakash Vijayaraman | Mechanical Development & Simulation Engineer',
     description: 'Mechanical development and simulation engineer specialising in FEM, structural dynamics, thermomechanical analysis, engineering automation and data-driven methods.',
@@ -162,6 +188,26 @@ const routeMetadata: Record<AppRoute, RouteMetadata> = {
   },
 }
 
+const routeMetadataDe: Record<AppRoute, RouteMetadata> = {
+  ...routeMetadataEn,
+  home: {
+    title: 'Selvaprakash Vijayaraman | Mechanische Entwicklung, CAE & Simulation',
+    description: 'Entwicklungsingenieur mit Erfahrung in mechanischer Entwicklung, FEM, Strukturdynamik, Thermomechanik, Simulationsautomatisierung und datengetriebenen Engineering-Methoden.',
+    path: 'de/',
+    image: 'social/portfolio-preview.png',
+    imageAlt: 'Deutsches Engineering-Portfolio von Selvaprakash Vijayaraman',
+    schemaType: 'Person',
+  },
+  resume: {
+    title: 'Digitaler Lebenslauf | Selvaprakash Vijayaraman',
+    description: 'Berufserfahrung, Ausbildung, technische Kompetenzen und Kontaktdaten von Selvaprakash Vijayaraman.',
+    path: 'de/lebenslauf/',
+    image: 'social/resume-preview.png',
+    imageAlt: 'Digitaler Lebenslauf von Selvaprakash Vijayaraman',
+    schemaType: 'ProfilePage',
+  },
+}
+
 function upsertMeta(selector: string, attributes: Record<string, string>) {
   let element = document.head.querySelector<HTMLMetaElement>(selector)
   if (!element) {
@@ -171,25 +217,25 @@ function upsertMeta(selector: string, attributes: Record<string, string>) {
   Object.entries(attributes).forEach(([key, value]) => element?.setAttribute(key, value))
 }
 
-function upsertCanonical(href: string) {
-  let link = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]')
+function upsertLink(selector: string, attributes: Record<string, string>) {
+  let link = document.head.querySelector<HTMLLinkElement>(selector)
   if (!link) {
     link = document.createElement('link')
-    link.rel = 'canonical'
     document.head.appendChild(link)
   }
-  link.href = href
+  Object.entries(attributes).forEach(([key, value]) => link?.setAttribute(key, value))
 }
 
 function absolutePublicUrl(path = '') {
   return new URL(path, site.publicUrl).toString()
 }
 
-function structuredData(route: AppRoute, canonical: string, image: string) {
-  const metadata = routeMetadata[route]
+function structuredData(route: AppRoute, canonical: string, image: string, language: Language) {
+  const metadata = (language === 'de' ? routeMetadataDe : routeMetadataEn)[route]
   const common = {
     '@context': 'https://schema.org',
     '@type': metadata.schemaType,
+    inLanguage: language === 'de' ? 'de-DE' : 'en',
     name: route === 'home' ? site.name : metadata.title.split(' | ')[0],
     url: canonical,
     image,
@@ -199,7 +245,7 @@ function structuredData(route: AppRoute, canonical: string, image: string) {
   if (route === 'home') {
     return {
       ...common,
-      jobTitle: site.role,
+      jobTitle: language === 'de' ? 'Entwicklungsingenieur für mechanische Systeme und Simulation' : site.role,
       description: metadata.description,
       email: `mailto:${site.email}`,
       address: { '@type': 'PostalAddress', addressLocality: 'Ingolstadt', addressCountry: 'DE' },
@@ -223,12 +269,13 @@ function structuredData(route: AppRoute, canonical: string, image: string) {
 }
 
 function applyRouteMetadata(route: AppRoute) {
-  const metadata = routeMetadata[route]
+  const language = resolveLanguage()
+  const metadata = (language === 'de' ? routeMetadataDe : routeMetadataEn)[route]
   const canonical = absolutePublicUrl(metadata.path)
   const image = absolutePublicUrl(metadata.image)
 
   document.title = metadata.title
-  document.documentElement.lang = 'en'
+  document.documentElement.lang = language
   upsertMeta('meta[name="description"]', { name: 'description', content: metadata.description })
   upsertMeta('meta[name="author"]', { name: 'author', content: site.name })
   upsertMeta('meta[name="robots"]', { name: 'robots', content: 'index,follow,max-image-preview:large' })
@@ -239,12 +286,19 @@ function applyRouteMetadata(route: AppRoute) {
   upsertMeta('meta[property="og:url"]', { property: 'og:url', content: canonical })
   upsertMeta('meta[property="og:image"]', { property: 'og:image', content: image })
   upsertMeta('meta[property="og:image:alt"]', { property: 'og:image:alt', content: metadata.imageAlt })
+  upsertMeta('meta[property="og:locale"]', { property: 'og:locale', content: language === 'de' ? 'de_DE' : 'en_US' })
   upsertMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' })
   upsertMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: metadata.title })
   upsertMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: metadata.description })
   upsertMeta('meta[name="twitter:image"]', { name: 'twitter:image', content: image })
   upsertMeta('meta[name="twitter:image:alt"]', { name: 'twitter:image:alt', content: metadata.imageAlt })
-  upsertCanonical(canonical)
+  upsertLink('link[rel="canonical"]', { rel: 'canonical', href: canonical })
+
+  const englishPath = route === 'resume' ? 'resume/' : route === 'home' ? '' : metadata.path
+  const germanPath = route === 'resume' ? 'de/lebenslauf/' : route === 'home' ? 'de/' : metadata.path
+  upsertLink('link[rel="alternate"][hreflang="en"]', { rel: 'alternate', hreflang: 'en', href: absolutePublicUrl(englishPath) })
+  upsertLink('link[rel="alternate"][hreflang="de"]', { rel: 'alternate', hreflang: 'de', href: absolutePublicUrl(germanPath) })
+  upsertLink('link[rel="alternate"][hreflang="x-default"]', { rel: 'alternate', hreflang: 'x-default', href: absolutePublicUrl(englishPath) })
 
   let script = document.head.querySelector<HTMLScriptElement>('#portfolio-structured-data')
   if (!script) {
@@ -253,28 +307,27 @@ function applyRouteMetadata(route: AppRoute) {
     script.type = 'application/ld+json'
     document.head.appendChild(script)
   }
-  script.textContent = JSON.stringify(structuredData(route, canonical, image))
+  script.textContent = JSON.stringify(structuredData(route, canonical, image, language))
 }
 
 export function useAppRoute() {
-  const [route, setRoute] = useState<AppRoute>(() => resolveRoute())
+  const [routeState, setRouteState] = useState(() => ({ route: resolveRoute(), path: window.location.pathname }))
 
   useEffect(() => {
-    // Preserve compatibility with the earlier query-string project URLs.
     const legacyParams = new URLSearchParams(window.location.search)
     const legacyProject = legacyParams.get('project')
     const legacyRoute = legacyParams.get('route')
     if (legacyProject === 'machineguard-ai' || legacyProject === 'finance-tracker') {
       window.history.replaceState({}, '', appUrl(`/projects/${legacyProject}`))
-      setRoute(resolveRoute())
+      setRouteState({ route: resolveRoute(), path: window.location.pathname })
     } else if (legacyRoute === 'resume') {
       window.history.replaceState({}, '', appUrl('/resume'))
-      setRoute(resolveRoute())
+      setRouteState({ route: resolveRoute(), path: window.location.pathname })
     }
 
     const onNavigation = (event: PopStateEvent) => {
       const nextRoute = resolveRoute()
-      setRoute(nextRoute)
+      setRouteState({ route: nextRoute, path: window.location.pathname })
       applyRouteMetadata(nextRoute)
       const savedPosition = typeof event.state?.scrollY === 'number' ? event.state.scrollY : 0
       scrollForCurrentUrl(savedPosition)
@@ -293,5 +346,5 @@ export function useAppRoute() {
     return () => window.removeEventListener('popstate', onNavigation)
   }, [])
 
-  return route
+  return routeState.route
 }
