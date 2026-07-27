@@ -1409,3 +1409,84 @@ a[target="_blank"]:focus-visible{outline-color:var(--orange)}
   .hero-copy{max-width:850px}
   .hero-art{transform:translateX(2vw)}
 }
+
+
+/* Phase 5.1 — mobile-first composition fixes.
+   Desktop/tablet layouts above 680px are intentionally untouched. */
+@media(max-width:680px){
+  /* The technical rotor is a desktop atmosphere element. On phones it
+     competes with the identity and creates a long, visually empty first scene. */
+  .hero{
+    display:block;
+    min-height:auto;
+    padding-top:calc(116px + env(safe-area-inset-top,0px));
+    padding-bottom:78px;
+  }
+  .hero-copy{position:relative;z-index:2;max-width:none;transform:none}
+  .hero-art{display:none!important}
+  .hero-meta,.scroll-cue{display:none!important}
+
+  /* One mobile career navigator only. The decorative career route is useful
+     on desktop, but duplicates the actual tabs on narrow screens. */
+  .career-route{display:none!important}
+  .experience-system{
+    display:block;
+    min-height:0;
+    overflow:hidden;
+  }
+  .experience-tabs{
+    display:flex;
+    flex-direction:row;
+    gap:8px;
+    padding:10px;
+    overflow-x:auto;
+    border-right:0;
+    border-bottom:1px solid var(--line);
+    scroll-snap-type:x mandatory;
+    overscroll-behavior-x:contain;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .experience-tabs::-webkit-scrollbar{display:none}
+  .experience-tabs button,
+  .experience-tabs button:nth-child(2n),
+  .experience-tabs button:nth-last-child(-n+2),
+  .experience-tabs button:last-child{
+    flex:0 0 min(76vw,285px);
+    grid-template-columns:28px 1fr;
+    min-height:84px;
+    padding:16px 15px;
+    border:1px solid var(--line);
+    scroll-snap-align:start;
+    background:rgba(10,15,23,.62);
+  }
+  .experience-tabs button.active{
+    border-color:var(--cyan);
+    background:rgba(23,34,49,.72);
+    box-shadow:inset 0 0 0 1px rgba(76,201,240,.12);
+  }
+  .experience-tabs button::before{
+    top:auto;
+    right:12px;
+    bottom:-1px;
+    left:12px;
+    width:auto;
+    height:2px;
+    transform:scaleX(0);
+    transform-origin:left;
+  }
+  .experience-tabs button.active::before{transform:scaleX(1)}
+  .experience-tabs strong{font-size:.77rem;line-height:1.18}
+  .experience-tabs small{font-size:.46rem;line-height:1.45}
+  .experience-panel{padding:30px 20px 34px}
+  .experience-topline{margin-bottom:22px}
+  .experience-panel h3{font-size:clamp(1.65rem,8.2vw,2.15rem)}
+  .career-metrics{margin-top:18px}
+}
+
+@media(max-width:430px){
+  .experience-tabs button,
+  .experience-tabs button:nth-child(2n),
+  .experience-tabs button:nth-last-child(-n+2),
+  .experience-tabs button:last-child{flex-basis:82vw}
+}

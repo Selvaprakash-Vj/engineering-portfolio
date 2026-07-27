@@ -1164,7 +1164,7 @@ export default function App() {
         </section>
 
         <div className="system-strip" aria-label="Portfolio system status">
-          <span><i />SYSTEM STATUS: NOMINAL</span><span>PORTFOLIO BUILD: 05.0 // LAUNCH READY</span><span>EXPERIENCE: 03+ YEARS</span><span>LOCATION: INGOLSTADT_DE</span><span><i />AVAILABLE FOR OPPORTUNITIES</span>
+          <span><i />SYSTEM STATUS: NOMINAL</span><span>PORTFOLIO BUILD: 05.1 // MOBILE EXPERIENCE REFINED</span><span>EXPERIENCE: 03+ YEARS</span><span>LOCATION: INGOLSTADT_DE</span><span><i />AVAILABLE FOR OPPORTUNITIES</span>
         </div>
 
         <IdentitySection />
