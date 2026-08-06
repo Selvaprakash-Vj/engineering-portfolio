@@ -6,6 +6,7 @@ const routePairs = [
   ['index.html', 'public/de/index.html'],
   ['public/resume/index.html', 'public/de/lebenslauf/index.html'],
   ['public/projects/machineguard-ai/index.html', 'public/de/projekte/machineguard-ai/index.html'],
+  ['public/projects/threadrom/index.html', 'public/de/projekte/threadrom/index.html'],
   ['public/projects/finance-tracker/index.html', 'public/de/projekte/finance-tracker/index.html'],
 ]
 
@@ -24,6 +25,8 @@ const expectedUrls = [
   '/engineering-portfolio/de/lebenslauf/',
   '/engineering-portfolio/projects/machineguard-ai/',
   '/engineering-portfolio/de/projekte/machineguard-ai/',
+  '/engineering-portfolio/projects/threadrom/',
+  '/engineering-portfolio/de/projekte/threadrom/',
   '/engineering-portfolio/projects/finance-tracker/',
   '/engineering-portfolio/de/projekte/finance-tracker/',
 ]
@@ -34,9 +37,11 @@ for (const url of expectedUrls) {
 const routing = readFileSync(join(root, 'src/routing.tsx'), 'utf8')
 for (const route of [
   '/de/projekte/machineguard-ai',
+  '/de/projekte/threadrom',
   '/de/projekte/finance-tracker',
   '/de/lebenslauf',
   '/projects/machineguard-ai',
+  '/projects/threadrom',
   '/projects/finance-tracker',
   '/resume',
 ]) {

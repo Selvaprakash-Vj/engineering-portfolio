@@ -21,7 +21,7 @@ const homeScenes: ScrollScene[] = [
   { id: 'contact', number: '07', label: 'CONNECT', accent: '#4cc9f0' },
 ]
 
-const projectScenes: Record<'machineguard' | 'finance', ScrollScene[]> = {
+const projectScenes: Record<'machineguard' | 'threadrom' | 'finance', ScrollScene[]> = {
   machineguard: [
     { id: 'mg-hero', number: '00', label: 'INTRO', accent: '#4cc9f0' },
     { id: 'mg-overview', number: '01', label: 'PROBLEM', accent: '#ff6b35' },
@@ -31,6 +31,15 @@ const projectScenes: Record<'machineguard' | 'finance', ScrollScene[]> = {
     { id: 'mg-failure', number: '05', label: 'FAILURE', accent: '#ff6b35' },
     { id: 'mg-decision', number: '06', label: 'DECISION', accent: '#57e6a4' },
     { id: 'mg-explore', number: '07', label: 'EXPLORE', accent: '#4cc9f0' },
+  ],
+  threadrom: [
+    { id: 'tr-hero', number: '00', label: 'INTRO', accent: '#4cc9f0' },
+    { id: 'tr-problem', number: '01', label: 'PROBLEM', accent: '#ff6b35' },
+    { id: 'tr-geometry', number: '02', label: 'GEOMETRY', accent: '#4cc9f0' },
+    { id: 'tr-solver', number: '03', label: 'SOLVER', accent: '#57e6a4' },
+    { id: 'tr-convergence', number: '04', label: 'CONVERGENCE', accent: '#4cc9f0' },
+    { id: 'tr-quality', number: '05', label: 'QUALITY', accent: '#ff6b35' },
+    { id: 'tr-boundary', number: '06', label: 'BOUNDARY', accent: '#57e6a4' },
   ],
   finance: [
     { id: 'ft-hero', number: '00', label: 'INTRO', accent: '#ff6b35' },
@@ -463,10 +472,11 @@ function projectSectionStart(index: number) {
   return variants[index % variants.length]
 }
 
-export function ProjectCinematicScrollSystem({ project }: { project: 'machineguard' | 'finance' }) {
+export function ProjectCinematicScrollSystem({ project }: { project: 'machineguard' | 'threadrom' | 'finance' }) {
   const language = resolveLanguage()
-  const labelsDe: Record<'machineguard' | 'finance', string[]> = {
+  const labelsDe: Record<'machineguard' | 'threadrom' | 'finance', string[]> = {
     machineguard: ['INTRO', 'PROBLEM', 'WORKFLOW', 'ERGEBNISSE', 'ZUVERLÄSSIGKEIT', 'FEHLERFALL', 'ENTSCHEIDUNG', 'VERTIEFEN'],
+    threadrom: ['INTRO', 'PROBLEM', 'GEOMETRIE', 'SOLVER', 'KONVERGENZ', 'QUALITÄT', 'GRENZE'],
     finance: ['INTRO', 'PROBLEM', 'WORKFLOW', 'KONTROLLE', 'SCHUTZ', 'SYSTEMSTAND', 'ROADMAP'],
   }
   const scenes = projectScenes[project].map((scene, index) => language === 'de' ? { ...scene, label: labelsDe[project][index] } : scene)
@@ -542,7 +552,7 @@ export function ProjectCinematicScrollSystem({ project }: { project: 'machinegua
 
         if (index === 0) {
           const copy = section.querySelector('.mg-case-copy')
-          const visual = section.querySelector('.mg-hero-visual, .ft-hero-visual')
+          const visual = section.querySelector('.mg-hero-visual, .tr-hero-visual, .ft-hero-visual')
           const stats = section.querySelector('.mg-hero-stats')
           if (copy) gsap.fromTo(copy, { autoAlpha: 0, x: -72 }, { autoAlpha: 1, x: 0, duration: 1, ease: 'power3.out' })
           if (visual) gsap.fromTo(visual, { autoAlpha: 0, x: 72, scale: 0.94 }, { autoAlpha: 1, x: 0, scale: 1, duration: 1.15, ease: 'power3.out', delay: 0.08 })
@@ -598,9 +608,9 @@ export function ProjectCinematicScrollSystem({ project }: { project: 'machinegua
         }
       })
 
-      gsap.to(project === 'machineguard' ? '.mg-hero-visual' : '.ft-hero-visual', {
+      gsap.to(project === 'machineguard' ? '.mg-hero-visual' : project === 'threadrom' ? '.tr-hero-visual' : '.ft-hero-visual', {
         yPercent: 12,
-        rotate: project === 'machineguard' ? 2.2 : -1.6,
+        rotate: project === 'machineguard' ? 2.2 : project === 'threadrom' ? 1.1 : -1.6,
         ease: 'none',
         scrollTrigger: { trigger: `#${scenes[0].id}`, start: 'top top', end: 'bottom top', scrub: 0.9 },
       })
@@ -633,7 +643,7 @@ export function ProjectCinematicScrollSystem({ project }: { project: 'machinegua
           ease: 'power2.out',
           scrollTrigger: { trigger: '#mg-decision', start: 'top 62%', once: true },
         })
-      } else {
+      } else if (project === 'finance') {
         gsap.fromTo('.ft-pipeline > div', { x: -46, autoAlpha: 0 }, {
           x: 0,
           autoAlpha: 1,
@@ -661,6 +671,23 @@ export function ProjectCinematicScrollSystem({ project }: { project: 'machinegua
           stagger: 0.07,
           ease: 'power3.out',
           scrollTrigger: { trigger: '#ft-roadmap', start: 'top 70%', once: true },
+        })
+      } else {
+        gsap.fromTo('.tr-mesh-level', { y: 55, scale: 0.9, autoAlpha: 0 }, {
+          y: 0, scale: 1, autoAlpha: 1, stagger: 0.1, ease: 'back.out(1.25)',
+          scrollTrigger: { trigger: '#tr-geometry', start: 'top 68%', once: true },
+        })
+        gsap.fromTo('.tr-pipeline article', { x: -46, autoAlpha: 0 }, {
+          x: 0, autoAlpha: 1, stagger: 0.09, ease: 'power3.out',
+          scrollTrigger: { trigger: '#tr-solver', start: 'top 68%', once: true },
+        })
+        gsap.fromTo('.tr-convergence-point', { scale: 0, transformOrigin: 'center', autoAlpha: 0 }, {
+          scale: 1, autoAlpha: 1, stagger: 0.16, ease: 'back.out(1.5)',
+          scrollTrigger: { trigger: '#tr-convergence', start: 'top 64%', once: true },
+        })
+        gsap.fromTo('.tr-quality-grid article', { y: 48, autoAlpha: 0 }, {
+          y: 0, autoAlpha: 1, stagger: 0.07, ease: 'power3.out',
+          scrollTrigger: { trigger: '#tr-quality', start: 'top 68%', once: true },
         })
       }
 

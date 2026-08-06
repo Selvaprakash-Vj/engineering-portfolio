@@ -13,12 +13,13 @@ This website is a professional evidence platform rather than a web-formatted CV.
 
 ## Current release
 
-**v1.1.0 — Bilingual Professional Release**
+**v1.2.0 — ThreadROM Phase 1 Portfolio Release**
 
 - Complete English and German homepage
 - English and German digital résumé
 - Bilingual MachineGuard AI case study
 - Bilingual Finance Tracker Automation case study
+- Bilingual ThreadROM Phase 1 FEM case study
 - Language-aware routing, metadata and sitemap
 - Desktop cinematic scrolling with lighter mobile behaviour
 - Mobile-specific hero and career navigation
@@ -33,6 +34,10 @@ A reliability-aware predictive-maintenance platform for NASA C-MAPSS turbofan Re
 - [Live dashboard](https://machineguard-ai.streamlit.app/)
 - [Source repository](https://github.com/Selvaprakash-Vj/MachineGuard-AI)
 
+### ThreadROM
+
+A Phase 1 threaded-fastener FEM foundation using Python, Gmsh and CalculiX. The case study documents a full-helical M10×1.5 geometry, controlled mesh refinement, axial-response verification, solver equilibrium and reproducible software-quality evidence. Later nonlinear pretension and reduced-order modelling remain explicitly outside this release.
+
 ### Finance Tracker Automation
 
 A private, local-first financial data-engineering workflow that standardises monthly statements, preserves human annotations exactly and applies machine learning only as a controlled fallback. The public portfolio exposes the architecture and engineering decisions—not personal financial data or private source code.
@@ -44,6 +49,7 @@ A private, local-first financial data-engineering workflow that standardises mon
 | `/` | `/de/` |
 | `/resume` | `/de/lebenslauf` |
 | `/projects/machineguard-ai` | `/de/projekte/machineguard-ai` |
+| `/projects/threadrom` | `/de/projekte/threadrom` |
 | `/projects/finance-tracker` | `/de/projekte/finance-tracker` |
 
 ## Technology

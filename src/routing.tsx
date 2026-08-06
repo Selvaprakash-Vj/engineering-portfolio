@@ -7,19 +7,21 @@ import {
 } from 'react'
 import { site } from './site'
 
-export type AppRoute = 'home' | 'machineguard-ai' | 'finance-tracker' | 'resume'
+export type AppRoute = 'home' | 'machineguard-ai' | 'threadrom' | 'finance-tracker' | 'resume'
 export type Language = 'en' | 'de'
 
 const routeSuffixes: Array<[AppRoute, string]> = [
   ['machineguard-ai', '/de/projekte/machineguard-ai'],
+  ['threadrom', '/de/projekte/threadrom'],
   ['finance-tracker', '/de/projekte/finance-tracker'],
   ['machineguard-ai', '/projects/machineguard-ai'],
+  ['threadrom', '/projects/threadrom'],
   ['finance-tracker', '/projects/finance-tracker'],
   ['resume', '/de/lebenslauf'],
   ['resume', '/resume'],
 ]
 
-const languageSuffixes = ['/de/projekte/machineguard-ai', '/de/projekte/finance-tracker', '/de/lebenslauf', '/de']
+const languageSuffixes = ['/de/projekte/machineguard-ai', '/de/projekte/threadrom', '/de/projekte/finance-tracker', '/de/lebenslauf', '/de']
 
 function trimTrailingSlash(path: string) {
   return path.length > 1 ? path.replace(/\/+$/, '') : path
@@ -82,6 +84,7 @@ export function alternateLanguagePath(route: AppRoute, targetLanguage: Language)
   if (route === 'resume') return localizedResume(targetLanguage)
   if (route === 'home') return localizedHome(targetLanguage)
   if (route === 'machineguard-ai') return targetLanguage === 'de' ? '/de/projekte/machineguard-ai' : '/projects/machineguard-ai'
+  if (route === 'threadrom') return targetLanguage === 'de' ? '/de/projekte/threadrom' : '/projects/threadrom'
   if (route === 'finance-tracker') return targetLanguage === 'de' ? '/de/projekte/finance-tracker' : '/projects/finance-tracker'
   return localizedHome(targetLanguage)
 }
@@ -173,6 +176,14 @@ const routeMetadataEn: Record<AppRoute, RouteMetadata> = {
     imageAlt: 'MachineGuard AI predictive maintenance project preview',
     schemaType: 'SoftwareApplication',
   },
+  threadrom: {
+    title: 'ThreadROM Phase 1 | Threaded-Fastener FEM Foundation',
+    description: 'A reproducible M10×1.5 full-helical fastener FEM foundation with controlled Gmsh meshes, CalculiX axial baselines, equilibrium checks and convergence evidence.',
+    path: 'projects/threadrom/',
+    image: 'social/threadrom-preview.png',
+    imageAlt: 'ThreadROM Phase 1 threaded-fastener FEM project preview',
+    schemaType: 'CreativeWork',
+  },
   'finance-tracker': {
     title: 'Finance Tracker Automation | Local-First Data Engineering',
     description: 'A private local-first financial data pipeline with canonical transaction processing, exact human-comment preservation, ML fallback and validated monthly publishing.',
@@ -200,6 +211,14 @@ const routeMetadataDe: Record<AppRoute, RouteMetadata> = {
     image: 'social/machineguard-preview.png',
     imageAlt: 'MachineGuard AI Predictive-Maintenance-Projekt',
     schemaType: 'SoftwareApplication',
+  },
+  threadrom: {
+    title: 'ThreadROM Phase 1 | FEM-Grundlage für Gewindeverbindungen',
+    description: 'Eine reproduzierbare FEM-Basis für eine vollhelikale M10×1,5-Schraube mit kontrollierten Gmsh-Netzen, CalculiX-Referenzlastfall, Gleichgewichtsprüfung und Konvergenzevidenz.',
+    path: 'de/projekte/threadrom/',
+    image: 'social/threadrom-preview.png',
+    imageAlt: 'ThreadROM Phase-1-Projekt zur FEM von Gewindeverbindungen',
+    schemaType: 'CreativeWork',
   },
   'finance-tracker': {
     title: 'Finance Tracker Automation | Lokales Data Engineering',
@@ -313,8 +332,8 @@ function applyRouteMetadata(route: AppRoute) {
   upsertMeta('meta[name="twitter:image:alt"]', { name: 'twitter:image:alt', content: metadata.imageAlt })
   upsertLink('link[rel="canonical"]', { rel: 'canonical', href: canonical })
 
-  const englishPath = route === 'resume' ? 'resume/' : route === 'home' ? '' : route === 'machineguard-ai' ? 'projects/machineguard-ai/' : 'projects/finance-tracker/'
-  const germanPath = route === 'resume' ? 'de/lebenslauf/' : route === 'home' ? 'de/' : route === 'machineguard-ai' ? 'de/projekte/machineguard-ai/' : 'de/projekte/finance-tracker/'
+  const englishPath = route === 'resume' ? 'resume/' : route === 'home' ? '' : route === 'machineguard-ai' ? 'projects/machineguard-ai/' : route === 'threadrom' ? 'projects/threadrom/' : 'projects/finance-tracker/'
+  const germanPath = route === 'resume' ? 'de/lebenslauf/' : route === 'home' ? 'de/' : route === 'machineguard-ai' ? 'de/projekte/machineguard-ai/' : route === 'threadrom' ? 'de/projekte/threadrom/' : 'de/projekte/finance-tracker/'
   upsertLink('link[rel="alternate"][hreflang="en"]', { rel: 'alternate', hreflang: 'en', href: absolutePublicUrl(englishPath) })
   upsertLink('link[rel="alternate"][hreflang="de"]', { rel: 'alternate', hreflang: 'de', href: absolutePublicUrl(germanPath) })
   upsertLink('link[rel="alternate"][hreflang="x-default"]', { rel: 'alternate', hreflang: 'x-default', href: absolutePublicUrl(englishPath) })
@@ -337,7 +356,7 @@ export function useAppRoute() {
     const legacyProject = legacyParams.get('project')
     const legacyRoute = legacyParams.get('route')
     const legacyLanguage = legacyParams.get('lang')
-    if (legacyProject === 'machineguard-ai' || legacyProject === 'finance-tracker') {
+    if (legacyProject === 'machineguard-ai' || legacyProject === 'threadrom' || legacyProject === 'finance-tracker') {
       const target = legacyLanguage === 'de' ? `/de/projekte/${legacyProject}` : `/projects/${legacyProject}`
       window.history.replaceState({}, '', appUrl(target))
       setRouteState({ route: resolveRoute(), path: window.location.pathname })

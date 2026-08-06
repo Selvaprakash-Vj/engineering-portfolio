@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.0 — ThreadROM Phase 1 Portfolio Release
+
+- Added bilingual ThreadROM Phase 1 project card and detailed case study.
+- Documented the M10×1.5 full-helical geometry, mesh hierarchy, CalculiX baseline, equilibrium checks and convergence evidence.
+- Added an explicit Phase 1 boundary so nonlinear pretension and ROM work are not overstated.
+- Added English/German routes, metadata, sitemap entries and project navigation.
+
 All notable public portfolio changes are documented here.
 
 ## [1.1.0] - 2026-07-27

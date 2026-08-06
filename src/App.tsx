@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { site as siteEn } from './site'
 import { usePortfolioContent } from './i18n'
 import { RouteLink, alternateLanguagePath, assetUrl, localizedHome, localizedResume, resolveLanguage, useAppRoute, type AppRoute, type Language } from './routing'
@@ -422,7 +422,7 @@ function ProjectsSection() {
       <div className="project-grid">
         {site.projects.map((project, index) => (
           <article className={`project-card ${project.accent}`} key={project.number} data-reveal>
-            <div className="project-meta"><span>{project.number}</span><strong className={`status ${project.status.toLowerCase()}`}><i />{language === 'de' ? (project.status === 'COMPLETE' ? 'ABGESCHLOSSEN' : 'PRIVAT') : project.status}</strong></div>
+            <div className="project-meta"><span>{project.number}</span><strong className={`status ${project.status.toLowerCase()}`}><i />{language === 'de' ? (project.status === 'COMPLETE' ? 'ABGESCHLOSSEN' : project.status === 'MILESTONE' ? 'MEILENSTEIN' : 'PRIVAT') : project.status}</strong></div>
             <ProjectGraphic index={index} />
             <p className="project-category">{project.category}</p>
             <h3>{project.title}</h3>
@@ -431,7 +431,7 @@ function ProjectsSection() {
             <div className="tool-chips compact">{project.stack.map(tool => <span key={tool}>{tool}</span>)}</div>
             <RouteLink
               className="project-link project-link-active"
-              to={project.title === 'MachineGuard AI' ? '/projects/machineguard-ai' : '/projects/finance-tracker'}
+              to={language === 'de' ? `/de/projekte/${project.route}` : `/projects/${project.route}`}
             >
               <span>{ui.projects.open}</span><strong>{project.release}</strong><i>↗</i>
             </RouteLink>
@@ -1079,6 +1079,292 @@ function MachineGuardPage() {
 }
 
 
+const threadromContent = {
+  en: {
+    skip: 'Skip to ThreadROM project content',
+    portfolio: '← Portfolio',
+    scopeLink: 'Phase boundary ↓',
+    resultsLink: 'Review convergence ↓',
+    overline: 'PROJECT // TR-01',
+    status: 'PHASE 1 COMPLETE · FOUNDATION BASELINE',
+    title: 'ThreadROM',
+    subtitle: 'A reproducible threaded-fastener FEM foundation for future reduced-order modelling.',
+    intro: 'Phase 1 establishes the controlled groundwork: a full-helical M10×1.5 geometry, grouped mesh hierarchy, CalculiX solver transfer, axial reference response, equilibrium checks and convergence evidence.',
+    heroButton: 'Review Phase 1',
+    boundaryButton: 'See scope boundary',
+    heroStats: [['GEOMETRY', 'M10×1.5 FULL HELIX'], ['MESH LEVELS', 'COARSE · MEDIUM · FINE'], ['SOLVER', 'CALCULIX 2.23'], ['REPOSITORY QA', '277 TESTS']],
+    problem: {
+      label: 'ENGINEERING PROBLEM',
+      title: 'Before a reduced-order model can be trusted, the fastener model beneath it must be controlled.',
+      text: 'Threaded joints combine detailed geometry, local stress gradients, contact, preload and interface behaviour. Phase 1 deliberately narrows the problem to a reproducible linear-elastic axial baseline so geometry, meshing, solver transfer and verification can be established before nonlinear clamp mechanics are introduced.',
+      cards: [
+        ['GEOMETRY REALISM', 'Generate a true M10×1.5 helical thread instead of replacing it with an equivalent smooth cylinder.'],
+        ['NUMERICAL CONSISTENCY', 'Carry the same model definition through controlled mesh levels and an independent open-source solver workflow.'],
+        ['TRACEABLE EVIDENCE', 'Record loads, materials, displacement, stiffness, equilibrium residuals and convergence in a reproducible project structure.'],
+      ],
+    },
+    geometry: {
+      label: 'GEOMETRY & MESH HIERARCHY',
+      title: 'One helical definition. Three controlled discretisation levels.',
+      text: 'The geometry and mesh are generated through configuration-driven Python and Gmsh workflows. Coarse, medium and fine models preserve the same engineering definition while increasing spatial resolution.',
+      levels: [
+        ['COARSE', '25,958 nodes', '125,300 C3D4 elements', 'Fast iteration and baseline verification'],
+        ['MEDIUM', 'Controlled refinement', 'Same grouped topology', 'Primary coarse-to-medium comparison'],
+        ['FINE', '194,527 nodes', '1,061,483 C3D4 elements', 'High-resolution reference trend'],
+      ],
+    },
+    solver: {
+      label: 'SOLVER BASELINE',
+      title: 'The pipeline connects generated geometry to a checked axial response.',
+      text: 'Phase 1 transfers the tetrahedral meshes into CalculiX and solves a deliberately simple elastic load case. This isolates the geometry, connectivity, material, boundary-condition and result-extraction pipeline before contact and pretension are activated.',
+      stages: [
+        ['01', 'CONFIGURATION', 'Versioned geometry, mesh and simulation identities'],
+        ['02', 'GMSH', 'Full-helical solid generation and grouped tetrahedral mesh'],
+        ['03', 'CALCULIX', 'C3D4 transfer, linear-elastic solve and result output'],
+        ['04', 'EVIDENCE', 'Displacement, stiffness, force balance and convergence records'],
+      ],
+      loadcase: [['MATERIAL', 'E = 210 GPa · ν = 0.30'], ['AXIAL LOAD', '1,000 N'], ['CONSTRAINT', 'TIP FIXED'], ['COARSE RESIDUAL', '5.666×10⁻¹² N'], ['FINE RESIDUAL', '1.026×10⁻¹¹ N']],
+    },
+    convergence: {
+      label: 'AXIAL RESPONSE & CONVERGENCE',
+      title: 'Refinement changes the response gradually—not unpredictably.',
+      text: 'The axial stiffness remains close between the first two levels and continues a controlled softening trend at the fine level. The result is not presented as a final joint stiffness; it is the verified linear-elastic reference for later contact and pretension work.',
+      values: [['COARSE', '−2.841×10⁻³ mm', '351.97 kN/mm'], ['MEDIUM', '−2.857×10⁻³ mm', '350.01 kN/mm'], ['FINE', '−2.896×10⁻³ mm', '≈345 kN/mm']],
+      highlight: '0.56% coarse-to-medium stiffness difference',
+      note: 'The analytical baseline, solver equilibrium and mesh trend agree well enough to close the Phase 1 foundation milestone.',
+    },
+    quality: {
+      label: 'REPRODUCIBILITY & SOFTWARE QUALITY',
+      title: 'The simulation is treated as a system, not a collection of manual files.',
+      text: 'ThreadROM combines engineering evidence with software quality controls so later nonlinear simulations and ROM datasets can be generated from a stable, auditable foundation.',
+      items: [['277', 'PYTEST TESTS', 'Automated coverage across geometry, configuration, transfer and evidence utilities.'], ['RUFF', 'CLEAN', 'Consistent Python style and static quality checks.'], ['83', 'MYPY-CHECKED FILES', 'Typed interfaces across the project codebase.'], ['ID', 'TRACEABILITY', 'Geometry, assembly, mesh and simulation records remain explicitly identified.']],
+    },
+    boundary: {
+      label: 'PHASE 1 BOUNDARY',
+      title: 'A completed foundation milestone—not a finished threaded-joint ROM.',
+      text: 'The page intentionally stops where the evidence stops. Phase 1 proves the geometry, mesh, solver and linear reference workflow. It does not yet claim a stable nonlinear clamp state, calibrated frictional contact or a trained reduced-order model.',
+      establishedTitle: 'ESTABLISHED IN PHASE 1',
+      established: ['Full-helical M10×1.5 geometry', 'Coarse / medium / fine mesh hierarchy', 'CalculiX transfer and successful elastic solves', 'Axial response, equilibrium and convergence evidence', 'Analytical reference and reproducible QA workflow'],
+      openTitle: 'OUTSIDE THIS RELEASE',
+      open: ['Stable nonlinear bolt–nut contact state', 'Controlled pretensioned clamp baseline', 'Friction and interface calibration', 'Preload-loss or service-load studies', 'Reduced-order model training and validation'],
+      statusLabel: 'PROJECT STATUS',
+      footer: 'PHASE 1 COMPLETE · NONLINEAR PRETENSION & ROM REMAIN OPEN',
+      return: '← Return to project lab',
+      review: 'Review convergence ↑',
+    },
+  },
+  de: {
+    skip: 'Zum ThreadROM-Projektinhalt springen',
+    portfolio: '← Portfolio',
+    scopeLink: 'Phasengrenze ↓',
+    resultsLink: 'Konvergenz ansehen ↓',
+    overline: 'PROJEKT // TR-01',
+    status: 'PHASE 1 ABGESCHLOSSEN · BASISMODELL',
+    title: 'ThreadROM',
+    subtitle: 'Eine reproduzierbare FEM-Grundlage für Gewindeverbindungen und zukünftiges Reduced-Order Modelling.',
+    intro: 'Phase 1 schafft die kontrollierte Basis: vollhelikale M10×1,5-Geometrie, gruppierte Vernetzungshierarchie, CalculiX-Übertragung, axiale Referenzantwort, Gleichgewichtsprüfung und Konvergenznachweis.',
+    heroButton: 'Phase 1 ansehen',
+    boundaryButton: 'Phasengrenze verstehen',
+    heroStats: [['GEOMETRIE', 'M10×1,5 VOLLHELIX'], ['VERNETZUNG', 'GROB · MITTEL · FEIN'], ['SOLVER', 'CALCULIX 2.23'], ['REPOSITORY-QA', '277 TESTS']],
+    problem: {
+      label: 'TECHNISCHE FRAGESTELLUNG',
+      title: 'Bevor ein Reduced-Order Model belastbar sein kann, muss das zugrunde liegende Schraubenmodell kontrolliert sein.',
+      text: 'Gewindeverbindungen vereinen detaillierte Geometrie, lokale Spannungsgradienten, Kontakt, Vorspannung und Schnittstellenverhalten. Phase 1 grenzt die Aufgabe bewusst auf eine reproduzierbare linear-elastische axiale Referenz ein, damit Geometrie, Vernetzung, Solver-Übertragung und Verifikation vor der nichtlinearen Klemmmechanik abgesichert werden.',
+      cards: [
+        ['REALISTISCHE GEOMETRIE', 'Erzeugung eines echten M10×1,5-Schraubengewindes statt einer vereinfachten glatten Ersatzgeometrie.'],
+        ['NUMERISCHE KONSISTENZ', 'Dieselbe Modelldefinition wird über kontrollierte Vernetzungsstufen und einen offenen Solver-Workflow geführt.'],
+        ['NACHVOLLZIEHBARE EVIDENZ', 'Lasten, Werkstoff, Verschiebung, Steifigkeit, Gleichgewichtsresiduen und Konvergenz werden reproduzierbar dokumentiert.'],
+      ],
+    },
+    geometry: {
+      label: 'GEOMETRIE & VERNETZUNGSHIERARCHIE',
+      title: 'Eine helikale Definition. Drei kontrollierte Diskretisierungsstufen.',
+      text: 'Geometrie und Vernetzung werden konfigurationsgesteuert mit Python und Gmsh erzeugt. Grobe, mittlere und feine Modelle behalten dieselbe technische Definition bei und erhöhen gezielt die räumliche Auflösung.',
+      levels: [
+        ['GROB', '25.958 Knoten', '125.300 C3D4-Elemente', 'Schnelle Iteration und Basisprüfung'],
+        ['MITTEL', 'Kontrollierte Verfeinerung', 'Gleiche gruppierte Topologie', 'Zentraler Grob-Mittel-Vergleich'],
+        ['FEIN', '194.527 Knoten', '1.061.483 C3D4-Elemente', 'Hochaufgelöster Referenztrend'],
+      ],
+    },
+    solver: {
+      label: 'SOLVER-BASIS',
+      title: 'Die Pipeline verbindet generierte Geometrie mit einer geprüften axialen Antwort.',
+      text: 'Phase 1 überträgt die Tetraedernetze nach CalculiX und löst einen bewusst einfachen elastischen Lastfall. Dadurch werden Geometrie, Konnektivität, Werkstoff, Randbedingungen und Ergebnisauswertung isoliert abgesichert, bevor Kontakt und Vorspannung aktiviert werden.',
+      stages: [
+        ['01', 'KONFIGURATION', 'Versionierte Geometrie-, Netz- und Simulationsidentitäten'],
+        ['02', 'GMSH', 'Vollhelikaler Volumenkörper und gruppiertes Tetraedernetz'],
+        ['03', 'CALCULIX', 'C3D4-Übertragung, linear-elastische Lösung und Ergebnisausgabe'],
+        ['04', 'EVIDENZ', 'Verschiebung, Steifigkeit, Kräftegleichgewicht und Konvergenz'],
+      ],
+      loadcase: [['WERKSTOFF', 'E = 210 GPa · ν = 0,30'], ['AXIALLAST', '1.000 N'], ['RANDBEDINGUNG', 'SPITZE FIXIERT'], ['RESIDUUM GROB', '5,666×10⁻¹² N'], ['RESIDUUM FEIN', '1,026×10⁻¹¹ N']],
+    },
+    convergence: {
+      label: 'AXIALE ANTWORT & KONVERGENZ',
+      title: 'Die Verfeinerung verändert die Antwort schrittweise – nicht unkontrolliert.',
+      text: 'Die axiale Steifigkeit liegt zwischen den ersten beiden Stufen eng beieinander und zeigt auf der feinen Stufe einen kontrollierten weicheren Trend. Das Ergebnis ist keine endgültige Verbindungssteifigkeit, sondern die verifizierte linear-elastische Referenz für spätere Kontakt- und Vorspannungsmodelle.',
+      values: [['GROB', '−2,841×10⁻³ mm', '351,97 kN/mm'], ['MITTEL', '−2,857×10⁻³ mm', '350,01 kN/mm'], ['FEIN', '−2,896×10⁻³ mm', '≈345 kN/mm']],
+      highlight: '0,56 % Steifigkeitsdifferenz zwischen grob und mittel',
+      note: 'Analytische Referenz, Solver-Gleichgewicht und Vernetzungstrend stimmen ausreichend überein, um den Phase-1-Grundlagenmeilenstein abzuschließen.',
+    },
+    quality: {
+      label: 'REPRODUZIERBARKEIT & SOFTWAREQUALITÄT',
+      title: 'Die Simulation wird als System behandelt – nicht als Sammlung manueller Dateien.',
+      text: 'ThreadROM verbindet technische Evidenz mit Softwarequalitätsprüfungen, damit spätere nichtlineare Simulationen und ROM-Datensätze auf einer stabilen und auditierbaren Grundlage entstehen.',
+      items: [['277', 'PYTEST-TESTS', 'Automatisierte Abdeckung für Geometrie, Konfiguration, Übertragung und Evidenzwerkzeuge.'], ['RUFF', 'CLEAN', 'Konsistenter Python-Stil und statische Qualitätsprüfungen.'], ['83', 'MYPY-GEPRÜFTE DATEIEN', 'Typisierte Schnittstellen im gesamten Projektcode.'], ['ID', 'RÜCKVERFOLGBARKEIT', 'Geometrie-, Baugruppen-, Netz- und Simulationsdatensätze bleiben eindeutig identifiziert.']],
+    },
+    boundary: {
+      label: 'GRENZE VON PHASE 1',
+      title: 'Ein abgeschlossener Grundlagenmeilenstein – noch kein fertiges Gewindeverbindungs-ROM.',
+      text: 'Die Seite endet bewusst dort, wo die Evidenz endet. Phase 1 belegt Geometrie, Vernetzung, Solver und linearen Referenzworkflow. Sie beansprucht noch keinen stabilen nichtlinearen Klemmzustand, kalibrierten Reibkontakt oder ein trainiertes Reduced-Order Model.',
+      establishedTitle: 'IN PHASE 1 NACHGEWIESEN',
+      established: ['Vollhelikale M10×1,5-Geometrie', 'Grobe / mittlere / feine Vernetzungshierarchie', 'CalculiX-Übertragung und erfolgreiche elastische Lösungen', 'Axiale Antwort, Gleichgewicht und Konvergenzevidenz', 'Analytische Referenz und reproduzierbarer QA-Workflow'],
+      openTitle: 'NICHT BESTANDTEIL DIESES RELEASES',
+      open: ['Stabiler nichtlinearer Schraube-Mutter-Kontakt', 'Kontrollierter vorgespannter Klemmzustand', 'Reibungs- und Schnittstellenkalibrierung', 'Vorspannungsverlust- oder Betriebslaststudien', 'Training und Validierung des Reduced-Order Models'],
+      statusLabel: 'PROJEKTSTATUS',
+      footer: 'PHASE 1 ABGESCHLOSSEN · NICHTLINEARE VORSPANNUNG & ROM NOCH OFFEN',
+      return: '← Zurück zum Projektlabor',
+      review: 'Konvergenz ansehen ↑',
+    },
+  },
+} as const
+
+function ThreadROMTopbar() {
+  const language = resolveLanguage()
+  const content = threadromContent[language]
+  return (
+    <header className="case-topbar threadrom-topbar">
+      <Logo href={localizedHome(language)} route />
+      <div className="case-topbar-actions">
+        <RouteLink to={`${localizedHome(language)}#projects`}>{content.portfolio}</RouteLink>
+        <LanguageSwitch route="threadrom" compact />
+        <a href="#tr-boundary">{content.scopeLink}</a>
+        <a className="button small primary" href="#tr-convergence">{content.resultsLink}</a>
+      </div>
+    </header>
+  )
+}
+
+function ThreadROMHeroVisual() {
+  return (
+    <div className="tr-hero-visual" aria-hidden="true">
+      <div className="tr-visual-grid" />
+      <svg viewBox="0 0 760 390" role="presentation">
+        <defs>
+          <linearGradient id="trMetal" x1="0" x2="1"><stop offset="0" stopColor="#4cc9f0" stopOpacity=".28"/><stop offset="1" stopColor="#ff6b35" stopOpacity=".12"/></linearGradient>
+          <marker id="trArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#ff6b35"/></marker>
+        </defs>
+        <g className="tr-bolt-body">
+          <path d="M85 125 H175 L210 160 V230 L175 265 H85 L50 230 V160Z" />
+          <rect x="210" y="168" width="185" height="54" rx="8" />
+          <path d="M395 158 H660 V232 H395Z" fill="url(#trMetal)" />
+        </g>
+        <g className="tr-thread-lines">
+          {Array.from({ length: 15 }).map((_, index) => <path key={index} d={`M ${390 + index * 18} 158 l 34 74 M ${390 + index * 18} 232 l 34 -74`} />)}
+        </g>
+        <g className="tr-mesh-nodes">
+          {Array.from({ length: 22 }).map((_, index) => <circle key={index} cx={110 + index * 24} cy={index % 2 ? 188 : 205} r="2.3" />)}
+        </g>
+        <path className="tr-load-arrow" d="M20 195 H72" markerEnd="url(#trArrow)" />
+        <g className="tr-fixed"><rect x="672" y="120" width="36" height="150" />{Array.from({ length: 7 }).map((_,i)=><path key={i} d={`M708 ${125+i*22} l24 18`} />)}</g>
+        <text x="18" y="174">1,000 N</text><text x="455" y="285">M10 × 1.5 FULL HELIX</text><text x="663" y="104">FIXED</text>
+      </svg>
+      <div className="tr-readout tr-readout-a"><span>BASELINE</span><strong>LINEAR ELASTIC</strong></div>
+      <div className="tr-readout tr-readout-b"><span>MESH</span><strong>3 LEVELS</strong></div>
+      <div className="tr-readout tr-readout-c"><span>STATUS</span><strong>PHASE 1 CLOSED</strong></div>
+    </div>
+  )
+}
+
+function ThreadROMConvergenceGraphic({ values }: { values: readonly (readonly [string, string, string])[] }) {
+  const points = [351.97, 350.01, 345]
+  return (
+    <div className="tr-convergence-chart" data-reveal role="img" aria-label="ThreadROM Phase 1 axial stiffness convergence">
+      <div className="tr-chart-head"><span>AXIAL STIFFNESS // kN/mm</span><strong>CONTROLLED SOFTENING TREND</strong></div>
+      <svg viewBox="0 0 760 330" preserveAspectRatio="none">
+        {[65,120,175,230,285].map(y => <line className="tr-chart-grid" key={y} x1="70" y1={y} x2="710" y2={y} />)}
+        <polyline className="tr-chart-line" points="130,112 380,126 630,185" />
+        {points.map((value,index)=><g className="tr-convergence-point" key={value}><circle cx={[130,380,630][index]} cy={[112,126,185][index]} r="9"/><text x={[130,380,630][index]} y={[86,100,159][index]} textAnchor="middle">{value}</text></g>)}
+      </svg>
+      <div className="tr-convergence-values">{values.map(([level,disp,stiff])=><article key={level}><span>{level}</span><p>{disp}</p><strong>{stiff}</strong></article>)}</div>
+    </div>
+  )
+}
+
+function ThreadROMPage() {
+  const language = resolveLanguage()
+  const content = threadromContent[language]
+  return (
+    <div className="case-page threadrom-case case-shell">
+      <a className="skip-link" href="#tr-main">{content.skip}</a>
+      <CursorGlow /><div className="noise" /><div className="grid" />
+      <ProjectCinematicScrollSystem project="threadrom" />
+      <ThreadROMTopbar />
+      <main id="tr-main" tabIndex={-1}>
+        <section id="tr-hero" className="mg-case-hero tr-case-hero">
+          <div className="mg-case-copy">
+            <p className="case-eyebrow"><span>{content.overline}</span><i />{content.status}</p>
+            <h1>{content.title}</h1>
+            <h2>{content.subtitle}</h2>
+            <p className="mg-case-intro">{content.intro}</p>
+            <div className="mg-case-actions">
+              <a className="button primary" href="#tr-problem">{content.heroButton} <span>↓</span></a>
+              <a className="button ghost" href="#tr-boundary">{content.boundaryButton} <span>↓</span></a>
+            </div>
+          </div>
+          <ThreadROMHeroVisual />
+          <div className="mg-hero-stats tr-hero-stats">{content.heroStats.map(([label,value])=><div key={label}><strong>{value}</strong><span>{label}</span></div>)}</div>
+        </section>
+
+        <nav className="case-jumpbar" aria-label={language === 'de' ? 'ThreadROM-Projektnavigation' : 'ThreadROM project navigation'}>
+          <a href="#tr-problem">{language === 'de' ? 'Problem' : 'Problem'}</a><a href="#tr-geometry">{language === 'de' ? 'Geometrie' : 'Geometry'}</a><a href="#tr-solver">Solver</a><a href="#tr-convergence">{language === 'de' ? 'Konvergenz' : 'Convergence'}</a><a href="#tr-quality">{language === 'de' ? 'Qualität' : 'Quality'}</a><a href="#tr-boundary">{language === 'de' ? 'Grenze' : 'Boundary'}</a>
+        </nav>
+
+        <section id="tr-problem" className="case-section">
+          <CaseSectionTitle index="01" label={content.problem.label} title={content.problem.title} text={content.problem.text} />
+          <div className="tr-problem-grid">{content.problem.cards.map(([title,text],index)=><article data-reveal key={title}><span>0{index+1}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
+        </section>
+
+        <section id="tr-geometry" className="case-section panel-section">
+          <CaseSectionTitle index="02" label={content.geometry.label} title={content.geometry.title} text={content.geometry.text} />
+          <div className="tr-mesh-grid">{content.geometry.levels.map(([level,nodes,elements,note],index)=><article className="tr-mesh-level" data-reveal key={level}><div><span>M{index+1}</span><strong>{level}</strong></div><h3>{nodes}</h3><p>{elements}</p><small>{note}</small><i style={{'--mesh-density': `${42 + index*28}%`} as CSSProperties}/></article>)}</div>
+        </section>
+
+        <section id="tr-solver" className="case-section">
+          <CaseSectionTitle index="03" label={content.solver.label} title={content.solver.title} text={content.solver.text} />
+          <div className="tr-solver-layout">
+            <div className="tr-pipeline" data-reveal>{content.solver.stages.map(([n,title,text],index)=><article key={n}><span>{n}</span><div><h3>{title}</h3><p>{text}</p></div>{index<content.solver.stages.length-1&&<i>→</i>}</article>)}</div>
+            <div className="tr-loadcase" data-reveal>{content.solver.loadcase.map(([label,value])=><p key={label}><span>{label}</span><strong>{value}</strong></p>)}</div>
+          </div>
+        </section>
+
+        <section id="tr-convergence" className="case-section panel-section">
+          <CaseSectionTitle index="04" label={content.convergence.label} title={content.convergence.title} text={content.convergence.text} />
+          <ThreadROMConvergenceGraphic values={content.convergence.values} />
+          <div className="tr-convergence-summary" data-reveal><strong>{content.convergence.highlight}</strong><p>{content.convergence.note}</p></div>
+        </section>
+
+        <section id="tr-quality" className="case-section">
+          <CaseSectionTitle index="05" label={content.quality.label} title={content.quality.title} text={content.quality.text} />
+          <div className="tr-quality-grid">{content.quality.items.map(([metric,label,text])=><article data-reveal key={label}><strong>{metric}</strong><span>{label}</span><p>{text}</p></article>)}</div>
+        </section>
+
+        <section id="tr-boundary" className="case-section panel-section tr-boundary-section">
+          <CaseSectionTitle index="06" label={content.boundary.label} title={content.boundary.title} text={content.boundary.text} />
+          <div className="tr-boundary-grid">
+            <article data-reveal><span>{content.boundary.establishedTitle}</span><ul>{content.boundary.established.map(item=><li key={item}>{item}</li>)}</ul></article>
+            <article data-reveal><span>{content.boundary.openTitle}</span><ul>{content.boundary.open.map(item=><li key={item}>{item}</li>)}</ul></article>
+          </div>
+          <div className="mg-case-footer" data-reveal>
+            <div><span>{content.boundary.statusLabel}</span><strong>{content.boundary.footer}</strong></div>
+            <div className="mg-case-footer-actions"><RouteLink to={`${localizedHome(language)}#projects`}>{content.boundary.return}</RouteLink><a href="#tr-convergence">{content.boundary.review}</a></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  )
+}
+
+
 function FinanceTopbar() {
   const language = resolveLanguage()
   return (
@@ -1313,6 +1599,7 @@ export default function App() {
   }, [route])
 
   if (route === 'machineguard-ai') return <><RouteAnnouncer route={route} /><MachineGuardPage /></>
+  if (route === 'threadrom') return <><RouteAnnouncer route={route} /><ThreadROMPage /></>
   if (route === 'finance-tracker') return <><RouteAnnouncer route={route} /><FinanceTrackerPage /></>
   if (route === 'resume') return <><RouteAnnouncer route={route} /><ResumePage /></>
 

@@ -30,9 +30,10 @@ export type Project = {
   stack: string[]
   metric: string
   metricLabel: string
-  status: 'COMPLETE' | 'PRIVATE'
+  status: 'COMPLETE' | 'PRIVATE' | 'MILESTONE'
   accent: 'cyan' | 'orange'
   release: string
+  route: 'machineguard-ai' | 'threadrom' | 'finance-tracker'
 }
 
 export const site = {
@@ -225,9 +226,23 @@ export const site = {
       status: 'COMPLETE',
       accent: 'cyan',
       release: 'v1.0.0 · LIVE DASHBOARD · PUBLIC REPOSITORY',
+      route: 'machineguard-ai',
     },
     {
       number: 'P.02',
+      title: 'ThreadROM',
+      category: 'THREADED-FASTENER FEM & ROM',
+      description: 'Phase 1 establishes a reproducible M10×1.5 full-helical fastener simulation baseline: generated geometry, controlled mesh levels, CalculiX transfer, axial-response verification, equilibrium checks and convergence evidence. Nonlinear pretension and reduced-order modelling remain outside this release.',
+      stack: ['Python', 'Gmsh', 'CalculiX', 'FEM', 'Validation'],
+      metric: '0.56%',
+      metricLabel: 'COARSE ↔ MEDIUM STIFFNESS DIFFERENCE',
+      status: 'MILESTONE',
+      accent: 'cyan',
+      release: 'PHASE 1 COMPLETE · FOUNDATION BASELINE',
+      route: 'threadrom',
+    },
+    {
+      number: 'P.03',
       title: 'Finance Tracker Automation',
       category: 'LOCAL DATA ENGINEERING',
       description: 'A private, local-first financial data pipeline that converts monthly statements into canonical transaction data, preserves human annotations, applies machine learning only to genuinely blank rows and publishes validated monthly outputs.',
@@ -237,6 +252,7 @@ export const site = {
       status: 'PRIVATE',
       accent: 'orange',
       release: 'PRIVATE SYSTEM · CASE STUDY ONLINE',
+      route: 'finance-tracker',
     },
   ] satisfies Project[],
   education: [

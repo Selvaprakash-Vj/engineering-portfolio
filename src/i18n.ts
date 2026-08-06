@@ -6,7 +6,7 @@ export const ui = {
   en: {
     nav: ['Identity', 'Experience', 'Expertise', 'Project Lab', 'Education', 'Resume'],
     menuOpen: 'Open menu', menuClose: 'Close menu', primaryNavigation: 'Primary navigation',
-    routeLabels: { home: 'Portfolio home', 'machineguard-ai': 'MachineGuard AI project', 'finance-tracker': 'Finance Tracker Automation project', resume: 'Digital resume' },
+    routeLabels: { home: 'Portfolio home', 'machineguard-ai': 'MachineGuard AI project', threadrom: 'ThreadROM Phase 1 project', 'finance-tracker': 'Finance Tracker Automation project', resume: 'Digital resume' },
     skipMain: 'Skip to main content', skipResume: 'Skip to resume content',
     language: 'Language', english: 'EN', german: 'DE',
     hero: {
@@ -14,7 +14,7 @@ export const ui = {
       projectButton: 'Explore project lab', resumeButton: 'View digital résumé',
       experience: '03+ years experience', scroll: 'SCROLL TO DECODE',
     },
-    systemStrip: ['SYSTEM STATUS: NOMINAL', 'PORTFOLIO BUILD: 06.3 // BILINGUAL RELEASE STABLE', 'EXPERIENCE: 03+ YEARS', 'LOCATION: INGOLSTADT_DE', 'AVAILABLE FOR OPPORTUNITIES'],
+    systemStrip: ['SYSTEM STATUS: NOMINAL', 'PORTFOLIO BUILD: 07.1 // THREADROM PHASE 1 ONLINE', 'EXPERIENCE: 03+ YEARS', 'LOCATION: INGOLSTADT_DE', 'AVAILABLE FOR OPPORTUNITIES'],
     identity: {
       label: 'IDENTITY', title: 'Mechanical engineer by foundation. Development and simulation engineer by experience.',
       text: 'I work across mechanical development, CAE and computational engineering, turning design questions into calculations, simulations and practical improvements.',
@@ -37,9 +37,9 @@ export const ui = {
     },
     projects: {
       label: 'PROJECT LAB', title: 'Proof of work beyond the job title.',
-      text: 'Only completed work enters this lab. For now: one engineering-AI system and one private data-automation platform, each built end to end. More projects will appear only when their code, documentation and engineering story are ready.',
+      text: 'Only work with a defensible completed milestone enters this lab. The current selection combines a released engineering-AI platform, a completed ThreadROM Phase 1 FEM foundation and a private data-automation system.',
       open: 'OPEN CASE STUDY', curation: 'CURATION RULE // ACTIVE',
-      note: 'Both projects are complete enough to explain, but they have different release boundaries. MachineGuard AI is public and deployed; the Finance Tracker case study is public while its source code, financial data and personalised configuration remain private.',
+      note: 'The three projects have different release boundaries. MachineGuard AI is public and deployed; ThreadROM documents a completed Phase 1 foundation while later nonlinear and ROM work remains ongoing; the Finance Tracker case study is public while its source code, financial data and personalised configuration remain private.',
     },
     education: {
       label: 'ACADEMIC CORE', title: 'Mechanical engineering foundation. Computational depth.',
@@ -50,7 +50,7 @@ export const ui = {
       label: 'DIGITAL RESUME', title: 'The direct professional view — inside the larger system.',
       text: 'A recruiter-ready summary of my profile, experience, education and technical capabilities, with the complete CV one click away.',
       location: 'LOCATION', email: 'EMAIL', status: 'STATUS', open: 'Open PDF CV', openGerman: 'Open German CV',
-      dossier: 'DOSSIER // SV-CAREER-2026', revision: 'REVISION // 06.3', locked: 'STATUS // FULLY BILINGUAL',
+      dossier: 'DOSSIER // SV-CAREER-2026', revision: 'REVISION // 07.1', locked: 'STATUS // FULLY BILINGUAL',
       careerDossier: 'CAREER DOSSIER', updated: 'LAST SYSTEM UPDATE // JULY 2026',
       profile: 'PROFILE', experience: 'EXPERIENCE', education: 'EDUCATION', technical: 'TECHNICAL SYSTEMS', certifications: 'CERTIFICATIONS', languages: 'LANGUAGES',
     },
@@ -69,7 +69,7 @@ export const ui = {
   de: {
     nav: ['Profil', 'Berufserfahrung', 'Kompetenzen', 'Projektlabor', 'Ausbildung', 'Lebenslauf'],
     menuOpen: 'Menü öffnen', menuClose: 'Menü schließen', primaryNavigation: 'Hauptnavigation',
-    routeLabels: { home: 'Portfolio-Startseite', 'machineguard-ai': 'MachineGuard-AI-Projekt', 'finance-tracker': 'Finance-Tracker-Automation', resume: 'Digitaler Lebenslauf' },
+    routeLabels: { home: 'Portfolio-Startseite', 'machineguard-ai': 'MachineGuard-AI-Projekt', threadrom: 'ThreadROM Phase-1-Projekt', 'finance-tracker': 'Finance-Tracker-Automation', resume: 'Digitaler Lebenslauf' },
     skipMain: 'Zum Hauptinhalt springen', skipResume: 'Zum Lebenslauf springen',
     language: 'Sprache', english: 'EN', german: 'DE',
     hero: {
@@ -77,7 +77,7 @@ export const ui = {
       projectButton: 'Projektlabor entdecken', resumeButton: 'Digitalen Lebenslauf ansehen',
       experience: '03+ Jahre Berufserfahrung', scroll: 'WEITERSCROLLEN',
     },
-    systemStrip: ['SYSTEMSTATUS: NOMINAL', 'PORTFOLIO BUILD: 06.3 // BILINGUALES RELEASE STABIL', 'ERFAHRUNG: 03+ JAHRE', 'STANDORT: INGOLSTADT_DE', 'OFFEN FÜR NEUE AUFGABEN'],
+    systemStrip: ['SYSTEMSTATUS: NOMINAL', 'PORTFOLIO BUILD: 07.1 // THREADROM PHASE 1 ONLINE', 'ERFAHRUNG: 03+ JAHRE', 'STANDORT: INGOLSTADT_DE', 'OFFEN FÜR NEUE AUFGABEN'],
     identity: {
       label: 'PROFIL', title: 'Maschinenbau als Fundament. Entwicklung und Simulation als Berufspraxis.',
       text: 'Ich arbeite an der Schnittstelle von mechanischer Entwicklung, CAE und Computational Engineering und überführe konstruktive Fragestellungen in Berechnungen, Simulationen und umsetzbare Verbesserungen.',
@@ -100,9 +100,9 @@ export const ui = {
     },
     projects: {
       label: 'PROJEKTLABOR', title: 'Nachweisbare Arbeit über die Stellenbezeichnung hinaus.',
-      text: 'In dieses Labor kommen nur abgeschlossene und erklärbare Projekte. Aktuell: ein öffentliches Engineering-AI-System und eine private Automatisierungsplattform für lokale Finanzdaten.',
+      text: 'In dieses Labor kommen nur Projekte mit einem belastbaren abgeschlossenen Meilenstein. Aktuell: ein veröffentlichtes Engineering-AI-System, die abgeschlossene ThreadROM-Phase-1-FEM-Basis und eine private Automatisierungsplattform für lokale Finanzdaten.',
       open: 'FALLSTUDIE ÖFFNEN', curation: 'KURATIERUNGSREGEL // AKTIV',
-      note: 'Beide Projekte sind technisch weit genug entwickelt, um ihre Architektur und Ergebnisse nachvollziehbar zu zeigen. MachineGuard AI ist öffentlich verfügbar; beim Finance Tracker ist die Fallstudie öffentlich, während Quellcode, Finanzdaten und persönliche Konfiguration privat bleiben.',
+      note: 'Die drei Projekte besitzen unterschiedliche Veröffentlichungsgrenzen. MachineGuard AI ist öffentlich verfügbar; ThreadROM dokumentiert den abgeschlossenen Phase-1-Grundlagenstand, während nichtlineare Vorspannung und ROM noch weiterentwickelt werden; beim Finance Tracker ist die Fallstudie öffentlich, während Quellcode, Finanzdaten und persönliche Konfiguration privat bleiben.',
     },
     education: {
       label: 'AKADEMISCHE BASIS', title: 'Maschinenbauliches Fundament. Numerische und rechnergestützte Tiefe.',
@@ -113,7 +113,7 @@ export const ui = {
       label: 'DIGITALER LEBENSLAUF', title: 'Der direkte professionelle Überblick – innerhalb des Gesamtsystems.',
       text: 'Eine kompakte, recruiterfreundliche Übersicht über Profil, Berufserfahrung, Ausbildung und technische Kompetenzen – mit dem vollständigen Lebenslauf direkt abrufbar.',
       location: 'STANDORT', email: 'E-MAIL', status: 'STATUS', open: 'Lebenslauf öffnen', openGerman: 'Deutschen Lebenslauf öffnen',
-      dossier: 'DOSSIER // SV-KARRIERE-2026', revision: 'REVISION // 06.3', locked: 'STATUS // VOLLSTÄNDIG BILINGUAL',
+      dossier: 'DOSSIER // SV-KARRIERE-2026', revision: 'REVISION // 07.1', locked: 'STATUS // VOLLSTÄNDIG BILINGUAL',
       careerDossier: 'KARRIERE-DOSSIER', updated: 'LETZTES SYSTEMUPDATE // JULI 2026',
       profile: 'PROFIL', experience: 'BERUFSERFAHRUNG', education: 'AUSBILDUNG', technical: 'TECHNISCHE SYSTEME', certifications: 'ZERTIFIKATE', languages: 'SPRACHEN',
     },

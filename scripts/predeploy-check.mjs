@@ -9,12 +9,15 @@ const required = [
   'public/de/index.html',
   'public/de/lebenslauf/index.html',
   'public/de/projekte/machineguard-ai/index.html',
+  'public/projects/threadrom/index.html',
+  'public/de/projekte/threadrom/index.html',
   'public/de/projekte/finance-tracker/index.html',
   'public/404.html',
   'public/.nojekyll',
   'public/robots.txt',
   'public/sitemap.xml',
   'public/social/portfolio-preview.png',
+  'public/social/threadrom-preview.png',
 ]
 
 const missing = required.filter(path => !existsSync(join(root, path)))
