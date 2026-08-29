@@ -1516,7 +1516,7 @@ a[target="_blank"]:focus-visible{outline-color:var(--orange)}
   .resume-topbar .language-switch{display:inline-flex}
 }
 
-/* Phase 7.1 — ThreadROM Phase 1 case study */
+/* Phase 7.2 — ThreadROM Phase 1 + 2 case study */
 .status.milestone{color:var(--cyan)}
 .status.milestone i{background:var(--cyan);box-shadow:0 0 9px rgba(76,201,240,.72)}
 .threadrom-case{background:radial-gradient(circle at 82% 8%,rgba(76,201,240,.075),transparent 27%),radial-gradient(circle at 12% 55%,rgba(255,107,53,.04),transparent 24%),var(--bg)}

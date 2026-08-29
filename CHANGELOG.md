@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.3.0 — ThreadROM Phase 1 + 2 Portfolio Release
+
+- Expanded the bilingual ThreadROM case study through the completed Phase 2 nonlinear FEM certification milestone.
+- Added the governed preload investigation, including rejected native pretension and nut-turn strategies.
+- Added the certified 20 kN physical clamp-force result, interface-force balance and independent validation evidence.
+- Updated the project card, metadata and release status to show Phases 1 + 2 complete and Phase 3 underway.
+- Preserved the existing portfolio routing, section structure, cinematic behaviour and bilingual navigation.
+
 ## 1.2.0 — ThreadROM Phase 1 Portfolio Release
 
 - Added bilingual ThreadROM Phase 1 project card and detailed case study.

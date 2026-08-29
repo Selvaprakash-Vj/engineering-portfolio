@@ -13,13 +13,13 @@ This website is a professional evidence platform rather than a web-formatted CV.
 
 ## Current release
 
-**v1.2.0 — ThreadROM Phase 1 Portfolio Release**
+**v1.3.0 — ThreadROM Phase 1 + 2 Portfolio Release**
 
 - Complete English and German homepage
 - English and German digital résumé
 - Bilingual MachineGuard AI case study
 - Bilingual Finance Tracker Automation case study
-- Bilingual ThreadROM Phase 1 FEM case study
+- Bilingual ThreadROM Phase 1 + 2 nonlinear FEM case study
 - Language-aware routing, metadata and sitemap
 - Desktop cinematic scrolling with lighter mobile behaviour
 - Mobile-specific hero and career navigation
@@ -36,7 +36,7 @@ A reliability-aware predictive-maintenance platform for NASA C-MAPSS turbofan Re
 
 ### ThreadROM
 
-A Phase 1 threaded-fastener FEM foundation using Python, Gmsh and CalculiX. The case study documents a full-helical M10×1.5 geometry, controlled mesh refinement, axial-response verification, solver equilibrium and reproducible software-quality evidence. Later nonlinear pretension and reduced-order modelling remain explicitly outside this release.
+A Python-driven threaded-joint FEM framework using Gmsh and CalculiX. Phase 1 established the analytical, geometry, mesh and solver foundation; Phase 2 stabilised the nonlinear preload architecture and certified a full-helical M10×1.5 reference at 20.0635 kN against a 20 kN target. Phase 3 is underway, extending the certified baseline into governed parametric simulation generation.
 
 ### Finance Tracker Automation
 

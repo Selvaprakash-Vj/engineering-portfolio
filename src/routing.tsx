@@ -177,11 +177,11 @@ const routeMetadataEn: Record<AppRoute, RouteMetadata> = {
     schemaType: 'SoftwareApplication',
   },
   threadrom: {
-    title: 'ThreadROM Phase 1 | Threaded-Fastener FEM Foundation',
-    description: 'A reproducible M10×1.5 full-helical fastener FEM foundation with controlled Gmsh meshes, CalculiX axial baselines, equilibrium checks and convergence evidence.',
+    title: 'ThreadROM | Certified Nonlinear Threaded-Joint FEM Baseline',
+    description: 'ThreadROM Phases 1 and 2: analytical mechanics, parametric Gmsh geometry and a physically certified full-helical M10×1.5 nonlinear CalculiX baseline at 20.0635 kN. Phase 3 is underway.',
     path: 'projects/threadrom/',
     image: 'social/threadrom-preview.png',
-    imageAlt: 'ThreadROM Phase 1 threaded-fastener FEM project preview',
+    imageAlt: 'ThreadROM nonlinear threaded-joint FEM project preview',
     schemaType: 'CreativeWork',
   },
   'finance-tracker': {
@@ -213,11 +213,11 @@ const routeMetadataDe: Record<AppRoute, RouteMetadata> = {
     schemaType: 'SoftwareApplication',
   },
   threadrom: {
-    title: 'ThreadROM Phase 1 | FEM-Grundlage für Gewindeverbindungen',
-    description: 'Eine reproduzierbare FEM-Basis für eine vollhelikale M10×1,5-Schraube mit kontrollierten Gmsh-Netzen, CalculiX-Referenzlastfall, Gleichgewichtsprüfung und Konvergenzevidenz.',
+    title: 'ThreadROM | Zertifizierte nichtlineare FEM-Referenz für Gewindeverbindungen',
+    description: 'ThreadROM Phase 1 und 2: analytische Mechanik, parametrische Gmsh-Geometrie und eine physikalisch zertifizierte vollhelikale nichtlineare M10×1,5-CalculiX-Referenz mit 20,0635 kN. Phase 3 läuft.',
     path: 'de/projekte/threadrom/',
     image: 'social/threadrom-preview.png',
-    imageAlt: 'ThreadROM Phase-1-Projekt zur FEM von Gewindeverbindungen',
+    imageAlt: 'ThreadROM-Projekt zur nichtlinearen FEM von Gewindeverbindungen',
     schemaType: 'CreativeWork',
   },
   'finance-tracker': {

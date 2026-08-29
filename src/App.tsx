@@ -1083,147 +1083,153 @@ const threadromContent = {
   en: {
     skip: 'Skip to ThreadROM project content',
     portfolio: '← Portfolio',
-    scopeLink: 'Phase boundary ↓',
-    resultsLink: 'Review convergence ↓',
+    scopeLink: 'Current status ↓',
+    resultsLink: 'Review certification ↓',
     overline: 'PROJECT // TR-01',
-    status: 'PHASE 1 COMPLETE · FOUNDATION BASELINE',
+    status: 'PHASES 1 + 2 COMPLETE · PHASE 3 UNDERWAY',
     title: 'ThreadROM',
-    subtitle: 'A reproducible threaded-fastener FEM foundation for future reduced-order modelling.',
-    intro: 'Phase 1 establishes the controlled groundwork: a full-helical M10×1.5 geometry, grouped mesh hierarchy, CalculiX solver transfer, axial reference response, equilibrium checks and convergence evidence.',
-    heroButton: 'Review Phase 1',
-    boundaryButton: 'See scope boundary',
-    heroStats: [['GEOMETRY', 'M10×1.5 FULL HELIX'], ['MESH LEVELS', 'COARSE · MEDIUM · FINE'], ['SOLVER', 'CALCULIX 2.23'], ['REPOSITORY QA', '277 TESTS']],
+    subtitle: 'From analytical fastener mechanics to a physically certified 20 kN nonlinear threaded-joint baseline.',
+    intro: 'ThreadROM is a Python-driven framework for simulation and reduced-order modelling of threaded bolted joints. Phase 1 built the analytical and FEM foundation; Phase 2 stabilised the nonlinear preload architecture and certified the physical load path. Phase 3 is now underway.',
+    heroButton: 'Review the engineering',
+    boundaryButton: 'See current status',
+    heroStats: [['CERTIFIED CLAMP', '20.0635 kN'], ['TARGET ERROR', '+0.3175%'], ['FORCE SPREAD', '0.02881%'], ['REGRESSION QA', '337 TESTS']],
     problem: {
-      label: 'ENGINEERING PROBLEM',
-      title: 'Before a reduced-order model can be trusted, the fastener model beneath it must be controlled.',
-      text: 'Threaded joints combine detailed geometry, local stress gradients, contact, preload and interface behaviour. Phase 1 deliberately narrows the problem to a reproducible linear-elastic axial baseline so geometry, meshing, solver transfer and verification can be established before nonlinear clamp mechanics are introduced.',
+      label: 'ENGINEERING OBJECTIVE',
+      title: 'Solver convergence is not enough. The joint must carry the intended load through the intended physical path.',
+      text: 'ThreadROM treats a threaded-joint simulation as an engineering experiment. The reference model must reproduce the target preload while showing bolt tension, member compression, load transfer through the engaged thread flanks and balanced forces across the principal interfaces.',
       cards: [
-        ['GEOMETRY REALISM', 'Generate a true M10×1.5 helical thread instead of replacing it with an equivalent smooth cylinder.'],
-        ['NUMERICAL CONSISTENCY', 'Carry the same model definition through controlled mesh levels and an independent open-source solver workflow.'],
-        ['TRACEABLE EVIDENCE', 'Record loads, materials, displacement, stiffness, equilibrium residuals and convergence in a reproducible project structure.'],
+        ['BUILD THE FOUNDATION', 'Start with independent analytical mechanics, full-helical geometry, controlled meshing and a reproducible solver pipeline.'],
+        ['VERIFY THE LOAD PATH', 'Measure physical clamp force at multiple interfaces instead of accepting a solver reference quantity at face value.'],
+        ['CERTIFY THE EVIDENCE', 'Combine analytical checks, nonlinear solver behaviour, contact mechanics and deterministic provenance before calling a case valid.'],
       ],
     },
     geometry: {
-      label: 'GEOMETRY & MESH HIERARCHY',
-      title: 'One helical definition. Three controlled discretisation levels.',
-      text: 'The geometry and mesh are generated through configuration-driven Python and Gmsh workflows. Coarse, medium and fine models preserve the same engineering definition while increasing spatial resolution.',
+      label: 'PHASE 1 · ENGINEERING FOUNDATION',
+      title: 'Build the mechanics and simulation pipeline before trusting nonlinear results.',
+      text: 'Phase 1 established the analytical joint model, parametric M10×1.5 thread geometry, mesh hierarchy, CalculiX transfer and verification framework. A 1 kN linear benchmark closed with only 0.56% stiffness difference between the coarse and medium meshes, providing a controlled reference before nonlinear preload work.',
       levels: [
-        ['COARSE', '25,958 nodes', '125,300 C3D4 elements', 'Fast iteration and baseline verification'],
-        ['MEDIUM', 'Controlled refinement', 'Same grouped topology', 'Primary coarse-to-medium comparison'],
-        ['FINE', '194,527 nodes', '1,061,483 C3D4 elements', 'High-resolution reference trend'],
+        ['ANALYTICS', 'M10×1.5 joint mechanics', 'Stiffness · elongation · load share', 'Independent engineering references before FEM interpretation'],
+        ['FEM PIPELINE', 'Python + Gmsh + CalculiX', 'Geometry · mesh · solver · evidence', 'Configuration-driven and reproducible from model definition to results'],
+        ['BASELINE', '0.56% coarse ↔ medium', '351.97 → 350.01 kN/mm', 'Linear axial benchmark and equilibrium checks completed'],
       ],
     },
     solver: {
-      label: 'SOLVER BASELINE',
-      title: 'The pipeline connects generated geometry to a checked axial response.',
-      text: 'Phase 1 transfers the tetrahedral meshes into CalculiX and solves a deliberately simple elastic load case. This isolates the geometry, connectivity, material, boundary-condition and result-extraction pipeline before contact and pretension are activated.',
+      label: 'PHASE 2 · PRELOAD STABILISATION',
+      title: 'The preload method had to prove physical force transfer—not just report the requested number.',
+      text: 'Phase 2 investigated several preload strategies against the complete nonlinear bolt–nut–member assembly. Native tetrahedral pretension could report 20 kN while transferring only about 83 N through the physical interfaces; an ideal nut-turn relation produced only about 3.2–3.4 kN. Both were rejected for the certified baseline. A governed bolt-only thermal eigenstrain was then calibrated from nonlinear solves and independently certified.',
       stages: [
-        ['01', 'CONFIGURATION', 'Versioned geometry, mesh and simulation identities'],
-        ['02', 'GMSH', 'Full-helical solid generation and grouped tetrahedral mesh'],
-        ['03', 'CALCULIX', 'C3D4 transfer, linear-elastic solve and result output'],
-        ['04', 'EVIDENCE', 'Displacement, stiffness, force balance and convergence records'],
+        ['01', 'NATIVE PRETENSION', '20 kN solver reference; ≈83 N physical clamp force → rejected'],
+        ['02', 'NUT-TURN CHECK', '12.57° ideal relation; ≈3.2–3.4 kN physical clamp force → rejected'],
+        ['03', 'THERMAL EIGENSTRAIN', 'Governed bolt-only numerical actuator calibrated from solved nonlinear cases'],
+        ['04', 'CERTIFICATION', 'Interface forces, thread loading, deformation and solver behaviour checked independently'],
       ],
-      loadcase: [['MATERIAL', 'E = 210 GPa · ν = 0.30'], ['AXIAL LOAD', '1,000 N'], ['CONSTRAINT', 'TIP FIXED'], ['COARSE RESIDUAL', '5.666×10⁻¹² N'], ['FINE RESIDUAL', '1.026×10⁻¹¹ N']],
+      loadcase: [['TARGET PRELOAD', '20.000 kN'], ['CERTIFIED MODEL', '101,493 nodes · 509,115 C3D4'], ['CONTACT', '4 PRIMARY INTERFACES'], ['GEOMETRY', '20 mm grip · 8 mm engagement'], ['GOVERNED ACTUATOR', 'ΔT = −243.2745°C']],
     },
     convergence: {
-      label: 'AXIAL RESPONSE & CONVERGENCE',
-      title: 'Refinement changes the response gradually—not unpredictably.',
-      text: 'The axial stiffness remains close between the first two levels and continues a controlled softening trend at the fine level. The result is not presented as a final joint stiffness; it is the verified linear-elastic reference for later contact and pretension work.',
-      values: [['COARSE', '−2.841×10⁻³ mm', '351.97 kN/mm'], ['MEDIUM', '−2.857×10⁻³ mm', '350.01 kN/mm'], ['FINE', '−2.896×10⁻³ mm', '≈345 kN/mm']],
-      highlight: '0.56% coarse-to-medium stiffness difference',
-      note: 'The analytical baseline, solver equilibrium and mesh trend agree well enough to close the Phase 1 foundation milestone.',
+      label: 'PHASE 2 · PHYSICAL CERTIFICATION',
+      title: 'Three independent interface measurements close on the same 20 kN clamp load.',
+      text: 'The final nonlinear certification case measures the physical load where it passes through the joint—not only at the actuator. Under-head bearing, nut bearing and member-interface forces agree to within a few newtons.',
+      chartLabel: 'PHYSICAL CLAMP FORCE // kN',
+      chartSignal: 'LOAD-PATH BALANCE',
+      ariaLabel: 'ThreadROM certified physical clamp force across three joint interfaces',
+      values: [['UNDER HEAD', 'bearing force', '20.06027 kN'], ['NUT BEARING', 'bearing force', '20.06605 kN'], ['MEMBER INTERFACE', 'contact force', '20.06418 kN']],
+      highlight: '20.0635 kN mean physical clamp force',
+      note: 'Target error: +0.3175%. Maximum spread across the three measurements: 5.78 N, or 0.02881%.',
     },
     quality: {
-      label: 'REPRODUCIBILITY & SOFTWARE QUALITY',
-      title: 'The simulation is treated as a system, not a collection of manual files.',
-      text: 'ThreadROM combines engineering evidence with software quality controls so later nonlinear simulations and ROM datasets can be generated from a stable, auditable foundation.',
-      items: [['277', 'PYTEST TESTS', 'Automated coverage across geometry, configuration, transfer and evidence utilities.'], ['RUFF', 'CLEAN', 'Consistent Python style and static quality checks.'], ['83', 'MYPY-CHECKED FILES', 'Typed interfaces across the project codebase.'], ['ID', 'TRACEABILITY', 'Geometry, assembly, mesh and simulation records remain explicitly identified.']],
+      label: 'VALIDATION & ENGINEERING QA',
+      title: 'Certification combines physical observables, analytical checks and reproducible software evidence.',
+      text: 'The final baseline also showed bolt tension, member compression, dominant loading on the expected thread flank and analytical-to-FEM deformation agreement. Solver and configuration artifacts are traceable through governed evidence and SHA-256 provenance.',
+      items: [['8.25×', 'THREAD-FLANK DOMINANCE', 'The intended load-bearing flank carried the dominant compressive traction tendency.'], ['≈3.2%', 'DEFORMATION DIFFERENCE', 'FEM member-stack shortening remained close to the independent analytical prediction.'], ['20 / 20', 'ACCEPTED INCREMENTS', 'All nonlinear load increments were accepted with no cutbacks in the certification run.'], ['337', 'REGRESSION TESTS', 'Automated tests protect the engineering configuration, generation, parsing and verification workflow.']],
     },
     boundary: {
-      label: 'PHASE 1 BOUNDARY',
-      title: 'A completed foundation milestone—not a finished threaded-joint ROM.',
-      text: 'The page intentionally stops where the evidence stops. Phase 1 proves the geometry, mesh, solver and linear reference workflow. It does not yet claim a stable nonlinear clamp state, calibrated frictional contact or a trained reduced-order model.',
-      establishedTitle: 'ESTABLISHED IN PHASE 1',
-      established: ['Full-helical M10×1.5 geometry', 'Coarse / medium / fine mesh hierarchy', 'CalculiX transfer and successful elastic solves', 'Axial response, equilibrium and convergence evidence', 'Analytical reference and reproducible QA workflow'],
-      openTitle: 'OUTSIDE THIS RELEASE',
-      open: ['Stable nonlinear bolt–nut contact state', 'Controlled pretensioned clamp baseline', 'Friction and interface calibration', 'Preload-loss or service-load studies', 'Reduced-order model training and validation'],
+      label: 'CURRENT DEVELOPMENT STATUS',
+      title: 'Phases 1 and 2 are closed. Phase 3 is underway.',
+      text: 'The certified 20 kN nonlinear reference now acts as the high-fidelity anchor for the next stage. Phase 3 is extending the same governed workflow into a parametric FEM factory while preserving the validation and provenance rules established here.',
+      establishedTitle: 'COMPLETED · PHASES 1 + 2',
+      established: ['Analytical bolted-joint mechanics and verification references', 'Parametric full-helical M10×1.5 geometry and controlled FEM pipeline', 'Validated nonlinear preload architecture for the complete joint', 'Certified 20.0635 kN physical clamp-force baseline', 'Physics-based acceptance logic and reproducible evidence'],
+      openTitle: 'PHASE 3 · UNDERWAY',
+      open: ['Governed parameter-space and case generation', 'Automated simulation, post-processing and acceptance', 'Preservation and reuse of trustworthy FEM evidence', 'High-fidelity dataset generation for later reduced-order modelling'],
       statusLabel: 'PROJECT STATUS',
-      footer: 'PHASE 1 COMPLETE · NONLINEAR PRETENSION & ROM REMAIN OPEN',
+      footer: 'PHASES 1 + 2 COMPLETE · PHASE 3 UNDERWAY',
       return: '← Return to project lab',
-      review: 'Review convergence ↑',
+      review: 'Review certification ↑',
     },
   },
   de: {
     skip: 'Zum ThreadROM-Projektinhalt springen',
     portfolio: '← Portfolio',
-    scopeLink: 'Phasengrenze ↓',
-    resultsLink: 'Konvergenz ansehen ↓',
+    scopeLink: 'Aktueller Stand ↓',
+    resultsLink: 'Zertifizierung ansehen ↓',
     overline: 'PROJEKT // TR-01',
-    status: 'PHASE 1 ABGESCHLOSSEN · BASISMODELL',
+    status: 'PHASEN 1 + 2 ABGESCHLOSSEN · PHASE 3 LÄUFT',
     title: 'ThreadROM',
-    subtitle: 'Eine reproduzierbare FEM-Grundlage für Gewindeverbindungen und zukünftiges Reduced-Order Modelling.',
-    intro: 'Phase 1 schafft die kontrollierte Basis: vollhelikale M10×1,5-Geometrie, gruppierte Vernetzungshierarchie, CalculiX-Übertragung, axiale Referenzantwort, Gleichgewichtsprüfung und Konvergenznachweis.',
-    heroButton: 'Phase 1 ansehen',
-    boundaryButton: 'Phasengrenze verstehen',
-    heroStats: [['GEOMETRIE', 'M10×1,5 VOLLHELIX'], ['VERNETZUNG', 'GROB · MITTEL · FEIN'], ['SOLVER', 'CALCULIX 2.23'], ['REPOSITORY-QA', '277 TESTS']],
+    subtitle: 'Von analytischer Schraubenmechanik zu einer physikalisch zertifizierten nichtlinearen 20-kN-Referenz für Gewindeverbindungen.',
+    intro: 'ThreadROM ist ein Python-gesteuertes Framework für Simulation und Reduced-Order Modelling von Schraubenverbindungen. Phase 1 schuf die analytische und numerische Grundlage; Phase 2 stabilisierte die nichtlineare Vorspannarchitektur und zertifizierte den physikalischen Lastpfad. Phase 3 läuft derzeit.',
+    heroButton: 'Engineering ansehen',
+    boundaryButton: 'Aktuellen Stand ansehen',
+    heroStats: [['ZERTIFIZIERTE KLEMMKRAFT', '20,0635 kN'], ['ZIELABWEICHUNG', '+0,3175 %'], ['KRAFTSTREUUNG', '0,02881 %'], ['REGRESSION-QA', '337 TESTS']],
     problem: {
-      label: 'TECHNISCHE FRAGESTELLUNG',
-      title: 'Bevor ein Reduced-Order Model belastbar sein kann, muss das zugrunde liegende Schraubenmodell kontrolliert sein.',
-      text: 'Gewindeverbindungen vereinen detaillierte Geometrie, lokale Spannungsgradienten, Kontakt, Vorspannung und Schnittstellenverhalten. Phase 1 grenzt die Aufgabe bewusst auf eine reproduzierbare linear-elastische axiale Referenz ein, damit Geometrie, Vernetzung, Solver-Übertragung und Verifikation vor der nichtlinearen Klemmmechanik abgesichert werden.',
+      label: 'TECHNISCHES ZIEL',
+      title: 'Solver-Konvergenz reicht nicht aus. Die Verbindung muss die vorgesehene Last über den vorgesehenen physikalischen Lastpfad tragen.',
+      text: 'ThreadROM behandelt die Simulation einer Gewindeverbindung als technisches Experiment. Das Referenzmodell muss die Zielvorspannung reproduzieren und gleichzeitig Schraubenzug, Bauteilkompression, Lastübertragung über die tragenden Gewindeflanken sowie ausgeglichene Kräfte an den wesentlichen Schnittstellen nachweisen.',
       cards: [
-        ['REALISTISCHE GEOMETRIE', 'Erzeugung eines echten M10×1,5-Schraubengewindes statt einer vereinfachten glatten Ersatzgeometrie.'],
-        ['NUMERISCHE KONSISTENZ', 'Dieselbe Modelldefinition wird über kontrollierte Vernetzungsstufen und einen offenen Solver-Workflow geführt.'],
-        ['NACHVOLLZIEHBARE EVIDENZ', 'Lasten, Werkstoff, Verschiebung, Steifigkeit, Gleichgewichtsresiduen und Konvergenz werden reproduzierbar dokumentiert.'],
+        ['GRUNDLAGE AUFBAUEN', 'Unabhängige analytische Mechanik, vollhelikale Geometrie, kontrollierte Vernetzung und reproduzierbare Solver-Pipeline zuerst absichern.'],
+        ['LASTPFAD VERIFIZIEREN', 'Physikalische Klemmkraft an mehreren Schnittstellen messen, statt nur einer Solver-Referenzgröße zu vertrauen.'],
+        ['EVIDENZ ZERTIFIZIEREN', 'Analytische Prüfungen, nichtlineares Solver-Verhalten, Kontaktmechanik und deterministische Provenienz gemeinsam bewerten.'],
       ],
     },
     geometry: {
-      label: 'GEOMETRIE & VERNETZUNGSHIERARCHIE',
-      title: 'Eine helikale Definition. Drei kontrollierte Diskretisierungsstufen.',
-      text: 'Geometrie und Vernetzung werden konfigurationsgesteuert mit Python und Gmsh erzeugt. Grobe, mittlere und feine Modelle behalten dieselbe technische Definition bei und erhöhen gezielt die räumliche Auflösung.',
+      label: 'PHASE 1 · ENGINEERING-GRUNDLAGE',
+      title: 'Mechanik und Simulationspipeline aufbauen, bevor nichtlineare Ergebnisse bewertet werden.',
+      text: 'Phase 1 etablierte das analytische Verbindungsmodell, die parametrische M10×1,5-Gewindegeometrie, die Vernetzungshierarchie, die CalculiX-Übertragung und den Verifikationsrahmen. Ein linearer 1-kN-Referenzfall wurde mit nur 0,56 % Steifigkeitsunterschied zwischen grobem und mittlerem Netz abgeschlossen und bildete damit die kontrollierte Basis für die nichtlineare Vorspannung.',
       levels: [
-        ['GROB', '25.958 Knoten', '125.300 C3D4-Elemente', 'Schnelle Iteration und Basisprüfung'],
-        ['MITTEL', 'Kontrollierte Verfeinerung', 'Gleiche gruppierte Topologie', 'Zentraler Grob-Mittel-Vergleich'],
-        ['FEIN', '194.527 Knoten', '1.061.483 C3D4-Elemente', 'Hochaufgelöster Referenztrend'],
+        ['ANALYTIK', 'M10×1,5-Verbindungsmechanik', 'Steifigkeit · Dehnung · Lastanteile', 'Unabhängige technische Referenzen vor der FEM-Interpretation'],
+        ['FEM-PIPELINE', 'Python + Gmsh + CalculiX', 'Geometrie · Netz · Solver · Evidenz', 'Konfigurationsgesteuert und reproduzierbar von der Modelldefinition bis zum Ergebnis'],
+        ['REFERENZ', '0,56 % grob ↔ mittel', '351,97 → 350,01 kN/mm', 'Linearer Axialfall und Gleichgewichtsprüfungen abgeschlossen'],
       ],
     },
     solver: {
-      label: 'SOLVER-BASIS',
-      title: 'Die Pipeline verbindet generierte Geometrie mit einer geprüften axialen Antwort.',
-      text: 'Phase 1 überträgt die Tetraedernetze nach CalculiX und löst einen bewusst einfachen elastischen Lastfall. Dadurch werden Geometrie, Konnektivität, Werkstoff, Randbedingungen und Ergebnisauswertung isoliert abgesichert, bevor Kontakt und Vorspannung aktiviert werden.',
+      label: 'PHASE 2 · STABILISIERUNG DER VORSPANNUNG',
+      title: 'Die Vorspannmethode musste physikalische Kraftübertragung nachweisen – nicht nur den gewünschten Zahlenwert ausgeben.',
+      text: 'Phase 2 untersuchte mehrere Vorspannstrategien am vollständigen nichtlinearen Schraube–Mutter–Bauteil-Modell. Die native Vorspannung konnte 20 kN als Solver-Referenz melden, übertrug an den physikalischen Schnittstellen jedoch nur rund 83 N; eine ideale Mutterdrehung erzeugte nur etwa 3,2–3,4 kN. Beide Ansätze wurden für die zertifizierte Referenz verworfen. Anschließend wurde eine kontrollierte thermische Eigenverzerrung ausschließlich im Schraubenkörper anhand nichtlinearer Lösungen kalibriert und unabhängig zertifiziert.',
       stages: [
-        ['01', 'KONFIGURATION', 'Versionierte Geometrie-, Netz- und Simulationsidentitäten'],
-        ['02', 'GMSH', 'Vollhelikaler Volumenkörper und gruppiertes Tetraedernetz'],
-        ['03', 'CALCULIX', 'C3D4-Übertragung, linear-elastische Lösung und Ergebnisausgabe'],
-        ['04', 'EVIDENZ', 'Verschiebung, Steifigkeit, Kräftegleichgewicht und Konvergenz'],
+        ['01', 'NATIVE VORSPANNUNG', '20 kN Solver-Referenz; ≈83 N physikalische Klemmkraft → verworfen'],
+        ['02', 'MUTTERDREHUNG', '12,57° ideale Relation; ≈3,2–3,4 kN physikalische Klemmkraft → verworfen'],
+        ['03', 'THERMISCHE EIGENVERZERRUNG', 'Kontrollierter numerischer Aktuator nur im Schraubenkörper, aus nichtlinearen Fällen kalibriert'],
+        ['04', 'ZERTIFIZIERUNG', 'Schnittstellenkräfte, Gewindelast, Verformung und Solver-Verhalten unabhängig geprüft'],
       ],
-      loadcase: [['WERKSTOFF', 'E = 210 GPa · ν = 0,30'], ['AXIALLAST', '1.000 N'], ['RANDBEDINGUNG', 'SPITZE FIXIERT'], ['RESIDUUM GROB', '5,666×10⁻¹² N'], ['RESIDUUM FEIN', '1,026×10⁻¹¹ N']],
+      loadcase: [['ZIELVORSPANNUNG', '20,000 kN'], ['ZERTIFIZIERTES MODELL', '101.493 Knoten · 509.115 C3D4'], ['KONTAKT', '4 PRIMÄRE SCHNITTSTELLEN'], ['GEOMETRIE', '20 mm Klemmlänge · 8 mm Eingriff'], ['KONTROLLIERTER AKTUATOR', 'ΔT = −243,2745 °C']],
     },
     convergence: {
-      label: 'AXIALE ANTWORT & KONVERGENZ',
-      title: 'Die Verfeinerung verändert die Antwort schrittweise – nicht unkontrolliert.',
-      text: 'Die axiale Steifigkeit liegt zwischen den ersten beiden Stufen eng beieinander und zeigt auf der feinen Stufe einen kontrollierten weicheren Trend. Das Ergebnis ist keine endgültige Verbindungssteifigkeit, sondern die verifizierte linear-elastische Referenz für spätere Kontakt- und Vorspannungsmodelle.',
-      values: [['GROB', '−2,841×10⁻³ mm', '351,97 kN/mm'], ['MITTEL', '−2,857×10⁻³ mm', '350,01 kN/mm'], ['FEIN', '−2,896×10⁻³ mm', '≈345 kN/mm']],
-      highlight: '0,56 % Steifigkeitsdifferenz zwischen grob und mittel',
-      note: 'Analytische Referenz, Solver-Gleichgewicht und Vernetzungstrend stimmen ausreichend überein, um den Phase-1-Grundlagenmeilenstein abzuschließen.',
+      label: 'PHASE 2 · PHYSIKALISCHE ZERTIFIZIERUNG',
+      title: 'Drei unabhängige Schnittstellenmessungen schließen auf dieselbe Klemmkraft von rund 20 kN.',
+      text: 'Der finale nichtlineare Zertifizierungsfall misst die physikalische Last dort, wo sie durch die Verbindung übertragen wird – nicht nur am Aktuator. Kopfauflage, Mutterauflage und Bauteilschnittstelle stimmen bis auf wenige Newton überein.',
+      chartLabel: 'PHYSIKALISCHE KLEMMKRAFT // kN',
+      chartSignal: 'LASTPFAD-BILANZ',
+      ariaLabel: 'ThreadROM zertifizierte physikalische Klemmkraft an drei Schnittstellen der Verbindung',
+      values: [['KOPFAUFLAGE', 'Auflagerkraft', '20,06027 kN'], ['MUTTERAUFLAGE', 'Auflagerkraft', '20,06605 kN'], ['BAUTEILSCHNITTSTELLE', 'Kontaktkraft', '20,06418 kN']],
+      highlight: '20,0635 kN mittlere physikalische Klemmkraft',
+      note: 'Abweichung vom Zielwert: +0,3175 %. Maximale Streuung zwischen den drei Messungen: 5,78 N bzw. 0,02881 %.',
     },
     quality: {
-      label: 'REPRODUZIERBARKEIT & SOFTWAREQUALITÄT',
-      title: 'Die Simulation wird als System behandelt – nicht als Sammlung manueller Dateien.',
-      text: 'ThreadROM verbindet technische Evidenz mit Softwarequalitätsprüfungen, damit spätere nichtlineare Simulationen und ROM-Datensätze auf einer stabilen und auditierbaren Grundlage entstehen.',
-      items: [['277', 'PYTEST-TESTS', 'Automatisierte Abdeckung für Geometrie, Konfiguration, Übertragung und Evidenzwerkzeuge.'], ['RUFF', 'CLEAN', 'Konsistenter Python-Stil und statische Qualitätsprüfungen.'], ['83', 'MYPY-GEPRÜFTE DATEIEN', 'Typisierte Schnittstellen im gesamten Projektcode.'], ['ID', 'RÜCKVERFOLGBARKEIT', 'Geometrie-, Baugruppen-, Netz- und Simulationsdatensätze bleiben eindeutig identifiziert.']],
+      label: 'VALIDIERUNG & ENGINEERING-QA',
+      title: 'Die Zertifizierung verbindet physikalische Messgrößen, analytische Prüfungen und reproduzierbare Software-Evidenz.',
+      text: 'Die finale Referenz zeigte zusätzlich Schraubenzug, Bauteilkompression, dominante Belastung der erwarteten Gewindeflanke und eine gute analytisch-numerische Übereinstimmung der Verformung. Solver- und Konfigurationsartefakte sind über kontrollierte Evidenz und SHA-256-Provenienz rückverfolgbar.',
+      items: [['8,25×', 'DOMINANZ DER TRAGENDEN FLANKE', 'Die erwartete tragende Gewindeflanke zeigte die deutlich dominierende Druckbeanspruchung.'], ['≈3,2 %', 'VERFORMUNGSABWEICHUNG', 'Die FEM-Verkürzung des Klemmstapels lag nahe an der unabhängigen analytischen Vorhersage.'], ['20 / 20', 'AKZEPTIERTE INKREMENTE', 'Alle nichtlinearen Lastinkremente wurden im Zertifizierungslauf ohne Cutbacks akzeptiert.'], ['337', 'REGRESSIONSTESTS', 'Automatisierte Tests schützen Konfiguration, Generierung, Parsing und Verifikationsworkflow.']],
     },
     boundary: {
-      label: 'GRENZE VON PHASE 1',
-      title: 'Ein abgeschlossener Grundlagenmeilenstein – noch kein fertiges Gewindeverbindungs-ROM.',
-      text: 'Die Seite endet bewusst dort, wo die Evidenz endet. Phase 1 belegt Geometrie, Vernetzung, Solver und linearen Referenzworkflow. Sie beansprucht noch keinen stabilen nichtlinearen Klemmzustand, kalibrierten Reibkontakt oder ein trainiertes Reduced-Order Model.',
-      establishedTitle: 'IN PHASE 1 NACHGEWIESEN',
-      established: ['Vollhelikale M10×1,5-Geometrie', 'Grobe / mittlere / feine Vernetzungshierarchie', 'CalculiX-Übertragung und erfolgreiche elastische Lösungen', 'Axiale Antwort, Gleichgewicht und Konvergenzevidenz', 'Analytische Referenz und reproduzierbarer QA-Workflow'],
-      openTitle: 'NICHT BESTANDTEIL DIESES RELEASES',
-      open: ['Stabiler nichtlinearer Schraube-Mutter-Kontakt', 'Kontrollierter vorgespannter Klemmzustand', 'Reibungs- und Schnittstellenkalibrierung', 'Vorspannungsverlust- oder Betriebslaststudien', 'Training und Validierung des Reduced-Order Models'],
+      label: 'AKTUELLER ENTWICKLUNGSSTAND',
+      title: 'Phase 1 und 2 sind abgeschlossen. Phase 3 läuft.',
+      text: 'Die zertifizierte nichtlineare 20-kN-Referenz dient nun als High-Fidelity-Anker für die nächste Stufe. Phase 3 erweitert denselben kontrollierten Workflow zu einer parametrischen FEM-Fabrik und übernimmt dabei die hier etablierten Regeln für Validierung und Provenienz.',
+      establishedTitle: 'ABGESCHLOSSEN · PHASEN 1 + 2',
+      established: ['Analytische Mechanik der Schraubenverbindung und Verifikationsreferenzen', 'Parametrische vollhelikale M10×1,5-Geometrie und kontrollierte FEM-Pipeline', 'Validierte nichtlineare Vorspannarchitektur für die vollständige Verbindung', 'Zertifizierte physikalische Klemmkraft von 20,0635 kN', 'Physikbasierte Akzeptanzlogik und reproduzierbare Evidenz'],
+      openTitle: 'PHASE 3 · LÄUFT',
+      open: ['Kontrollierter Parameterraum und automatische Fallgenerierung', 'Automatisierte Simulation, Nachverarbeitung und Akzeptanz', 'Erhalt und Wiederverwendung vertrauenswürdiger FEM-Evidenz', 'High-Fidelity-Datensatz als Grundlage für späteres Reduced-Order Modelling'],
       statusLabel: 'PROJEKTSTATUS',
-      footer: 'PHASE 1 ABGESCHLOSSEN · NICHTLINEARE VORSPANNUNG & ROM NOCH OFFEN',
+      footer: 'PHASEN 1 + 2 ABGESCHLOSSEN · PHASE 3 LÄUFT',
       return: '← Zurück zum Projektlabor',
-      review: 'Konvergenz ansehen ↑',
+      review: 'Zertifizierung ansehen ↑',
     },
   },
 } as const
@@ -1266,26 +1272,37 @@ function ThreadROMHeroVisual() {
         </g>
         <path className="tr-load-arrow" d="M20 195 H72" markerEnd="url(#trArrow)" />
         <g className="tr-fixed"><rect x="672" y="120" width="36" height="150" />{Array.from({ length: 7 }).map((_,i)=><path key={i} d={`M708 ${125+i*22} l24 18`} />)}</g>
-        <text x="18" y="174">1,000 N</text><text x="455" y="285">M10 × 1.5 FULL HELIX</text><text x="663" y="104">FIXED</text>
+        <text x="18" y="174">20 kN</text><text x="455" y="285">M10 × 1.5 FULL HELIX</text><text x="640" y="104">LOAD PATH</text>
       </svg>
-      <div className="tr-readout tr-readout-a"><span>BASELINE</span><strong>LINEAR ELASTIC</strong></div>
-      <div className="tr-readout tr-readout-b"><span>MESH</span><strong>3 LEVELS</strong></div>
-      <div className="tr-readout tr-readout-c"><span>STATUS</span><strong>PHASE 1 CLOSED</strong></div>
+      <div className="tr-readout tr-readout-a"><span>BASELINE</span><strong>NONLINEAR CONTACT</strong></div>
+      <div className="tr-readout tr-readout-b"><span>CERTIFIED</span><strong>20.0635 kN</strong></div>
+      <div className="tr-readout tr-readout-c"><span>STATUS</span><strong>PHASE 3 UNDERWAY</strong></div>
     </div>
   )
 }
 
-function ThreadROMConvergenceGraphic({ values }: { values: readonly (readonly [string, string, string])[] }) {
-  const points = [351.97, 350.01, 345]
+function ThreadROMCertificationGraphic({
+  values,
+  chartLabel,
+  chartSignal,
+  ariaLabel,
+}: {
+  values: readonly (readonly [string, string, string])[]
+  chartLabel: string
+  chartSignal: string
+  ariaLabel: string
+}) {
+  const xs = [130, 380, 630]
+  const ys = [145, 118, 132]
   return (
-    <div className="tr-convergence-chart" data-reveal role="img" aria-label="ThreadROM Phase 1 axial stiffness convergence">
-      <div className="tr-chart-head"><span>AXIAL STIFFNESS // kN/mm</span><strong>CONTROLLED SOFTENING TREND</strong></div>
+    <div className="tr-convergence-chart" data-reveal role="img" aria-label={ariaLabel}>
+      <div className="tr-chart-head"><span>{chartLabel}</span><strong>{chartSignal}</strong></div>
       <svg viewBox="0 0 760 330" preserveAspectRatio="none">
         {[65,120,175,230,285].map(y => <line className="tr-chart-grid" key={y} x1="70" y1={y} x2="710" y2={y} />)}
-        <polyline className="tr-chart-line" points="130,112 380,126 630,185" />
-        {points.map((value,index)=><g className="tr-convergence-point" key={value}><circle cx={[130,380,630][index]} cy={[112,126,185][index]} r="9"/><text x={[130,380,630][index]} y={[86,100,159][index]} textAnchor="middle">{value}</text></g>)}
+        <polyline className="tr-chart-line" points={xs.map((x,index)=>`${x},${ys[index]}`).join(' ')} />
+        {values.map(([, , value],index)=><g className="tr-convergence-point" key={value}><circle cx={xs[index]} cy={ys[index]} r="9"/><text x={xs[index]} y={ys[index]-26} textAnchor="middle">{value.replace(' kN','')}</text></g>)}
       </svg>
-      <div className="tr-convergence-values">{values.map(([level,disp,stiff])=><article key={level}><span>{level}</span><p>{disp}</p><strong>{stiff}</strong></article>)}</div>
+      <div className="tr-convergence-values">{values.map(([level,kind,value])=><article key={level}><span>{level}</span><p>{kind}</p><strong>{value}</strong></article>)}</div>
     </div>
   )
 }
@@ -1316,7 +1333,7 @@ function ThreadROMPage() {
         </section>
 
         <nav className="case-jumpbar" aria-label={language === 'de' ? 'ThreadROM-Projektnavigation' : 'ThreadROM project navigation'}>
-          <a href="#tr-problem">{language === 'de' ? 'Problem' : 'Problem'}</a><a href="#tr-geometry">{language === 'de' ? 'Geometrie' : 'Geometry'}</a><a href="#tr-solver">Solver</a><a href="#tr-convergence">{language === 'de' ? 'Konvergenz' : 'Convergence'}</a><a href="#tr-quality">{language === 'de' ? 'Qualität' : 'Quality'}</a><a href="#tr-boundary">{language === 'de' ? 'Grenze' : 'Boundary'}</a>
+          <a href="#tr-problem">{language === 'de' ? 'Ziel' : 'Objective'}</a><a href="#tr-geometry">Phase 1</a><a href="#tr-solver">Phase 2</a><a href="#tr-convergence">{language === 'de' ? 'Zertifizierung' : 'Certification'}</a><a href="#tr-quality">{language === 'de' ? 'Validierung' : 'Validation'}</a><a href="#tr-boundary">Status</a>
         </nav>
 
         <section id="tr-problem" className="case-section">
@@ -1339,7 +1356,7 @@ function ThreadROMPage() {
 
         <section id="tr-convergence" className="case-section panel-section">
           <CaseSectionTitle index="04" label={content.convergence.label} title={content.convergence.title} text={content.convergence.text} />
-          <ThreadROMConvergenceGraphic values={content.convergence.values} />
+          <ThreadROMCertificationGraphic values={content.convergence.values} chartLabel={content.convergence.chartLabel} chartSignal={content.convergence.chartSignal} ariaLabel={content.convergence.ariaLabel} />
           <div className="tr-convergence-summary" data-reveal><strong>{content.convergence.highlight}</strong><p>{content.convergence.note}</p></div>
         </section>
 
