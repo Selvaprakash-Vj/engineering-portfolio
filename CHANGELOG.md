@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.5.0 — ThreadROM Adaptive FEM & ROM Development Update
+
+- Updated Phase 3 with the demonstrated autonomous adaptive FEM factory and the 43-state evidence base, including 35 in-domain states and 19 executed fine-mesh reference runs.
+- Added Phase 4 data qualification, member-shortening target, synthetic-only training evidence and independent-validation boundary in English and German.
+- Updated ThreadROM project metrics, navigation, route metadata and localized social previews while preserving existing Phase 1–2 evidence and the wider portfolio.
+- No real FEM ROM accuracy or completed numerical certification is claimed.
+
+## 1.4.0 — ThreadROM Phase 3 Factory Update
+
+- Expanded the bilingual ThreadROM case study with the active Phase-3 governed DOE and adaptive FEM factory.
+- Added the Geometry & Mesh Atlas, adaptive preload calibration loop, registry/provenance controls and full-physics certification flow.
+- Clarified that the core factory architecture is implemented while the diversified FEM production dataset is still being expanded for Phase 4.
+- Updated the homepage project card, route metadata, cinematic project navigation and release copy without changing the wider portfolio structure.
+
 ## 1.3.0 — ThreadROM Phase 1 + 2 Portfolio Release
 
 - Expanded the bilingual ThreadROM case study through the completed Phase 2 nonlinear FEM certification milestone.

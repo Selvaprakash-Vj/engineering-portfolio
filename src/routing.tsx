@@ -177,11 +177,11 @@ const routeMetadataEn: Record<AppRoute, RouteMetadata> = {
     schemaType: 'SoftwareApplication',
   },
   threadrom: {
-    title: 'ThreadROM | Certified Nonlinear Threaded-Joint FEM Baseline',
-    description: 'ThreadROM Phases 1 and 2: analytical mechanics, parametric Gmsh geometry and a physically certified full-helical M10×1.5 nonlinear CalculiX baseline at 20.0635 kN. Phase 3 is underway.',
+    title: "ThreadROM | Adaptive Nonlinear FEM & Reduced-Order Modelling",
+    description: "ThreadROM: 43 accepted FEM states, an autonomous adaptive FEM factory and 19 fine-mesh reference runs. Phase 4 ROM development is underway; real-FEM training and validation are pending.",
     path: 'projects/threadrom/',
-    image: 'social/threadrom-preview.png',
-    imageAlt: 'ThreadROM nonlinear threaded-joint FEM project preview',
+    image: "social/threadrom-preview.png",
+    imageAlt: "ThreadROM adaptive FEM and developing ROM project preview",
     schemaType: 'CreativeWork',
   },
   'finance-tracker': {
@@ -213,11 +213,11 @@ const routeMetadataDe: Record<AppRoute, RouteMetadata> = {
     schemaType: 'SoftwareApplication',
   },
   threadrom: {
-    title: 'ThreadROM | Zertifizierte nichtlineare FEM-Referenz für Gewindeverbindungen',
-    description: 'ThreadROM Phase 1 und 2: analytische Mechanik, parametrische Gmsh-Geometrie und eine physikalisch zertifizierte vollhelikale nichtlineare M10×1,5-CalculiX-Referenz mit 20,0635 kN. Phase 3 läuft.',
+    title: "ThreadROM | Adaptive nichtlineare FEM & Modellreduktion",
+    description: "ThreadROM: 43 akzeptierte FEM-Zustände, autonome adaptive FEM-Fabrik und 19 Feinnetz-Referenzläufe. Phase 4 läuft; Training und Validierung mit realen FEM-Daten stehen aus.",
     path: 'de/projekte/threadrom/',
-    image: 'social/threadrom-preview.png',
-    imageAlt: 'ThreadROM-Projekt zur nichtlinearen FEM von Gewindeverbindungen',
+    image: "social/threadrom-preview-de.png",
+    imageAlt: "ThreadROM-Projekt zur adaptiven FEM und ROM-Entwicklung",
     schemaType: 'CreativeWork',
   },
   'finance-tracker': {

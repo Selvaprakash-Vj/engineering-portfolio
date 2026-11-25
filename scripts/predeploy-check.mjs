@@ -18,6 +18,7 @@ const required = [
   'public/sitemap.xml',
   'public/social/portfolio-preview.png',
   'public/social/threadrom-preview.png',
+  'public/social/threadrom-preview-de.png',
 ]
 
 const missing = required.filter(path => !existsSync(join(root, path)))

@@ -13,13 +13,13 @@ This website is a professional evidence platform rather than a web-formatted CV.
 
 ## Current release
 
-**v1.3.0 — ThreadROM Phase 1 + 2 Portfolio Release**
+**v1.5.0 — ThreadROM Adaptive FEM & ROM Development Update**
 
 - Complete English and German homepage
 - English and German digital résumé
 - Bilingual MachineGuard AI case study
 - Bilingual Finance Tracker Automation case study
-- Bilingual ThreadROM Phase 1 + 2 nonlinear FEM case study
+- Bilingual ThreadROM case study: demonstrated Phase-3 adaptive FEM factory and Phase-4 ROM development
 - Language-aware routing, metadata and sitemap
 - Desktop cinematic scrolling with lighter mobile behaviour
 - Mobile-specific hero and career navigation
@@ -36,7 +36,7 @@ A reliability-aware predictive-maintenance platform for NASA C-MAPSS turbofan Re
 
 ### ThreadROM
 
-A Python-driven threaded-joint FEM framework using Gmsh and CalculiX. Phase 1 established the analytical, geometry, mesh and solver foundation; Phase 2 stabilised the nonlinear preload architecture and certified a full-helical M10×1.5 reference at 20.0635 kN against a 20 kN target. Phase 3 is underway, extending the certified baseline into governed parametric simulation generation.
+A Python-driven threaded-joint FEM and ROM framework using Gmsh and CalculiX. Phases 1 and 2 established and certified the nonlinear M10×1.5 reference at 20.0635 kN against a 20 kN target. Phase 3 demonstrates a diversified DOE and autonomous adaptive FEM factory with 43 accepted states (35 in the initial ROM domain), 19 executed fine-mesh reference runs and 13 physical acceptance gates. Phase 4 implements a 12-gate data-admission architecture and a synthetic-only training workflow; numerical certification, real FEM training and independent ROM accuracy validation remain in progress.
 
 ### Finance Tracker Automation
 

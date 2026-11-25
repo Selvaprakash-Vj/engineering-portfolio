@@ -1565,6 +1565,7 @@ html[data-project-scene='tr-geometry'] .case-shell .grid{background-size:38px 38
 html[data-project-scene='tr-solver'] .case-shell .grid{background-size:92px 44px;transform:translate3d(14px,-8px,0)}
 html[data-project-scene='tr-convergence'] .case-shell .grid{background-size:52px 76px;transform:translate3d(-8px,12px,0)}
 html[data-project-scene='tr-quality'] .case-shell .grid{background-size:44px 44px;transform:translate3d(10px,-10px,0)}
+html[data-project-scene='tr-factory'] .case-shell .grid{background-size:82px 54px;transform:translate3d(-12px,8px,0);opacity:.7}
 html[data-project-scene='tr-boundary'] .case-shell .grid{background-size:118px 118px;transform:translate3d(0,18px,0);opacity:.55}
 
 @media(max-width:1100px){
@@ -1588,3 +1589,19 @@ html[data-project-scene='tr-boundary'] .case-shell .grid{background-size:118px 1
   .tr-quality-grid{grid-template-columns:1fr}.tr-quality-grid article{min-height:auto;border-right:0}.tr-quality-grid article:last-child{border-bottom:0}
   .tr-boundary-grid{grid-template-columns:1fr}.tr-boundary-grid article{padding:24px}
 }
+
+/* ThreadROM Phase 4 — scoped extensions to existing project components. */
+.threadrom-project-card .project-result{position:static;text-align:left;margin-top:20px}
+.tr-card-evidence{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0 20px}
+.tr-card-evidence>div{min-width:0;border-top:1px solid var(--line);padding-top:10px;display:grid;gap:5px}
+.tr-card-evidence strong{font-family:var(--display);font-size:1.2rem;color:var(--cyan)}
+.tr-card-evidence span{font-family:var(--mono);font-size:.47rem;line-height:1.5;color:var(--muted);overflow-wrap:anywhere}
+.tr-evidence-grid{margin-top:24px}
+.tr-evidence-grid article{min-height:0}
+.tr-evidence-grid strong{font-size:clamp(1.8rem,3.5vw,3rem);overflow-wrap:anywhere}
+.tr-evidence-grid p{margin-top:16px}
+.tr-rom-pipeline article{grid-template-columns:44px minmax(0,1fr) 24px}
+.tr-rom-summary{border-color:rgba(255,107,53,.38);background:rgba(255,107,53,.035)}
+.tr-rom-summary strong{color:var(--orange)}
+@media(min-width:901px) and (prefers-reduced-motion:no-preference) and (pointer:fine){html[data-project-scene='tr-rom'] .case-shell .grid{background-size:60px 90px;transform:translate3d(8px,-12px,0)}}
+@media(max-width:680px){.tr-rom-pipeline article{grid-template-columns:34px minmax(0,1fr)}.tr-card-evidence span{font-size:.5rem}}

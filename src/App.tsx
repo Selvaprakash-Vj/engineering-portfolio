@@ -421,13 +421,16 @@ function ProjectsSection() {
       />
       <div className="project-grid">
         {site.projects.map((project, index) => (
-          <article className={`project-card ${project.accent}`} key={project.number} data-reveal>
+          <article className={`project-card ${project.accent}${project.route === 'threadrom' ? ' threadrom-project-card' : ''}`} key={project.number} data-reveal>
             <div className="project-meta"><span>{project.number}</span><strong className={`status ${project.status.toLowerCase()}`}><i />{language === 'de' ? (project.status === 'COMPLETE' ? 'ABGESCHLOSSEN' : project.status === 'MILESTONE' ? 'MEILENSTEIN' : 'PRIVAT') : project.status}</strong></div>
             <ProjectGraphic index={index} />
             <p className="project-category">{project.category}</p>
             <h3>{project.title}</h3>
             <p className="project-description">{project.description}</p>
             <div className="project-result"><strong>{project.metric}</strong><span>{project.metricLabel}</span></div>
+            {project.route === 'threadrom' && <div className="tr-card-evidence" aria-label={language === 'de' ? 'Weitere ThreadROM-Kennzahlen' : 'Additional ThreadROM metrics'}>
+              {(language === 'de' ? [['19','FEINNETZLÄUFE'],['13','PHYSIKPRÜFUNGEN'],['12','ROM-FREIGABESTUFEN']] : [['19','FINE-MESH RUNS'],['13','PHYSICS GATES'],['12','ROM ADMISSION GATES']]).map(([value,label])=><div key={label}><strong>{value}</strong><span>{label}</span></div>)}
+            </div>}
             <div className="tool-chips compact">{project.stack.map(tool => <span key={tool}>{tool}</span>)}</div>
             <RouteLink
               className="project-link project-link-active"
@@ -1086,13 +1089,13 @@ const threadromContent = {
     scopeLink: 'Current status ↓',
     resultsLink: 'Review certification ↓',
     overline: 'PROJECT // TR-01',
-    status: 'PHASES 1 + 2 COMPLETE · PHASE 3 UNDERWAY',
+    status: "PHASES 1–3 IMPLEMENTED · PHASE 4 IN DEVELOPMENT",
     title: 'ThreadROM',
-    subtitle: 'From analytical fastener mechanics to a physically certified 20 kN nonlinear threaded-joint baseline.',
-    intro: 'ThreadROM is a Python-driven framework for simulation and reduced-order modelling of threaded bolted joints. Phase 1 built the analytical and FEM foundation; Phase 2 stabilised the nonlinear preload architecture and certified the physical load path. Phase 3 is now underway.',
+    subtitle: "From nonlinear joint mechanics to autonomous FEM production and reduced-order modelling.",
+    intro: "ThreadROM is a Python-driven engineering framework for threaded bolted joints. A certified nonlinear reference and an autonomous adaptive FEM factory underpin a diversified simulation evidence base. Phase 4 develops the first reduced-order model for member shortening, with numerical certification and real FEM training still pending.",
     heroButton: 'Review the engineering',
     boundaryButton: 'See current status',
-    heroStats: [['CERTIFIED CLAMP', '20.0635 kN'], ['TARGET ERROR', '+0.3175%'], ['FORCE SPREAD', '0.02881%'], ['REGRESSION QA', '337 TESTS']],
+    heroStats: [["ACCEPTED FEM STATES", "43"], ["FINE-MESH REFERENCE RUNS", "19"], ["PHYSICAL ACCEPTANCE GATES", "13"], ["ROM ADMISSION GATES", "12"]],
     problem: {
       label: 'ENGINEERING OBJECTIVE',
       title: 'Solver convergence is not enough. The joint must carry the intended load through the intended physical path.',
@@ -1140,20 +1143,157 @@ const threadromContent = {
       label: 'VALIDATION & ENGINEERING QA',
       title: 'Certification combines physical observables, analytical checks and reproducible software evidence.',
       text: 'The final baseline also showed bolt tension, member compression, dominant loading on the expected thread flank and analytical-to-FEM deformation agreement. Solver and configuration artifacts are traceable through governed evidence and SHA-256 provenance.',
-      items: [['8.25×', 'THREAD-FLANK DOMINANCE', 'The intended load-bearing flank carried the dominant compressive traction tendency.'], ['≈3.2%', 'DEFORMATION DIFFERENCE', 'FEM member-stack shortening remained close to the independent analytical prediction.'], ['20 / 20', 'ACCEPTED INCREMENTS', 'All nonlinear load increments were accepted with no cutbacks in the certification run.'], ['337', 'REGRESSION TESTS', 'Automated tests protect the engineering configuration, generation, parsing and verification workflow.']],
+      items: [['8.25×', 'THREAD-FLANK DOMINANCE', 'The intended load-bearing flank carried the dominant compressive traction tendency.'], ['≈3.2%', 'DEFORMATION DIFFERENCE', 'FEM member-stack shortening remained close to the independent analytical prediction.'], ['20 / 20', 'ACCEPTED INCREMENTS', 'All nonlinear load increments were accepted with no cutbacks in the certification run.'], ['337', 'PHASE-2 REGRESSION TESTS', 'The certified Phase-2 milestone closed with 337 automated regression tests passing.']],
+    },
+    factory: {
+      "label": "PHASE 3 · DIVERSIFIED DOE & AUTONOMOUS ADAPTIVE FEM FACTORY",
+      "title": "From one certified reference to a diversified, traceable FEM evidence base.",
+      "text": "A diversified Design of Experiments (DOE) covers metric fastener sizes, clamped-member materials, joint geometries and preload configurations within a defined engineering domain. Deterministic case, geometry, mesh, material and solver identities preserve traceability. The Geometry & Mesh Atlas reuses validated CAD and meshes when their engineering identities match.",
+      "stages": [
+        [
+          "01",
+          "DOE DEFINITION",
+          "Define traceable engineering cases within the documented parameter envelope."
+        ],
+        [
+          "02",
+          "GEOMETRY & MESH ATLAS",
+          "Resolve matching validated assets or generate new parametric geometry and meshes."
+        ],
+        [
+          "03",
+          "ADAPTIVE FEM CALIBRATION",
+          "Predict initial thermal preload, measure realized clamp force and autonomously derive bounded follow-up trials when necessary."
+        ],
+        [
+          "04",
+          "FULL-PHYSICS ACCEPTANCE",
+          "Apply 13 mandatory criteria: clamp-force consistency, thread-contact load transfer, bolt tension and extension, member compression and shortening, support equilibrium and nonlinear convergence."
+        ],
+        [
+          "05",
+          "GOVERNED EVIDENCE",
+          "Preserve accepted states and their provenance. Valid calibration misses inform future predictions; accepted states become ROM admission candidates."
+        ]
+      ],
+      "governanceTitle": "PRODUCTION CONTROLS",
+      "governance": [
+        [
+          "EXECUTION",
+          "Explicit execution authorization and bounded parallel CalculiX execution."
+        ],
+        [
+          "RECOVERY",
+          "Recover valid completed simulations; prevent duplicate runs."
+        ],
+        [
+          "LEARNING",
+          "Preserve valid calibration misses as evidence for future preload estimates."
+        ],
+        [
+          "TRACEABILITY",
+          "Immutable provenance records and deterministic engineering identities."
+        ]
+      ],
+      "evidence": [
+        [
+          "43",
+          "ACCEPTED FEM STATES",
+          "Diversified simulation evidence base as of 25 November 2026."
+        ],
+        [
+          "35",
+          "IN-DOMAIN FEM STATES",
+          "Within the frozen member-shortening ROM applicability domain; not necessarily admitted training data."
+        ],
+        [
+          "19",
+          "FINE-MESH REFERENCE RUNS",
+          "Executed reference simulations across 11 numerical-certification cohorts."
+        ],
+        [
+          "13",
+          "PHYSICAL ACCEPTANCE GATES",
+          "Mandatory mechanical and solver checks beyond convergence."
+        ]
+      ],
+      "outcomeLabel": "FACTORY IMPLEMENTED & DEMONSTRATED",
+      "outcome": "The adaptive FEM infrastructure has produced a diversified, traceable evidence base. ROM-specific numerical certification and final training-data admission belong to Phase 4. The demonstrated applicability remains limited to the documented engineering domain."
+    },
+    rom: {
+      "label": "PHASE 4 · GOVERNED DATA ADMISSION & ROM DEVELOPMENT",
+      "title": "A converged FEM result is not automatically qualified training data.",
+      "text": "The first physics-informed, data-driven ROM targets axial shortening of the clamped-member stack in millimetres. The target definition is frozen before training and uses the difference between mean axial displacements at the head-bearing and nut-bearing regions of the final accepted FEM state.",
+      "stages": [
+        [
+          "01",
+          "NUMERICAL CERTIFICATION",
+          "Compare production and fine-mesh FEM responses at matched realized clamp forces using governed interpolation and uncertainty bounds. Formal certification remains in progress."
+        ],
+        [
+          "02",
+          "12-GATE DATA ADMISSION",
+          "Qualify engineering inputs, identities, physical acceptance, target extraction, numerical accuracy, domain, provenance and partition integrity. SHA-256 evidence binds accepted FEM sources; protected independent holdouts remain excluded from training."
+        ],
+        [
+          "03",
+          "FEATURES & MODEL DEVELOPMENT",
+          "Deterministic engineering-input projection, feature encoding, source-lineage checks, dataset preparation, model fitting and serialized prediction artifacts. Demonstrated on synthetic data only."
+        ],
+        [
+          "04",
+          "INDEPENDENT ACCURACY VALIDATION",
+          "Train on admitted real FEM data and evaluate against predefined accuracy criteria with protected blind holdouts. Pending."
+        ]
+      ],
+      "evidence": [
+        [
+          "12",
+          "ROM ADMISSION GATES",
+          "Implemented DA01–DA12 qualification architecture."
+        ],
+        [
+          "96",
+          "SYNTHETIC SAMPLES",
+          "Training, validation and test groups separated; training-only normalization and deterministic prediction replay demonstrated."
+        ],
+        [
+          "11 / 12",
+          "GATES MET IN TWO CASES",
+          "Non-authorizing real-FEM evaluations; formal numerical certification is outstanding."
+        ],
+        [
+          "24+ / 6",
+          "PLANNED TRAINING / HOLDOUT",
+          "Target of at least 24 qualified real FEM training samples and six independent blind holdout samples."
+        ]
+      ],
+      "outcomeLabel": "ROM INFRASTRUCTURE IMPLEMENTED",
+      "outcome": "The synthetic-only sandbox demonstrates the technical model-development workflow, not real-FEM prediction accuracy. Numerical certification, formal real-data admission, real-FEM training and independent accuracy validation remain in progress."
     },
     boundary: {
-      label: 'CURRENT DEVELOPMENT STATUS',
-      title: 'Phases 1 and 2 are closed. Phase 3 is underway.',
-      text: 'The certified 20 kN nonlinear reference now acts as the high-fidelity anchor for the next stage. Phase 3 is extending the same governed workflow into a parametric FEM factory while preserving the validation and provenance rules established here.',
-      establishedTitle: 'COMPLETED · PHASES 1 + 2',
-      established: ['Analytical bolted-joint mechanics and verification references', 'Parametric full-helical M10×1.5 geometry and controlled FEM pipeline', 'Validated nonlinear preload architecture for the complete joint', 'Certified 20.0635 kN physical clamp-force baseline', 'Physics-based acceptance logic and reproducible evidence'],
-      openTitle: 'PHASE 3 · UNDERWAY',
-      open: ['Governed parameter-space and case generation', 'Automated simulation, post-processing and acceptance', 'Preservation and reuse of trustworthy FEM evidence', 'High-fidelity dataset generation for later reduced-order modelling'],
-      statusLabel: 'PROJECT STATUS',
-      footer: 'PHASES 1 + 2 COMPLETE · PHASE 3 UNDERWAY',
-      return: '← Return to project lab',
-      review: 'Review certification ↑',
+      "label": "CURRENT DEVELOPMENT STATUS",
+      "title": "A demonstrated FEM factory. A reduced-order model still in development.",
+      "text": "Phases 1 and 2 established the trusted nonlinear reference; Phase 3 implemented and demonstrated autonomous FEM production. Phase 4 is qualifying the evidence and developing a bounded predictive model. No real-FEM ROM accuracy or general industrial applicability is claimed.",
+      "establishedTitle": "ESTABLISHED · PHASES 1–3",
+      "established": [
+        "Independent analytical mechanics and parametric full-helical FEM workflow",
+        "Certified 20.0635 kN nonlinear reference and physical load-path verification",
+        "Diversified DOE, Geometry & Mesh Atlas and autonomous adaptive calibration",
+        "43 accepted FEM states; 35 within the initial ROM domain",
+        "19 executed fine-mesh reference runs across 11 numerical-certification cohorts"
+      ],
+      "openTitle": "PHASE 4 · IN DEVELOPMENT",
+      "open": [
+        "Complete ROM-specific numerical certification",
+        "Admit at least 24 qualified real FEM training samples",
+        "Preserve six independent blind holdout samples",
+        "Train and independently validate the first real FEM-based member-shortening ROM"
+      ],
+      "statusLabel": "PROJECT STATUS",
+      "footer": "PHASES 1–3 IMPLEMENTED · PHASE 4 IN DEVELOPMENT",
+      "return": "← Return to project lab",
+      "review": "Review Phase 4 ↑"
     },
   },
   de: {
@@ -1162,13 +1302,13 @@ const threadromContent = {
     scopeLink: 'Aktueller Stand ↓',
     resultsLink: 'Zertifizierung ansehen ↓',
     overline: 'PROJEKT // TR-01',
-    status: 'PHASEN 1 + 2 ABGESCHLOSSEN · PHASE 3 LÄUFT',
+    status: "PHASEN 1–3 UMGESETZT · PHASE 4 IN ENTWICKLUNG",
     title: 'ThreadROM',
-    subtitle: 'Von analytischer Schraubenmechanik zu einer physikalisch zertifizierten nichtlinearen 20-kN-Referenz für Gewindeverbindungen.',
-    intro: 'ThreadROM ist ein Python-gesteuertes Framework für Simulation und Reduced-Order Modelling von Schraubenverbindungen. Phase 1 schuf die analytische und numerische Grundlage; Phase 2 stabilisierte die nichtlineare Vorspannarchitektur und zertifizierte den physikalischen Lastpfad. Phase 3 läuft derzeit.',
+    subtitle: "Von der nichtlinearen Verbindungsmechanik zur autonomen FEM-Datenerzeugung und Modellreduktion.",
+    intro: "ThreadROM ist ein Python-basiertes Engineering-Framework für Schraubenverbindungen. Eine zertifizierte nichtlineare Referenz und eine autonome adaptive FEM-Fabrik bilden die Grundlage einer diversifizierten Berechnungsbasis. In Phase 4 entsteht das erste Reduced-Order Model für die Bauteilverkürzung; die numerische Zertifizierung und das Training mit realen FEM-Daten stehen noch aus.",
     heroButton: 'Engineering ansehen',
     boundaryButton: 'Aktuellen Stand ansehen',
-    heroStats: [['ZERTIFIZIERTE KLEMMKRAFT', '20,0635 kN'], ['ZIELABWEICHUNG', '+0,3175 %'], ['KRAFTSTREUUNG', '0,02881 %'], ['REGRESSION-QA', '337 TESTS']],
+    heroStats: [["AKZEPTIERTE FEM-ZUSTÄNDE", "43"], ["FEINNETZ-REFERENZLÄUFE", "19"], ["PHYSIKALISCHE PRÜFKRITERIEN", "13"], ["ROM-DATENFREIGABESTUFEN", "12"]],
     problem: {
       label: 'TECHNISCHES ZIEL',
       title: 'Solver-Konvergenz reicht nicht aus. Die Verbindung muss die vorgesehene Last über den vorgesehenen physikalischen Lastpfad tragen.',
@@ -1184,52 +1324,189 @@ const threadromContent = {
       title: 'Mechanik und Simulationspipeline aufbauen, bevor nichtlineare Ergebnisse bewertet werden.',
       text: 'Phase 1 etablierte das analytische Verbindungsmodell, die parametrische M10×1,5-Gewindegeometrie, die Vernetzungshierarchie, die CalculiX-Übertragung und den Verifikationsrahmen. Ein linearer 1-kN-Referenzfall wurde mit nur 0,56 % Steifigkeitsunterschied zwischen grobem und mittlerem Netz abgeschlossen und bildete damit die kontrollierte Basis für die nichtlineare Vorspannung.',
       levels: [
-        ['ANALYTIK', 'M10×1,5-Verbindungsmechanik', 'Steifigkeit · Dehnung · Lastanteile', 'Unabhängige technische Referenzen vor der FEM-Interpretation'],
-        ['FEM-PIPELINE', 'Python + Gmsh + CalculiX', 'Geometrie · Netz · Solver · Evidenz', 'Konfigurationsgesteuert und reproduzierbar von der Modelldefinition bis zum Ergebnis'],
+        ['ANALYTIK', 'M10×1,5-Verbindungsmechanik', 'Steifigkeit · Dehnung · Lastanteil', 'Unabhängige technische Referenzen vor der FEM-Interpretation'],
+        ['FEM-PIPELINE', 'Python + Gmsh + CalculiX', 'Geometrie · Netz · Solver · Evidenz', 'Konfigurationsgesteuert und reproduzierbar vom Modell bis zum Ergebnis'],
         ['REFERENZ', '0,56 % grob ↔ mittel', '351,97 → 350,01 kN/mm', 'Linearer Axialfall und Gleichgewichtsprüfungen abgeschlossen'],
       ],
     },
     solver: {
       label: 'PHASE 2 · STABILISIERUNG DER VORSPANNUNG',
-      title: 'Die Vorspannmethode musste physikalische Kraftübertragung nachweisen – nicht nur den gewünschten Zahlenwert ausgeben.',
-      text: 'Phase 2 untersuchte mehrere Vorspannstrategien am vollständigen nichtlinearen Schraube–Mutter–Bauteil-Modell. Die native Vorspannung konnte 20 kN als Solver-Referenz melden, übertrug an den physikalischen Schnittstellen jedoch nur rund 83 N; eine ideale Mutterdrehung erzeugte nur etwa 3,2–3,4 kN. Beide Ansätze wurden für die zertifizierte Referenz verworfen. Anschließend wurde eine kontrollierte thermische Eigenverzerrung ausschließlich im Schraubenkörper anhand nichtlinearer Lösungen kalibriert und unabhängig zertifiziert.',
+      title: 'Die Vorspannmethode musste den physikalischen Kraftfluss nachweisen – nicht nur den angeforderten Zahlenwert melden.',
+      text: 'Phase 2 untersuchte mehrere Vorspannstrategien am vollständigen nichtlinearen Schrauben-Mutter-Bauteil-System. Die native Vorspannung im Tetraedernetz konnte 20 kN melden, übertrug aber nur etwa 83 N über die physikalischen Schnittstellen; die ideale Mutterdrehung erzeugte nur etwa 3,2–3,4 kN. Beide Ansätze wurden für die zertifizierte Referenz verworfen. Anschließend wurde eine governed thermische Eigenverzerrung nur im Schraubenkörper anhand nichtlinearer Lösungen kalibriert und unabhängig zertifiziert.',
       stages: [
-        ['01', 'NATIVE VORSPANNUNG', '20 kN Solver-Referenz; ≈83 N physikalische Klemmkraft → verworfen'],
-        ['02', 'MUTTERDREHUNG', '12,57° ideale Relation; ≈3,2–3,4 kN physikalische Klemmkraft → verworfen'],
-        ['03', 'THERMISCHE EIGENVERZERRUNG', 'Kontrollierter numerischer Aktuator nur im Schraubenkörper, aus nichtlinearen Fällen kalibriert'],
+        ['01', 'NATIVE VORSPANNUNG', '20-kN-Solverreferenz; ≈83 N physikalische Klemmkraft → verworfen'],
+        ['02', 'MUTTERDREHUNG', '12,57° ideale Beziehung; ≈3,2–3,4 kN physikalische Klemmkraft → verworfen'],
+        ['03', 'THERMISCHE EIGENVERZERRUNG', 'Governed numerischer Aktuator nur im Schraubenkörper, aus gelösten nichtlinearen Fällen kalibriert'],
         ['04', 'ZERTIFIZIERUNG', 'Schnittstellenkräfte, Gewindelast, Verformung und Solver-Verhalten unabhängig geprüft'],
       ],
-      loadcase: [['ZIELVORSPANNUNG', '20,000 kN'], ['ZERTIFIZIERTES MODELL', '101.493 Knoten · 509.115 C3D4'], ['KONTAKT', '4 PRIMÄRE SCHNITTSTELLEN'], ['GEOMETRIE', '20 mm Klemmlänge · 8 mm Eingriff'], ['KONTROLLIERTER AKTUATOR', 'ΔT = −243,2745 °C']],
+      loadcase: [['ZIELVORSPANNUNG', '20,000 kN'], ['ZERTIFIZIERTES MODELL', '101.493 Knoten · 509.115 C3D4'], ['KONTAKT', '4 HAUPTSCHNITTSTELLEN'], ['GEOMETRIE', '20 mm Klemmlänge · 8 mm Eingriff'], ['GOVERNED AKTUATOR', 'ΔT = −243,2745°C']],
     },
     convergence: {
       label: 'PHASE 2 · PHYSIKALISCHE ZERTIFIZIERUNG',
-      title: 'Drei unabhängige Schnittstellenmessungen schließen auf dieselbe Klemmkraft von rund 20 kN.',
+      title: 'Drei unabhängige Schnittstellenmessungen schließen auf dieselbe Klemmkraft von 20 kN.',
       text: 'Der finale nichtlineare Zertifizierungsfall misst die physikalische Last dort, wo sie durch die Verbindung übertragen wird – nicht nur am Aktuator. Kopfauflage, Mutterauflage und Bauteilschnittstelle stimmen bis auf wenige Newton überein.',
       chartLabel: 'PHYSIKALISCHE KLEMMKRAFT // kN',
-      chartSignal: 'LASTPFAD-BILANZ',
+      chartSignal: 'LASTPFAD-GLEICHGEWICHT',
       ariaLabel: 'ThreadROM zertifizierte physikalische Klemmkraft an drei Schnittstellen der Verbindung',
-      values: [['KOPFAUFLAGE', 'Auflagerkraft', '20,06027 kN'], ['MUTTERAUFLAGE', 'Auflagerkraft', '20,06605 kN'], ['BAUTEILSCHNITTSTELLE', 'Kontaktkraft', '20,06418 kN']],
+      values: [['KOPFAUFLAGE', 'Auflagekraft', '20,06027 kN'], ['MUTTERAUFLAGE', 'Auflagekraft', '20,06605 kN'], ['BAUTEILSCHNITTSTELLE', 'Kontaktkraft', '20,06418 kN']],
       highlight: '20,0635 kN mittlere physikalische Klemmkraft',
-      note: 'Abweichung vom Zielwert: +0,3175 %. Maximale Streuung zwischen den drei Messungen: 5,78 N bzw. 0,02881 %.',
+      note: 'Zielabweichung: +0,3175 %. Maximale Streuung der drei Messungen: 5,78 N bzw. 0,02881 %.',
     },
     quality: {
       label: 'VALIDIERUNG & ENGINEERING-QA',
-      title: 'Die Zertifizierung verbindet physikalische Messgrößen, analytische Prüfungen und reproduzierbare Software-Evidenz.',
-      text: 'Die finale Referenz zeigte zusätzlich Schraubenzug, Bauteilkompression, dominante Belastung der erwarteten Gewindeflanke und eine gute analytisch-numerische Übereinstimmung der Verformung. Solver- und Konfigurationsartefakte sind über kontrollierte Evidenz und SHA-256-Provenienz rückverfolgbar.',
-      items: [['8,25×', 'DOMINANZ DER TRAGENDEN FLANKE', 'Die erwartete tragende Gewindeflanke zeigte die deutlich dominierende Druckbeanspruchung.'], ['≈3,2 %', 'VERFORMUNGSABWEICHUNG', 'Die FEM-Verkürzung des Klemmstapels lag nahe an der unabhängigen analytischen Vorhersage.'], ['20 / 20', 'AKZEPTIERTE INKREMENTE', 'Alle nichtlinearen Lastinkremente wurden im Zertifizierungslauf ohne Cutbacks akzeptiert.'], ['337', 'REGRESSIONSTESTS', 'Automatisierte Tests schützen Konfiguration, Generierung, Parsing und Verifikationsworkflow.']],
+      title: 'Die Zertifizierung kombiniert physikalische Messgrößen, analytische Prüfungen und reproduzierbare Software-Evidenz.',
+      text: 'Die finale Referenz zeigte zusätzlich Schraubenzug, Bauteilkompression, dominante Belastung der erwarteten Gewindeflanke und eine gute Übereinstimmung von analytischer und FEM-Verformung. Solver- und Konfigurationsartefakte sind über governed Evidenz und SHA-256-Provenienz rückverfolgbar.',
+      items: [['8,25×', 'DOMINANZ DER GEWINDEFLANKE', 'Die vorgesehene tragende Flanke zeigte die dominante Druckbeanspruchung.'], ['≈3,2 %', 'VERFORMUNGSABWEICHUNG', 'Die FEM-Verkürzung des Bauteilstapels blieb nahe an der unabhängigen analytischen Vorhersage.'], ['20 / 20', 'AKZEPTIERTE INKREMENTE', 'Alle nichtlinearen Lastinkremente wurden im Zertifizierungslauf ohne Cutbacks akzeptiert.'], ['337', 'PHASE-2-REGRESSIONSTESTS', 'Der zertifizierte Phase-2-Meilenstein wurde mit 337 bestandenen automatisierten Regressionstests abgeschlossen.']],
+    },
+    factory: {
+      "label": "PHASE 3 · DIVERSIFIZIERTER DOE & AUTONOME ADAPTIVE FEM-FABRIK",
+      "title": "Von einer zertifizierten Referenz zu einer diversifizierten, nachvollziehbaren FEM-Berechnungsbasis.",
+      "text": "Ein diversifizierter statistischer Versuchsplan (Design of Experiments, DOE) umfasst metrische Schraubengrößen, Werkstoffe der verspannten Bauteile, Verbindungsgeometrien und Vorspannungszustände innerhalb eines definierten technischen Anwendungsbereichs. Deterministische Fall-, Geometrie-, Netz-, Werkstoff- und Solver-Identitäten sichern die Rückverfolgbarkeit. Der Geometry & Mesh Atlas ermöglicht die Wiederverwendung validierter CAD- und Netzmodelle bei identischer technischer Identität.",
+      "stages": [
+        [
+          "01",
+          "DOE-DEFINITION",
+          "Nachvollziehbare Berechnungsfälle innerhalb des dokumentierten Parameterbereichs definieren."
+        ],
+        [
+          "02",
+          "GEOMETRY & MESH ATLAS",
+          "Passende validierte Modelle wiederverwenden oder parametrische Geometrien und Netze erzeugen."
+        ],
+        [
+          "03",
+          "ADAPTIVE FEM-KALIBRIERUNG",
+          "Thermischen Vorspannungsparameter prognostizieren, tatsächliche Klemmkraft messen und bei Bedarf selbstständig begrenzte Folgeversuche ableiten."
+        ],
+        [
+          "04",
+          "PHYSIKALISCHE AKZEPTANZ",
+          "13 verbindliche Kriterien prüfen: Klemmkraftkonsistenz, Lastübertragung im Gewindekontakt, Schraubenzug und -verlängerung, Bauteilkompression und -verkürzung, Auflagergleichgewicht sowie nichtlineare Konvergenz."
+        ],
+        [
+          "05",
+          "NACHVOLLZIEHBARE EVIDENZ",
+          "Akzeptierte Zustände und ihre Herkunft sichern. Gültige Kalibrierungsabweichungen verbessern künftige Prognosen; akzeptierte Zustände werden Kandidaten für die ROM-Datenfreigabe."
+        ]
+      ],
+      "governanceTitle": "PROZESSKONTROLLE",
+      "governance": [
+        [
+          "AUSFÜHRUNG",
+          "Explizite Ausführungsfreigaben und begrenzte parallele CalculiX-Berechnungen."
+        ],
+        [
+          "WIEDERAUFNAHME",
+          "Gültige abgeschlossene Simulationen wiederverwenden und Doppelläufe vermeiden."
+        ],
+        [
+          "LERNEN",
+          "Gültige Kalibrierungsabweichungen als Grundlage künftiger Vorspannungsprognosen erhalten."
+        ],
+        [
+          "RÜCKVERFOLGBARKEIT",
+          "Unveränderbare Herkunftsnachweise und deterministische technische Identitäten."
+        ]
+      ],
+      "evidence": [
+        [
+          "43",
+          "AKZEPTIERTE FEM-ZUSTÄNDE",
+          "Diversifizierte Berechnungsbasis, Stand 25. November 2026."
+        ],
+        [
+          "35",
+          "FEM-ZUSTÄNDE IM ANWENDUNGSBEREICH",
+          "Innerhalb des festgelegten ROM-Anwendungsbereichs für Bauteilverkürzung; nicht zwangsläufig als Trainingsdaten freigegeben."
+        ],
+        [
+          "19",
+          "FEINNETZ-REFERENZLÄUFE",
+          "Durchgeführte Referenzsimulationen in 11 Gruppen zur numerischen Zertifizierung."
+        ],
+        [
+          "13",
+          "PHYSIKALISCHE PRÜFKRITERIEN",
+          "Verbindliche mechanische und numerische Prüfungen über die reine Solverkonvergenz hinaus."
+        ]
+      ],
+      "outcomeLabel": "FEM-FABRIK UMGESETZT UND ERPROBT",
+      "outcome": "Die adaptive FEM-Infrastruktur hat eine diversifizierte und nachvollziehbare Berechnungsbasis erzeugt. Die ROM-spezifische numerische Zertifizierung und endgültige Trainingsdatenfreigabe erfolgen in Phase 4. Der nachgewiesene Anwendungsbereich bleibt auf die dokumentierten technischen Konfigurationen beschränkt."
+    },
+    rom: {
+      "label": "PHASE 4 · REGELGEBUNDENE DATENFREIGABE & ROM-ENTWICKLUNG",
+      "title": "Ein konvergiertes FEM-Ergebnis ist nicht automatisch als Trainingsdatum geeignet.",
+      "text": "Das erste physikalisch fundierte, datengetriebene Reduced-Order Model (ROM) soll die axiale Verkürzung der verspannten Bauteile in Millimetern prognostizieren. Die Zielgrößendefinition wurde vor dem Training festgelegt und basiert auf der Differenz der mittleren axialen Verschiebungen an den kopf- und mutterseitigen Auflagebereichen des finalen akzeptierten FEM-Zustands.",
+      "stages": [
+        [
+          "01",
+          "NUMERISCHE ZERTIFIZIERUNG",
+          "Produktionsmodelle und fein vernetzte FEM-Referenzen bei übereinstimmender tatsächlicher Klemmkraft anhand kontrollierter Interpolation und Unsicherheitsgrenzen vergleichen. Formale Zertifizierung läuft."
+        ],
+        [
+          "02",
+          "ZWÖLF DATENFREIGABESTUFEN",
+          "Technische Eingangsgrößen, Identitäten, physikalische Akzeptanz, Zielgrößenextraktion, numerische Genauigkeit, Anwendbarkeit, Datenherkunft und Datensatzintegrität prüfen. SHA-256-Nachweise sichern die Zuordnung zu akzeptierten FEM-Ergebnissen; geschützte unabhängige Testfälle bleiben vom Training getrennt."
+        ],
+        [
+          "03",
+          "MERKMALE & MODELLENTWICKLUNG",
+          "Deterministische Aufbereitung technischer Eingangsgrößen, Merkmalskodierung, Prüfung der Datenherkunft, Datensatzaufbereitung, Modelltraining und serialisierte Vorhersageartefakte. Bisher nur mit synthetischen Daten erprobt."
+        ],
+        [
+          "04",
+          "UNABHÄNGIGE GENAUIGKEITSVALIDIERUNG",
+          "Mit freigegebenen realen FEM-Daten trainieren und anhand vorab definierter Genauigkeitskriterien sowie geschützter Blind-Testfälle bewerten. Noch ausstehend."
+        ]
+      ],
+      "evidence": [
+        [
+          "12",
+          "ROM-DATENFREIGABESTUFEN",
+          "Implementierte Prüfarchitektur DA01–DA12."
+        ],
+        [
+          "96",
+          "SYNTHETISCHE DATENSÄTZE",
+          "Getrennte Trainings-, Validierungs- und Testgruppen; Normalisierung nur anhand der Trainingsdaten und deterministische Wiederholung der Vorhersagen erprobt."
+        ],
+        [
+          "11 / 12",
+          "KRITERIEN IN ZWEI FÄLLEN ERFÜLLT",
+          "Nicht freigebende Prüfungen realer FEM-Fälle; formale numerische Zertifizierung steht aus."
+        ],
+        [
+          "24+ / 6",
+          "GEPLANT: TRAINING / BLIND-TEST",
+          "Ziel: mindestens 24 qualifizierte reale FEM-Trainingsdatensätze und sechs unabhängige Blind-Testfälle."
+        ]
+      ],
+      "outcomeLabel": "ROM-INFRASTRUKTUR IMPLEMENTIERT",
+      "outcome": "Die rein synthetische Testumgebung demonstriert den technischen Modellierungsworkflow, nicht die Vorhersagegenauigkeit für reale FEM-Daten. Numerische Zertifizierung, formale Datenfreigabe, Training mit realen FEM-Daten und unabhängige Genauigkeitsvalidierung laufen noch."
     },
     boundary: {
-      label: 'AKTUELLER ENTWICKLUNGSSTAND',
-      title: 'Phase 1 und 2 sind abgeschlossen. Phase 3 läuft.',
-      text: 'Die zertifizierte nichtlineare 20-kN-Referenz dient nun als High-Fidelity-Anker für die nächste Stufe. Phase 3 erweitert denselben kontrollierten Workflow zu einer parametrischen FEM-Fabrik und übernimmt dabei die hier etablierten Regeln für Validierung und Provenienz.',
-      establishedTitle: 'ABGESCHLOSSEN · PHASEN 1 + 2',
-      established: ['Analytische Mechanik der Schraubenverbindung und Verifikationsreferenzen', 'Parametrische vollhelikale M10×1,5-Geometrie und kontrollierte FEM-Pipeline', 'Validierte nichtlineare Vorspannarchitektur für die vollständige Verbindung', 'Zertifizierte physikalische Klemmkraft von 20,0635 kN', 'Physikbasierte Akzeptanzlogik und reproduzierbare Evidenz'],
-      openTitle: 'PHASE 3 · LÄUFT',
-      open: ['Kontrollierter Parameterraum und automatische Fallgenerierung', 'Automatisierte Simulation, Nachverarbeitung und Akzeptanz', 'Erhalt und Wiederverwendung vertrauenswürdiger FEM-Evidenz', 'High-Fidelity-Datensatz als Grundlage für späteres Reduced-Order Modelling'],
-      statusLabel: 'PROJEKTSTATUS',
-      footer: 'PHASEN 1 + 2 ABGESCHLOSSEN · PHASE 3 LÄUFT',
-      return: '← Zurück zum Projektlabor',
-      review: 'Zertifizierung ansehen ↑',
+      "label": "AKTUELLER ENTWICKLUNGSSTAND",
+      "title": "Eine erprobte FEM-Fabrik. Ein Reduced-Order Model in Entwicklung.",
+      "text": "Phase 1 und 2 etablierten die vertrauenswürdige nichtlineare Referenz; Phase 3 setzte die autonome FEM-Datenerzeugung um und erprobte sie. Phase 4 qualifiziert die Berechnungsergebnisse und entwickelt ein Modell für einen begrenzten Anwendungsbereich. Eine ROM-Vorhersagegenauigkeit für reale FEM-Daten oder allgemeine industrielle Anwendbarkeit wird nicht beansprucht.",
+      "establishedTitle": "ETABLIERT · PHASEN 1–3",
+      "established": [
+        "Unabhängige analytische Mechanik und parametrischer FEM-Workflow mit vollhelikaler Gewindegeometrie",
+        "Zertifizierte nichtlineare Referenz mit 20,0635 kN und physikalischem Lastpfadnachweis",
+        "Diversifizierter DOE, Geometry & Mesh Atlas und autonome adaptive Kalibrierung",
+        "43 akzeptierte FEM-Zustände; 35 im ersten ROM-Anwendungsbereich",
+        "19 durchgeführte Feinnetz-Referenzläufe in 11 Gruppen zur numerischen Zertifizierung"
+      ],
+      "openTitle": "PHASE 4 · IN ENTWICKLUNG",
+      "open": [
+        "ROM-spezifische numerische Zertifizierung abschließen",
+        "Mindestens 24 qualifizierte reale FEM-Trainingsdatensätze freigeben",
+        "Sechs unabhängige Blind-Testfälle schützen",
+        "Erstes ROM für die Bauteilverkürzung mit realen FEM-Daten trainieren und unabhängig validieren"
+      ],
+      "statusLabel": "PROJEKTSTATUS",
+      "footer": "PHASEN 1–3 UMGESETZT · PHASE 4 IN ENTWICKLUNG",
+      "return": "← Zurück zum Projektlabor",
+      "review": "Phase 4 ansehen ↑"
     },
   },
 } as const
@@ -1251,6 +1528,7 @@ function ThreadROMTopbar() {
 }
 
 function ThreadROMHeroVisual() {
+  const de = resolveLanguage() === 'de'
   return (
     <div className="tr-hero-visual" aria-hidden="true">
       <div className="tr-visual-grid" />
@@ -1272,11 +1550,11 @@ function ThreadROMHeroVisual() {
         </g>
         <path className="tr-load-arrow" d="M20 195 H72" markerEnd="url(#trArrow)" />
         <g className="tr-fixed"><rect x="672" y="120" width="36" height="150" />{Array.from({ length: 7 }).map((_,i)=><path key={i} d={`M708 ${125+i*22} l24 18`} />)}</g>
-        <text x="18" y="174">20 kN</text><text x="455" y="285">M10 × 1.5 FULL HELIX</text><text x="640" y="104">LOAD PATH</text>
+        <text x="18" y="174">20 kN</text><text x="455" y="285">{de ? 'M10 × 1,5 GEWINDE' : 'M10 × 1.5 FULL HELIX'}</text><text x="640" y="104">{de ? 'LASTPFAD' : 'LOAD PATH'}</text>
       </svg>
-      <div className="tr-readout tr-readout-a"><span>BASELINE</span><strong>NONLINEAR CONTACT</strong></div>
-      <div className="tr-readout tr-readout-b"><span>CERTIFIED</span><strong>20.0635 kN</strong></div>
-      <div className="tr-readout tr-readout-c"><span>STATUS</span><strong>PHASE 3 UNDERWAY</strong></div>
+      <div className="tr-readout tr-readout-a"><span>{de ? 'REFERENZ' : 'BASELINE'}</span><strong>{de ? 'NICHTLINEARER KONTAKT' : 'NONLINEAR CONTACT'}</strong></div>
+      <div className="tr-readout tr-readout-b"><span>{de ? 'ZERTIFIZIERT' : 'CERTIFIED'}</span><strong>{de ? '20,0635 kN' : '20.0635 kN'}</strong></div>
+      <div className="tr-readout tr-readout-c"><span>STATUS</span><strong>{de ? 'PHASE 4 IN ENTWICKLUNG' : 'PHASE 4 IN DEVELOPMENT'}</strong></div>
     </div>
   )
 }
@@ -1333,7 +1611,7 @@ function ThreadROMPage() {
         </section>
 
         <nav className="case-jumpbar" aria-label={language === 'de' ? 'ThreadROM-Projektnavigation' : 'ThreadROM project navigation'}>
-          <a href="#tr-problem">{language === 'de' ? 'Ziel' : 'Objective'}</a><a href="#tr-geometry">Phase 1</a><a href="#tr-solver">Phase 2</a><a href="#tr-convergence">{language === 'de' ? 'Zertifizierung' : 'Certification'}</a><a href="#tr-quality">{language === 'de' ? 'Validierung' : 'Validation'}</a><a href="#tr-boundary">Status</a>
+          <a href="#tr-problem">{language === 'de' ? 'Ziel' : 'Objective'}</a><a href="#tr-geometry">Phase 1</a><a href="#tr-solver">Phase 2</a><a href="#tr-convergence">{language === 'de' ? 'Zertifizierung' : 'Certification'}</a><a href="#tr-factory">Phase 3</a><a href="#tr-rom">Phase 4</a><a href="#tr-boundary">Status</a>
         </nav>
 
         <section id="tr-problem" className="case-section">
@@ -1365,15 +1643,35 @@ function ThreadROMPage() {
           <div className="tr-quality-grid">{content.quality.items.map(([metric,label,text])=><article data-reveal key={label}><strong>{metric}</strong><span>{label}</span><p>{text}</p></article>)}</div>
         </section>
 
+        <section id="tr-factory" className="case-section panel-section">
+          <CaseSectionTitle index="06" label={content.factory.label} title={content.factory.title} text={content.factory.text} />
+          <div className="tr-solver-layout">
+            <div className="tr-pipeline" data-reveal>{content.factory.stages.map(([n,title,text],index)=><article key={n}><span>{n}</span><div><h3>{title}</h3><p>{text}</p></div>{index<content.factory.stages.length-1&&<i>→</i>}</article>)}</div>
+            <div className="tr-loadcase" data-reveal>
+              <p><span>{content.factory.governanceTitle}</span><strong>{language === 'de' ? 'AKTIV' : 'ACTIVE'}</strong></p>
+              {content.factory.governance.map(([label,value])=><p key={label}><span>{label}</span><strong>{value}</strong></p>)}
+            </div>
+          </div>
+          <div className="tr-quality-grid tr-evidence-grid">{content.factory.evidence.map(([metric,label,text])=><article data-reveal key={label}><strong>{metric}</strong><span>{label}</span><p>{text}</p></article>)}</div>
+          <div className="tr-convergence-summary" data-reveal><strong>{content.factory.outcomeLabel}</strong><p>{content.factory.outcome}</p></div>
+        </section>
+
+        <section id="tr-rom" className="case-section">
+          <CaseSectionTitle index="07" label={content.rom.label} title={content.rom.title} text={content.rom.text} />
+          <div className="tr-pipeline tr-rom-pipeline" data-reveal>{content.rom.stages.map(([n,title,text],index)=><article key={n}><span>{n}</span><div><h3>{title}</h3><p>{text}</p></div>{index<content.rom.stages.length-1&&<i>→</i>}</article>)}</div>
+          <div className="tr-quality-grid tr-evidence-grid">{content.rom.evidence.map(([metric,label,text])=><article data-reveal key={label}><strong>{metric}</strong><span>{label}</span><p>{text}</p></article>)}</div>
+          <div className="tr-convergence-summary tr-rom-summary" data-reveal><strong>{content.rom.outcomeLabel}</strong><p>{content.rom.outcome}</p></div>
+        </section>
+
         <section id="tr-boundary" className="case-section panel-section tr-boundary-section">
-          <CaseSectionTitle index="06" label={content.boundary.label} title={content.boundary.title} text={content.boundary.text} />
+          <CaseSectionTitle index="08" label={content.boundary.label} title={content.boundary.title} text={content.boundary.text} />
           <div className="tr-boundary-grid">
             <article data-reveal><span>{content.boundary.establishedTitle}</span><ul>{content.boundary.established.map(item=><li key={item}>{item}</li>)}</ul></article>
             <article data-reveal><span>{content.boundary.openTitle}</span><ul>{content.boundary.open.map(item=><li key={item}>{item}</li>)}</ul></article>
           </div>
           <div className="mg-case-footer" data-reveal>
             <div><span>{content.boundary.statusLabel}</span><strong>{content.boundary.footer}</strong></div>
-            <div className="mg-case-footer-actions"><RouteLink to={`${localizedHome(language)}#projects`}>{content.boundary.return}</RouteLink><a href="#tr-convergence">{content.boundary.review}</a></div>
+            <div className="mg-case-footer-actions"><RouteLink to={`${localizedHome(language)}#projects`}>{content.boundary.return}</RouteLink><a href="#tr-rom">{content.boundary.review}</a></div>
           </div>
         </section>
       </main>

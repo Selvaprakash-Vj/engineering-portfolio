@@ -39,7 +39,9 @@ const projectScenes: Record<'machineguard' | 'threadrom' | 'finance', ScrollScen
     { id: 'tr-solver', number: '03', label: 'SOLVER', accent: '#57e6a4' },
     { id: 'tr-convergence', number: '04', label: 'CONVERGENCE', accent: '#4cc9f0' },
     { id: 'tr-quality', number: '05', label: 'QUALITY', accent: '#ff6b35' },
-    { id: 'tr-boundary', number: '06', label: 'BOUNDARY', accent: '#57e6a4' },
+    { id: 'tr-factory', number: '06', label: 'FACTORY', accent: '#4cc9f0' },
+    { id: 'tr-rom', number: '07', label: 'ROM', accent: '#ff6b35' },
+    { id: 'tr-boundary', number: '08', label: 'STATUS', accent: '#57e6a4' },
   ],
   finance: [
     { id: 'ft-hero', number: '00', label: 'INTRO', accent: '#ff6b35' },
@@ -476,7 +478,7 @@ export function ProjectCinematicScrollSystem({ project }: { project: 'machinegua
   const language = resolveLanguage()
   const labelsDe: Record<'machineguard' | 'threadrom' | 'finance', string[]> = {
     machineguard: ['INTRO', 'PROBLEM', 'WORKFLOW', 'ERGEBNISSE', 'ZUVERLÄSSIGKEIT', 'FEHLERFALL', 'ENTSCHEIDUNG', 'VERTIEFEN'],
-    threadrom: ['INTRO', 'PROBLEM', 'GEOMETRIE', 'SOLVER', 'KONVERGENZ', 'QUALITÄT', 'GRENZE'],
+    threadrom: ['INTRO', 'PROBLEM', 'GEOMETRIE', 'SOLVER', 'KONVERGENZ', 'QUALITÄT', 'FEM-FABRIK', 'ROM', 'STATUS'],
     finance: ['INTRO', 'PROBLEM', 'WORKFLOW', 'KONTROLLE', 'SCHUTZ', 'SYSTEMSTAND', 'ROADMAP'],
   }
   const scenes = projectScenes[project].map((scene, index) => language === 'de' ? { ...scene, label: labelsDe[project][index] } : scene)
